@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>司机当前位置</title>
+	<link rel="stylesheet" href="css/common.css" />
+	<script src="js/jquery-2.1.0.js"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<style type="text/css">
+		.header{
+			width: 100%;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			box-sizing: border-box;
+			padding-left: 0.23rem;
+			padding-right: 0.23rem;
+			font-size: 0.3rem;
+			background: #22bcee;
+			color: #fff;
+			position: fixed;
+			top: 0px;
+			z-index: 999;
+		}
+		.header .txt{
+			text-align: center;
+		}
+		.header .returnBtn{
+			width: 0.88rem;
+			height: 0.88rem;
+			position: absolute;
+			left: 0.23rem;
+			background: url(images/return.png) no-repeat left center;
+			background-size: 0.4rem 0.4rem;
+		}
+		.header .right{
+			position: absolute;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			right: 0.23rem;
+			top: 0rem;
+			font-weight: normal;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">司机当前位置</p>
+		<b class="right"></b>
+	</div>
+
+	<div class="container" style="width: 100%; height: 100%; position: absolute;" id="container"></div>
+	<div id="panel" style="display: none;"></div>
+	<script type="text/javascript" src="js/env_config.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+        document.write("<s" + "cript type='text/javascript' src='https://webapi.amap.com/maps?v=1.4.6&key=" + AmapQdKey + "&plugin=AMap.Driving'></s" + "cript>");
+	</script>
+	<script type="text/javascript">
+	    //初始化地图对象，加载地图
+
+	    var carCurrentPlace = localStorage.getItem("carCurrentPlace");
+	    console.log(carCurrentPlace);
+	    console.log(carCurrentPlace.split(",")[0]);
+	    //mapMarker([carCurrentPlace.split(",")[0],carCurrentPlace.split(",")[1]]);
+	    var map = new AMap.Map("container", {
+	        resizeEnable: true,
+	        center: [carCurrentPlace.split(",")[0],carCurrentPlace.split(",")[1]],//地图中心点
+	        mapStyle: 'amap://styles/692385c0456b39aa7ddc41e56c88596f',
+	        zoom: 13 //地图显示的缩放级别
+	    });
+	     mapMarker([carCurrentPlace.split(",")[0],carCurrentPlace.split(",")[1]]);
+	    function mapMarker(locationLngCode){
+	    	new AMap.Marker({
+		        map: map,
+				position: locationLngCode,
+		        icon: new AMap.Icon({
+		            size: new AMap.Size(40, 50),  //图标大小
+		            image: "https://webapi.amap.com/theme/v1.3/images/newpc/way_btn2.png",
+		            imageOffset: new AMap.Pixel(0, -60)
+		        })
+		    });
+	    }
+	    //添加点标记，并使用自己的icon
+
+		// 微信中不隐去.header
+		$(function(){
+            // 获取当前位置
+            getLocationFun();
+			var ua = window.navigator.userAgent.toLowerCase();
+			/*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+				$(".header").show();
+				$(".container").css({
+					"marginTop":"0.88rem"
+				})
+			}*/
+		})
+
+	</script>
+</body>
+</html>

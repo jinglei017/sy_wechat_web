@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>新增合作商-设备</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn" id="goBeforePage"></a>
+    <p class="txt">新增合作商-设备</p>
+    <b class="right"></b>
+</div>
+<div class="content newPartyMain" id="newOrderApp">
+    <div class="orderInf parcelInf">
+        <ul v-for="(contactEqpInfos,index) in contactEqplList" class="adsRightConInp">
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>设备类型</span>
+                <p class="inp">
+                    <select v-model="contactEqpInfos.eqpType" name="" id="">
+                        <option value="">请选择</option>
+                        <option v-for="eqpTypeItem in selectListData.eqpTypeList" v-bind:value="eqpTypeItem.code">{{eqpTypeItem.text}}</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>设备品牌</span>
+                <p class="inp">
+                    <input type="text" v-model="contactEqpInfos.eqpBrand" placeholder="设备品牌" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>设备型号</span>
+                <p class="inp">
+                    <input type="text" v-model="contactEqpInfos.eqpSpec" placeholder="设备型号" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>设备号</span>
+                <p class="inp">
+                    <input type="text" v-model="contactEqpInfos.eqpNo" placeholder="设备号" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>设备名称</span>
+                <p class="inp">
+                    <input type="text" v-model="contactEqpInfos.eqpName" placeholder="设备名称" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>备注</span>
+                <p class="inp">
+                    <input type="text" v-model="contactEqpInfos.remark" placeholder="备注" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>是否默认</span>
+                <p class="inp">
+                    <select v-model="contactEqpInfos.isDefault" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+            <li class="operationItem" style="display: none;">
+                <span class="txt float_l" v-on:click="addDeviceFun()">+新增设备</span>
+                <p class="inp float_r" v-if="index != 0" v-on:click="delDeviceFun(index)">-删除设备</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="orderBottom1">
+        <a href="javascript:;" v-on:click="saveNewOrderItemsInfo()" v-if="disAbled == '1'">保存</a>
+    </div>
+
+    <div v-if="disAbled == '0'" class="orderBottom2">请先填写保存上一页合作商基本信息，再填写设备信息。</div>
+
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            disAbled:"",
+            cdPartyId:"",
+            selectListData:{},
+            contactEqplList:[{
+                eqpType:"",
+                eqpNo:"",
+                eqpName:"",
+                isDefault:""
+            }]
+        },
+        methods:{
+            addDeviceFun(){
+                this.contactEqplList.push({
+                    eqpType:"",
+                    eqpNo:"",
+                    eqpName:"",
+                    isDefault:""
+                });
+            },
+            delDeviceFun(index){
+                if(index == 0){
+                    loadData('show', '第一条不可删除', true);
+                }else{
+                    this.contactEqplList.splice(index,1);
+                }
+            },
+            saveNewOrderItemsInfo(){
+                var that = this,hasPartyEqp = [];
+                that.logininf = JSON.parse(localStorage.getItem("logininf"));
+                if(that.contactEqplList.length == 0){
+                    loadData('show', '当前无设备信息', true);
+                    return false;
+                }
+                var check = 0,defaultNum = 0,sucNum = 0,defaultObj = {};
+                $.each(that.contactEqplList, function (index, item) { // 设备类型、设备号、设备名称、是否默认
+                    if(item.eqpType == '' || item.eqpNo == '' || item.eqpName == '' || item.isDefault == ''){
+                        check += 1;
+                    }
+                });
+                if(check != 0){
+                    loadData('show', '请完整填写必填项', true);
+                    return false;
+                }
+                $.each(that.contactEqplList, function (index, item) {
+                    if(item.isDefault == 1){
+                        defaultNum++;
+                        defaultObj = item;
+                    }
+                });
+                if(defaultNum != 0){
+                    if(localStorage.getItem("hasPartyEqpDefault") == null){
+                        localStorage.setItem("hasPartyEqpDefault",JSON.stringify(defaultObj));
+                    }else{
+                        var hasDefaultObj = JSON.parse(localStorage.getItem("hasPartyEqpDefault"));
+                        loadData("show",'您已设置'+hasDefaultObj.eqpNo+'为默认设备',true)
+                        return false;
+                    }
+                }
+                $.each(that.contactEqplList, function (index, item) {
+                    item.refId = that.cdPartyId;
+                    postRequest(cmdUrl + "/cdEqp/saveCdEqp.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,item,function(data){
+                        if(data != null && data.result != null){
+                            hasPartyEqp.push(data.result);
+                            sucNum += 1;
+                            if(sucNum == that.contactEqplList.length){
+                                if(localStorage.getItem("hasPartyEqp") != null){
+                                    var oldArray = JSON.parse(localStorage.getItem("hasPartyEqp"));
+                                    $.each(oldArray, function (indexx, itemm) {
+                                        hasPartyEqp.push(itemm);
+                                    });
+                                }
+                                localStorage.setItem("hasPartyEqp",JSON.stringify(hasPartyEqp));
+                                that.contactEqplList = [{
+                                    eqpType:"",
+                                    eqpNo:"",
+                                    eqpName:"",
+                                    isDefault:""
+                                }];
+                                loadData('show', '保存设备信息成功', true);
+                            }
+                        }else{
+                            loadData('show', '保存设备信息失败！', true);
+                        }
+                    });
+                });
+            }
+        },
+        created:function(){
+            var that = this;
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+            console.log(getUrlParam('cdPartyId'));
+            if(getUrlParam('cdPartyId') == null){
+                that.disAbled = 0;
+            }else{
+                that.disAbled = 1;
+                that.cdPartyId = getUrlParam('cdPartyId');
+            }
+        }
+    });
+
+    $(function () {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+       /* if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".content.newPartyMain").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+
+        // 返回
+        $(document).on("click","#goBeforePage",function(){
+            window.location.href = "newPartyHisLists.html";
+        });
+    });
+</script>
+
+</body>
+</html>

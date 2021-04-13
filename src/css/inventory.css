@@ -1,0 +1,44 @@
+.header{width: 100%;height: 0.88rem;line-height: 0.88rem;box-sizing: border-box;padding-left: 0.23rem;padding-right: 0.23rem;font-size: 0.3rem;background: #22bcee;color: #fff;position: fixed;top: 0px;z-index: 999;}
+.header .txt{text-align: center;}
+.header .returnBtn{width: 0.88rem;height: 0.88rem;position: absolute;left: 0.2rem;background: url(../images/return.png) no-repeat left center;background-size: 0.4rem 0.4rem;}
+.header .right{position: absolute;height: 0.88rem;line-height: 0.88rem;right: 0.23rem;top: 0rem;font-weight: normal;}
+.header .right .searchBtn{width: 0.46rem;height: 0.46rem;display: block;margin-top: 0.19rem;float: right;}
+
+.searchLayer{width: 100%;height: 100%;position: fixed;top: 0.88rem;background: rgba(0,0,0,0.3);z-index: 999;display: none;}
+.searchLayer .searchCon{padding-bottom: 0.3rem;background: #fff;}
+.searchLayer .searchCon ul{padding-top: 0.26rem;padding-left: 0.23rem;overflow: hidden;box-sizing: border-box;}
+.searchLayer .searchCon ul li{width: 48%;float: left;font-size: 0.26rem;color: #333;padding-bottom: 0.32rem;text-align: right;}
+.searchLayer .searchCon ul li span{width: 1.2rem;float: left;height: 0.62rem;line-height: 0.62rem;padding-right: 0.2rem;}
+.searchLayer .searchCon ul li:nth-of-type(3) span{width: 1.2rem;}
+.searchLayer .searchCon ul li:nth-of-type(4) span{width: 1.2rem;}
+.searchLayer .searchCon ul li input{width: 2rem;height: 0.62rem;line-height: 0.62rem;padding-left: 0.12rem;box-sizing: border-box;border: 1px solid #e5e5e5;float: left;}
+.searchLayer .searchCon ul li select{width: 2rem;height: 0.62rem;line-height: 0.62rem;padding-left: 0.12rem;box-sizing: border-box;border: 1px solid #e5e5e5;color: #666;float: left;background: url(../images/bottom_btn.png) no-repeat 1.5rem center;background-size: 0.36rem auto;}
+.searchLayer .searchCon ul li select:focus{outline: none;border: 1px solid #e5e5e5;}
+.searchLayer .searchCon ul li{width: 100%;}
+.searchLayer .searchCon ul li input{width: 5rem;font-size: 0.26rem;color: #333;}
+.searchLayer .searchCon .searchbtn{width: 100%;height: 0.66rem;line-height: 0.66rem;text-align: center;margin: 0 auto;}
+.searchLayer .searchCon .searchbtn .searchspan{display: inline-block;width: 23%;height: 0.66rem;line-height: 0.66rem;background: #22bcee;border-radius: 0.03rem;color: #fff;}
+.searchLayer .searchCon .searchbtn .searchspan.bg_white{background: #fff;color: #333;border: 1px solid #e5e5e5;}
+
+.main{padding-top: 0.88rem;width: 100%;height: 100%;box-sizing: border-box;overflow-y: auto;}
+.main .itemDiv{width:100%;height:1.5rem;display:block;border-bottom: 1px dashed #b0b0b0;padding: 0.1rem 0;}
+.main .itemDiv .itemCon{width: 97%;height: 1.5rem;margin-left: 3%;}
+.main .itemDiv .itemCon .itemLis{width:95%;height:0.5rem;color: #666;}
+.main .itemDiv .itemCon .itemLis.itemTxt{height:0.4rem;margin-bottom:0.1rem;color: #333;overflow: hidden;word-break: break-all;text-overflow: ellipsis;
+    display: -webkit-box;display: -moz-box;-webkit-box-orient: vertical;-moz-box-orient: vertical;-webkit-line-clamp: 1;-moz-line-clamp: 1;}
+.main .itemDiv .itemCon .itemLis .itemLi1{width: 60%;height:0.4rem;overflow: hidden;word-break: break-all;text-overflow: ellipsis;
+    display: -webkit-box;display: -moz-box;-webkit-box-orient: vertical;-moz-box-orient: vertical;-webkit-line-clamp: 1;-moz-line-clamp: 1;}
+.main .itemDiv .itemCon .itemLis .itemLi2{width: 40%;height:0.4rem;overflow: hidden;word-break: break-all;text-overflow: ellipsis;
+    display: -webkit-box;display: -moz-box;-webkit-box-orient: vertical;-moz-box-orient: vertical;-webkit-line-clamp: 1;-moz-line-clamp: 1;}
+
+/* 服务商-选择委托人 */
+.personMain{padding-top: 1.64rem;width: 100%;height: 100%;box-sizing: border-box;overflow-y: auto;}
+.personMain .personMainTitle{width: 100%;height:0.76rem;line-height:0.76rem;position: fixed;top: 0.88rem;left: 0;box-sizing: border-box;background: #fff;z-index: 99;padding: 0 0.23rem;overflow: hidden;border-bottom: 1px solid #e5e5e5;}
+.personMain .personItem{padding: 0 0.23rem;height: 0.76rem;border-bottom: 1px solid #e5e5e5;color: #3c3b3b;}
+.personMain .personItem li{height: 0.76rem;line-height:0.76rem;}
+.personMain .personItem .imgPerson{display:inline-block;width: 0.5rem;height: 0.5rem;margin-top:0.13rem;background: url(../images/index_pic_6.png) no-repeat center center;background-size: cover;}
+.personMain .personItem .goBtn{display:inline-block;width: 0.2rem;height: 0.31rem;margin-top: 0.22rem;margin-left:0.15rem;background: url(../images/right_btn.png) no-repeat center center;background-size: cover;}
+
+/* 仅用于浏览器页面效果，Excel不会分离表格边框，不需要此样式 */
+#exportTable{border-collapse: collapse;}
+

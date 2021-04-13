@@ -1,0 +1,335 @@
+body{
+	background: #f3f5f7;
+}
+.header{
+	width: 100%;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.3rem;
+	background: #22bcee;
+	color: #fff;
+	position: fixed;
+	top: 0px;
+	z-index: 999;
+}
+.header .txt{
+	text-align: center;
+}
+.header .returnBtn{
+	width: 0.88rem;
+	height: 0.88rem;
+	position: absolute;
+	left: 0.2rem;
+	background: url(../images/return.png) no-repeat left center;
+	background-size: 0.4rem 0.4rem;
+}
+.header .right{
+	position: absolute;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	right: 0.23rem;
+	top: 0rem;
+	font-weight: normal;
+}
+
+
+.main{
+	margin-top: 0.88rem;
+}
+.main .mCon{
+	margin-top: 0.23rem;
+}
+.main .costList ul{
+	border-top: 1px solid #e5e5e5;
+}
+.main .costList ul li{
+	background: #fff;
+}
+.main .costList ul li .clTitle{
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.3rem;
+	color: #3c3b3b;
+	overflow: hidden;
+	line-height: 0.8rem;
+	border-bottom: 1px solid #e5e5e5;
+	background: url(../images/right_btn.png) no-repeat 6.96rem center;
+	background-size: 0.18rem auto;
+}
+.main .costList ul .active .clTitle{
+	color: #22bcee;
+	background: url(../images/bottom_btn1.png) no-repeat 6.9rem center;
+	background-size: 0.3rem auto;
+}
+.main .costList ul li .clTitle .left{
+	float: left;
+}
+.main .costList ul li .clTitle .right{
+	float: right;
+	text-align: right;
+	padding-right: 0.56rem;
+}
+.main .costList ul .active .costDetailList{
+	display: block;
+}
+.main .costList .costDetailList{
+	display: none;
+}
+.main .costList .costDetailList ul{
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+}
+.main .costList .costDetailList .con{
+	height: 6rem;
+	overflow-y: auto;
+	padding-bottom: 0.2rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.main .costList .costDetailList ul li{
+	height: 0.72rem;
+	line-height: 0.72rem;
+	font-size: 0.28rem;
+	color: #555;
+	overflow: hidden;
+	border-bottom: 1px solid #e5e5e5;
+}
+.main .costList .costDetailList ul li p:nth-of-type(1){
+	width: 4rem;
+	float: left;
+}
+.main .costList .costDetailList ul li p:nth-of-type(2){
+	width: 1.8rem;
+	float: right;
+	text-align: center;
+}
+.main .costList1 .costDetailList ul li{
+	width: 5.6rem;
+	margin: 0 auto;
+	height: auto;
+	line-height: 0.72rem;
+	border-bottom: none;
+	padding-top: 0.12rem;
+	padding-bottom: 0.12rem;
+}
+.main .costList1 .costDetailList ul li p{
+	width: 5.6rem;
+}
+.main .costList1 .costDetailList ul li p:nth-of-type(1){
+	float: none;
+	text-align: left;
+	font-size: 0.28rem;
+	width: 5.6rem;
+}
+.main .costList1 .costDetailList ul li p:nth-of-type(2){
+	float: none;
+	text-align: left;
+	width: 5.6rem;
+}
+.main .costList1 .costDetailList ul li p:nth-of-type(3){
+	float: none;
+	text-align: left;
+	width: 5.6rem;
+}
+.main .costList1 .costDetailList ul li p:nth-of-type(4){
+	float: none;
+	text-align: left;
+	width: 5.6rem;
+}
+.main .costList1 .costDetailList .con{
+	height: auto;
+	padding-bottom: 0.2rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.main .mTitle{
+
+}
+.mTitle ul{
+	overflow: hidden;
+	background: #fff;
+}
+.mTitle ul li{
+	width: 33.333333%;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	float: left;
+	position: relative;
+	text-align: center;
+	font-size: 0.28rem;
+	color: #929292;
+	letter-spacing: 0.01rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.mTitle ul li a{
+	color: #929292;
+}
+.mTitle ul li a span{
+	font-size: 0.2rem;
+}
+.mTitle ul .active a{
+	color: #22bcee;
+}
+
+/*
+.footer{
+	width: 100%;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	height: 0.8rem;
+	border-top: 1px solid #e5e5e5;
+	background: #fff;
+	z-index: 2;
+}
+.footer ul li{
+	width: 33.333333%;
+	float: left;
+	position: relative;
+	text-align: center;
+	font-size: 0.24rem;
+	color: #929292;
+	padding-top: 0.36rem;
+	letter-spacing: 0.01rem;
+}
+.footer ul li a{
+	color: #929292;
+}
+.footer ul li a span{
+	font-size: 0.2rem;
+}
+.footer ul .active a{
+	color: #22bcee;
+}
+.footer ul li:after{
+	content: "";
+	width: 0.16rem;
+	height: 0.03rem;
+	display: block;
+	background: #ff3a31;
+	position: absolute;
+	left: 50%;
+	margin-left: -0.08rem;
+	top: 0.16rem;
+}*/
+
+
+
+
+
+.maskLayer{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(0,0,0,0.5);
+	top: 0px;
+	left: 0px;
+	display: none;
+	z-index: 999;
+}
+.maskLayer .popup{
+	width: 6.6rem;
+	margin: 0 auto;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	border-radius: 0.3rem;
+}
+.popupCon{
+	height: 9rem;
+}
+.popupCon .popuptitle{
+
+	border-bottom: 1px solid #e5e5e5;
+}
+.popupCon .infHint{
+	line-height: 0.82rem;
+	padding-top: 0.12rem;
+	font-size: 0.3rem;
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+	position: relative;
+}
+.popupCon .infHint .closeorderinf{
+	position: absolute;
+	width: 0.86rem;
+	height: 0.86rem;
+	display: block;
+	right: 0.23rem;
+	top: 0.1rem;
+	background: url(../images/closeBtn2.png) no-repeat center center;
+	background-size: 0.32rem 0.32rem;
+}
+
+.popupCon .popuptitle ul{
+	padding: 0.2rem;
+}
+.popupCon .popuptitle ul li{
+	height: 0.6rem;
+	line-height: 0.6rem;
+	overflow: hidden;
+	border-bottom: #e5e5e5;
+}
+.popupCon .popuptitle ul li .txt{
+	float: left;
+	font-size: 0.28rem;
+	color: #333;
+}
+.popupCon .popuptitle ul li .inf{
+	float: right;
+	font-size: 0.26rem;
+	color: #666;
+}
+.popupCon .popuptitle ul li .inf a{
+	color: #22bcee;
+}
+
+.popupCon .orderSort {
+	padding-top: 0.12rem;
+	overflow: hidden;
+}
+.popupCon .orderSort ul{
+	overflow: hidden;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.popupCon .ordersortTitle li{
+	color: #333;
+	color: #f60;
+}
+.popupCon .orderSort .ordersortList{
+	height: 3.96rem;
+	overflow-y: scroll;
+}
+.popupCon .orderSort li{
+	float: left;
+	line-height: 0.6rem;
+	text-align: center;
+	color: #555;
+}
+.popupCon .orderSort li:nth-of-type(1){
+	width: 3rem;
+	text-align: left;
+	padding-right: 0.1rem;
+	box-sizing: border-box;
+}
+.popupCon .orderSort .ordersortList li:nth-of-type(1){
+	width: 3rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.popupCon .orderSort li:nth-of-type(2){
+	width: 1.5rem;
+	padding-right: 0.1rem;
+	box-sizing: border-box;
+}
+.popupCon .orderSort li:nth-of-type(3){
+	width: 1.5rem;
+}
+
+

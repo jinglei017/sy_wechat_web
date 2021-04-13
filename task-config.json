@@ -1,0 +1,25 @@
+{
+    "requirejs": {
+        "requirejs": {
+            "options": {
+                "appDir":"src/",
+                "baseUrl": "js/",
+                "optimizeCss": "standard",
+                "mainConfigFile": "",
+                "dir": "dist-wechat",
+                "removeCombined": "true"
+            }
+        }
+    },
+    "clean": {
+        "build": {
+            "src": [ "dist-wechat", "dist-wechat.zip"]
+        }
+    },
+    "zip": {
+        "long-format": {
+            "src": ["dist-wechat/**"],
+            "dest": "dist-wechat.zip"
+        }
+    }
+}

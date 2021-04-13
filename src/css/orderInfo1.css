@@ -1,0 +1,35 @@
+.orderInfList{
+	padding-top: 0.2rem;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	box-sizing: border-box;
+	width: 7.5rem;
+}
+.orderInfList .listItem{
+	background: #fff;
+	color: #333;
+	box-sizing: border-box;
+}
+.orderInfList .listItem .title{
+	line-height: 0.8rem;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 0.3rem;
+    font-weight: bold;
+    padding-left: 0.23rem;
+}
+.orderInfList .infoItem{
+	width: 6.74rem;
+	padding-left: 0.16rem;
+}
+.orderInfList .infoItem{
+	margin-top: 0px;
+}
+.orderInfo .infoItem .itemSortCon li:nth-of-type(1){
+	width: 3.66rem;
+}
+.orderInfList .infoItem .itemTitle{
+	font-size: 0.28rem;
+}
+.inflistCon{
+	display: none;
+}

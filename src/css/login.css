@@ -1,0 +1,288 @@
+body{
+	background: #f0eff4;
+}
+.header{
+	width: 100%;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.3rem;
+	background: #22bcee;
+	color: #fff;
+}
+.header .txt{
+	text-align: center;
+}
+.header .returnBtn{
+	width: 0.88rem;
+	height: 0.88rem;
+	position: absolute;
+	left: 0.2rem;
+	background: url(../images/return.png) no-repeat left center;
+	background-size: 0.4rem 0.4rem;
+}
+.loginMetPar{
+	height: 0.55rem;
+}
+.loginMethod{
+	font-size: 0.28rem;
+	line-height: 0.55rem;
+	color: #666;
+	float: right;
+	margin-top: 0.1rem;
+}
+.roleChoiceDiv{
+	width: 33.333%;
+	float: left;
+}
+.roleChoice{
+	width: 100%;
+	line-height: .4rem;
+	margin: .24rem 0;
+	text-align: center;
+	vertical-align: middle;
+	border-left: 1px solid #e5e5e5;
+	color: #666;
+	font-size: .3rem;
+}
+.roleChoiceDiv:nth-child(1) .roleChoice{
+	border-left: 0;
+}
+.roleActive{
+	background: #22bcee;
+}
+.roleActive .roleChoice{
+	color: #fff;
+}
+.yzmButton{
+	float: right;
+	width: 1.5rem;
+	height: 0.6rem;
+	color: #22bcee;
+	font-size: .26rem;
+	line-height: 0.6rem;
+	border: 1px solid #22bcee;
+	border-radius: 0.08rem;
+	margin-top: 0.14rem;
+	margin-right: 0.2rem;
+}
+.loginCon,.loginCon1{
+	padding: 0.36rem 0.23rem 0.23rem 0.23rem;
+}
+.loginCon .logoimg,.loginCon1 .logoimg{
+	width: 3.2rem;
+	margin: 0 auto;
+	padding-top: 0.72rem;
+	padding-bottom: 0.72rem;
+}
+.loginCon .logoimg img,.loginCon1 .logoimg img{
+	width: 3.2rem;
+	display: block;
+}
+.loginCon ul,.loginCon1 ul{
+	border: 1px solid #e5e5e5;
+	border-bottom: none;
+	border-radius: 0.12rem;
+	overflow: hidden;
+}
+.loginCon ul li,.loginCon1 ul li{
+	background: #fff;
+	height: 0.88rem;
+	padding-left: 0.36rem;
+	border-bottom: 1px solid #e5e5e5;
+}
+.loginCon ul li img,.loginCon1 ul li img{
+	width: 0.42rem;
+	height: 0.42rem;
+	display: block;
+	float: left;
+	margin-top: 0.23rem;
+}
+.loginCon ul li input,.loginCon1 ul li input{
+	width: 5rem;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	padding-left: 0.3rem;
+}
+.loginCon ul li .roleSelect{
+	width: 3rem;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	padding-left: 0.3rem;
+	color: #666;
+	background: url(../images/bottom_btn.png) no-repeat right center;
+	background-size: 0.36rem auto;
+}
+.loginCon ul li .roleSelect:focus{
+	outline: none;
+}
+.loginCon .loginbtn,.loginCon1 .loginbtn{
+	width: 7.04rem;
+	margin: 0 auto;
+	height: 0.72rem;
+	line-height: 0.72rem;
+	background: #22bcee;
+	color: #fff;
+	font-size: 0.3rem;
+	text-align: center;
+	border-radius: 0.12rem;
+	margin-top: 0.3rem;
+}
+.loginCon .loginBot,.loginCon1 .loginBot{
+	height: 0.8rem;
+	line-height: 0.8rem;
+	overflow: hidden;
+	padding-top: 0.2rem;
+
+}
+.loginCon .loginBot a{
+	font-size: 0.26rem;
+	color: #666;
+}
+.loginCon .loginBot a:nth-of-type(1){
+	float: left;
+}
+.loginCon .loginBot a:nth-of-type(2){
+	float: right;
+}
+.loginCon ul .telLi{
+	display: none;
+}
+
+
+.registerCon{
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	padding-top: 0.36rem;
+}
+
+.registerCon ul li{
+	height: 0.72rem;
+	line-height: 0.72rem;
+	overflow: hidden;
+	padding-bottom: 0.3rem;
+}
+.registerCon ul li .txt{
+	float: left;
+	width: 1.2rem;
+	padding-right: 0.2rem;
+	font-size: 0.28rem;
+	color: #333;
+	text-align: right;
+}
+.registerCon ul li input{
+	width: 5.64rem;
+	height: 0.72rem;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	border-radius: 0.09rem;
+	padding-left: 0.18rem;
+	float: left;
+}
+.registerCon ul .yzmLi input{
+	width: 2.6rem;
+
+}
+.registerCon ul .yzmLi i{
+	width: 2.82rem;
+	height: 0.72rem;
+	margin-left: 0.2rem;
+	float: left;
+	background: #22bcee;
+	text-align: center;
+	color: #fff;
+	border-radius: 0.09rem;
+}
+.registerBtn{
+	width: 5.83rem;
+	margin: 0 auto;
+	height: 0.72rem;
+	line-height: 0.72rem;
+	background: #22bcee;
+	color: #fff;
+	font-size: 0.3rem;
+	text-align: center;
+	border-radius: 0.12rem;
+	margin-top: 0.36rem;
+}
+.registerHint{
+	height: 0.36rem;
+	line-height: 0.36rem;
+	font-size: 0.26rem;
+	color: #555;
+	margin: 0 auto;
+	background:  url(../images/icon_quan.png) no-repeat left center;
+	background-size: 0.36rem 0.36rem;
+	padding-left: 0.52rem;
+	display: table;
+}
+.agreeTerms{
+	background:  url(../images/icon_gou.png) no-repeat left center;
+	background-size: 0.36rem 0.36rem;
+}
+.registerHint i{
+	color: #22bcee;
+}
+
+
+.maskLayer{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	background: rgba(0,0,0,0.5);
+	display: none;
+}
+.maskLayer .popup{
+	width: 6.5rem;
+	height: 10rem;
+	background: #fff;
+	font-size: 0.26rem;
+	color: #666;
+	line-height: 0.52rem;
+	box-sizing: border-box;
+	padding: 0.3rem;
+	padding-top: 0.1rem;
+	border-radius: 0.23rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -3.25rem;
+	transform: translateY(-50%);
+}
+.maskLayer .popup .popupCon{
+	height: 8.5rem;
+	overflow-y: scroll;
+	padding-top: 0.12rem;
+}
+.maskLayer .popup h3{
+	border-bottom: 1px solid #e5e5e5;
+	line-height: 0.86rem;
+	text-align: center;
+	font-size: 0.3rem;
+	color: #333;
+	position: relative;
+}
+.maskLayer .popup h3 a{
+	width: 0.6rem;
+	height: 0.6rem;
+	display: block;
+	position: absolute;
+	right: 0rem;
+	bottom: 0.1rem;
+	background: url(../images/closeBtn2.png) no-repeat center center;
+	background-size: 0.32rem 0.32rem;
+}
+.maskLayer .popup p{
+	text-indent: 2em;
+}
+.maskLayer .popup h5{
+	font-weight: normal;
+	color: #333;
+	line-height: 0.6rem;
+	font-size: 0.28rem;
+	text-indent: 1em;
+}

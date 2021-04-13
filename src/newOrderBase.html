@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>订单基本信息</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" href="css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">订单基本信息</p>
+		<b class="right"></b>
+	</div>
+	<div class="content newOrderMain" id="newOrderApp">
+		<div class="orderInf parcelInf">
+			<ul>
+				<!--<li>
+					<span class="txt">发单方</span>
+					<p class="inp">
+						<select v-model="orderDetail.orderFrom" name="">
+							<option value="">请选择</option>
+							<option v-for="orderFormItem in selectListData.orderFromList" v-bind:value="orderFormItem.code">{{orderFormItem.text}}</option>
+						</select>
+					</p>
+				</li>-->
+				<!--<li>
+					<span class="txt">接单方</span>
+					<p class="inp">
+						<select v-model="orderDetail.orderTo" name="">
+							<option value="">请选择</option>
+							<option v-for="orderToItem in selectListData.orderToList" v-bind:value="orderToItem.code">{{orderToItem.text}}</option>
+						</select>
+					</p>
+				</li>-->
+				<li>
+					<span class="txt">关联号</span>
+					<p class="inp" class="orderinf3">
+						<input type="text" v-model="orderDetail.customerRefNo" placeholder="关联号" />
+					</p>
+				</li>
+				<li class="twoItem">
+					<span class="txt" style="width: 1.3rem">普货/危货</span>
+					<select class="select" v-model="orderDetail.general" name="" style="width: 5.6rem;outline: 0">
+						<option value="">请选择单位</option>
+						<option value="普货">普货</option>
+						<option value="危货">危货</option>
+					</select>
+				</li>
+				<!--<li>
+					<span class="txt">类型</span>
+					<p class="inp">
+						<select v-model="orderDetail.orderType">
+							<option value="">请选择</option>
+							<option v-for="orderTypeItem in selectListData.orderTypeList" v-bind:value="orderTypeItem.code">{{orderTypeItem.text}}</option>
+						</select>
+					</p>
+				</li>-->
+				<li>
+					<span class="txt">要求完成时间</span>
+					<p class="inp">
+						<span class="inpDates muiDateBtn1" id="muiDateVal1">{{orderDetail.completeTime}}</span>
+					</p>
+				</li>
+				<li>
+					<span class="txt">订单过期时间</span>
+					<p class="inp">
+						<span class="inpDates muiDateBtn2" id="muiDateVal2">{{orderDetail.expireTime}}</span>
+					</p>
+				</li>
+				<li class="twoItem">
+					<span class="txt">总数量</span>
+					<p class="inp">
+						<input type="text" v-model="orderDetail.totalQty" placeholder="总数量" />
+					</p>
+					<select class="select" v-model="orderDetail.qtyUnit" name="" style="outline: none">
+						<option value="">请选择单位</option>
+						<option v-for="qtyUnitItem in selectListData.qtyUnitList" v-bind:value="qtyUnitItem.code" v-bind:label="qtyUnitItem.text" v-bind:name="qtyUnitItem.text">{{qtyUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">总重量</span>
+					<p class="inp">
+						<input type="text" v-model="orderDetail.totalWeight" placeholder="总重量" />
+					</p>
+					<select class="select" v-model="orderDetail.weightUnit" name="" style="outline: none">
+						<option value="">请选择单位</option>
+						<option v-for="weightUnitItem in selectListData.weightUnitList" v-bind:value="weightUnitItem.code">{{weightUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">总体积</span>
+					<p class="inp">
+						<input type="text" v-model="orderDetail.totalVolume" placeholder="总体积" />
+					</p>
+					<select class="select" v-model="orderDetail.volumeUnit" name="" style="outline: none">
+						<option value="">请选择单位</option>
+						<option v-for="volumeUnitItem in selectListData.volumeUnitList" v-bind:value="volumeUnitItem.code">{{volumeUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">总金额</span>
+					<p class="inp">
+						<input type="text" v-model="orderDetail.totalAmount" placeholder="总金额" />
+					</p>
+					<select class="select" v-model="orderDetail.currency" name="" style="outline: none">
+						<option value="">请选择单位</option>
+						<option v-for="(currencyItem,ins) in selectListData.currencyList" v-bind:value="currencyItem.code">{{currencyItem.text}}</option>
+					</select>
+				</li>
+				<li class="textarea">
+					<span class="txt">备注</span>
+					<textarea name="" rows="2" cols="" v-model="orderDetail.remark" placeholder="请输入备注"></textarea>
+				</li>
+			</ul>
+		</div>
+		<div class="orderBottom1">
+			<a href="javascript:;" v-on:click="saveNewOrderBaseInfo()">保存</a>
+		</div>
+	</div>
+
+	<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+	<script src="js/vue.js" type="text/javascript"></script>
+	<script src="js/mui.js"></script>
+	<script src="js/mui.picker.min.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    </script>
+	<script type="text/javascript">
+        var app = new Vue({
+            el: '#newOrderApp',
+            data: {
+                orderDetail:{
+                    orderType :"TO",
+                    qtyUnit:[],
+                    weightUnit:[],
+                    volumeUnit:[],
+                    currency:[],
+                    general:""
+				},
+                selectListData:{
+                    qtyUnitList:[]
+				},
+                shoQuantity:""
+            },
+            methods:{
+                saveNewOrderBaseInfo(){
+                    var that = this,logininf = JSON.parse(localStorage.getItem("logininf"));
+                    /*if(that.orderDetail.orderTo == ''){
+                        loadData('show', '请选择接单方', true);
+                        return false;
+                    }*/
+                    if(that.orderDetail.customerRefNo == ''){
+                        loadData('show', '关联号为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.completeTime == ''){
+                        loadData('show', '要求完成时间为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.expireTime == ''){
+                        loadData('show', '订单过期时间为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.totalQty == ''){
+                        loadData('show', '总数量为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.qtyUnit == ''){
+                        loadData('show', '请选择数量单位', true);
+                        return false;
+                    }
+                    if(that.orderDetail.totalWeight == ''){
+                        loadData('show', '总重量为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.weightUnit == ''){
+                        loadData('show', '请选择重量单位', true);
+                        return false;
+                    }
+                    if(that.orderDetail.totalVolume == ''){
+                        loadData('show', '总体积为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.volumeUnit == ''){
+                        loadData('show', '请选择体积单位', true);
+                        return false;
+                    }
+                    if(that.orderDetail.totalAmount == ''){
+                        loadData('show', '总金额为必填项', true);
+                        return false;
+                    }
+                    if(that.orderDetail.currency == ''){
+                        loadData('show', '请选择金额单位', true);
+                        return false;
+                    }
+                    that.orderDetail.orderType = "TO";
+                    localStorage.setItem("newOrderBaseInfo",JSON.stringify(that.orderDetail));
+                    window.location.href = "newOrder.html";
+                }
+            },
+            created:function(){
+                localStorage.removeItem("muiDateComplete");
+                localStorage.removeItem("muiDateExpireTime");
+                var that = this;
+                that.logininf = JSON.parse(localStorage.getItem("logininf"));
+                initSelectData(that);
+                that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));//获取下拉数据
+                that.orderDetail.qtyUnit = that.selectListData.qtyUnitList[0].code;
+                that.orderDetail.weightUnit = that.selectListData.weightUnitList[0].code;
+                that.orderDetail.volumeUnit = that.selectListData.volumeUnitList[0].code;
+                that.orderDetail.currency = that.selectListData.currencyList[0].code;
+                that.orderDetail.general = "普货";
+                console.log(that.showSelectQuantity);
+                console.log(that.showQuantity);
+                if(localStorage.getItem("newOrderBaseInfo") != null){
+                    that.orderDetail = JSON.parse(localStorage.getItem("newOrderBaseInfo"));
+                }
+            }
+        });
+
+        function initSelectData(that){
+            that.orderDetail = {
+                orderFrom:"",
+                orderTo:"",
+                customerRefNo:"",
+                ordinaryGoods:"",
+                orderType:"",
+                completeTime:GetNowdate(),
+                expireTime:GetNowdate(),
+                totalQty:"",
+                qtyUnit:"",
+                totalWeight:"",
+                weightUnit:"",
+                totalVolume:"",
+                volumeUnit:"",
+                totalAmount:"",
+                currency:"",
+                remark:""
+            };
+        }
+
+        /* mui时间插件 */
+        (function($) {
+            $.init();
+            var btns = $('.muiDateBtn1');
+            var flag = true;
+            btns.each(function(i, btn) {
+                btn.addEventListener('tap', function() {
+                    setTimeout(function(){
+                        flag = true;
+                    },2000);
+                    if(flag){
+                        var optionsJson = this.getAttribute('data-options') || '{"type":"date"}';  // 时间格式 2018-10-10
+                        var options = JSON.parse(optionsJson);
+                        var picker = new $.DtPicker(options);
+                        picker.show(function(rs) {
+                            localStorage.setItem("muiDateComplete",rs.text);
+                            getMuiDateVals('muiDateComplete');
+                            console.log(rs.text);
+                            picker.dispose();
+                        });
+
+                        flag  = false;
+                    }
+
+                }, false);
+            });
+        })(mui);
+        (function($) {
+            $.init();
+            var btns2 = $('.muiDateBtn2');
+            var flag2 = true;
+            btns2.each(function(i, btn) {
+                btn.addEventListener('tap', function() {
+                    setTimeout(function(){
+                        flag2 = true;
+                    },2000);
+                    if(flag2){
+                        var optionsJson = this.getAttribute('data-options') || '{"type":"date"}';  // 时间格式 2018-10-10
+                        var options = JSON.parse(optionsJson);
+                        var picker = new $.DtPicker(options);
+                        picker.show(function(rs) {
+                            localStorage.setItem("muiDateExpireTime",rs.text);
+                            getMuiDateVals('muiDateExpireTime');
+                            console.log(rs.text);
+                            picker.dispose();
+                        });
+
+                        flag2  = false;
+                    }
+
+                }, false);
+            });
+        })(mui);
+        function getMuiDateVals(type) {
+            switch (type)
+			{
+                case 'muiDateComplete':
+                    document.getElementById('muiDateVal1').innerHTML = localStorage.getItem("muiDateComplete");
+                    break;
+                case 'muiDateExpireTime':
+                    document.getElementById('muiDateVal2').innerHTML = localStorage.getItem("muiDateExpireTime");
+                    break;
+			}
+        }
+
+        $(function(){
+            // 获取当前位置
+            getLocationFun();
+
+            /* 微信中不隐去.header */
+			var ua = window.navigator.userAgent.toLowerCase();
+			/*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+				$(".header").show();
+				$(".content.newOrderMain").css({
+					"marginTop":"0.88rem"
+				})
+			}*/
+		})
+	</script>
+
+</body>
+</html>

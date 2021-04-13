@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>新增合作商-地址</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn" id="goBeforePage"></a>
+    <p class="txt">新增合作商-地址</p>
+    <b class="right"></b>
+</div>
+<div class="content newPartyMain" id="newOrderApp">
+    <div class="orderInf parcelInf">
+        <ul v-for="(locationInfo,index) in locationInfoList" class="adsRightConInp locationContactUls">
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_r">*&nbsp;</span>地址名称</span>
+                <p class="inp">
+                    <input type="text" v-model="locationInfo.locationName" placeholder="地址名称" />
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_r">*&nbsp;</span>地址类型</span>
+                <p class="inp">
+                    <select v-model="locationInfo.locationType" name="locationType">
+                        <option value="undefined">请选择</option>
+                        <option value="STO">收货地址</option>
+                        <option value="SFR">发货地址</option>
+                        <option value="OTHER">其他</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_r">*&nbsp;</span>地址</span>
+                <p class="inp">
+                    <select v-model="locationInfo.provinceCode" class="pointProvinceName" v-on:change="selectCity1(locationInfo.provinceCode)" name="">
+                        <option value="">省份/自治州</option>
+                        <option v-for="address in dpDistrictList" v-bind:value="address.adcode">{{address.chineseName}}</option>
+                    </select>
+                    <select v-model="locationInfo.cityCode" class="pointCityName" v-on:change="selectDistrict1(locationInfo.cityCode)" name="">
+                        <option value="">城市/地区</option>
+                        <option v-for="address in selectCity(locationInfo.provinceCode)" v-bind:value="address.adcode">{{address.chineseName}}</option>
+                    </select>
+                    <select v-model="locationInfo.districtCode" class="pointDistrictName" name="">
+                        <option value="">区/县</option>
+                        <option v-for="address in selectDistrict(locationInfo.cityCode)" v-bind:value="address.adcode">{{address.chineseName}}</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_r">*&nbsp;</span>街道</span>
+                <p class="inp">
+                    <input type="text" class="pointAddress" v-model="locationInfo.address" placeholder="街道" />
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_w">*&nbsp;</span>邮编</span>
+                <p class="inp">
+                    <input type="text" v-model="locationInfo.postCode" placeholder="邮编" />
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_w">*&nbsp;</span>位置编码</span>
+                <p class="inp">
+                    <input id="latlng" type="text" v-model="locationInfo.latLng" placeholder="位置编码" />
+                </p>
+            </li>
+            <li class="newPartyLi2">
+                <span class="txt"><span class="color_r">*&nbsp;</span>地址默认</span>
+                <p class="inp">
+                    <select v-model="locationInfo.isDefault" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+
+            <ul class="locationContactUl">
+                <li class="newPartyLiDet" v-for="(locationContact,index) in locationContactList">
+                    <span v-if="locationContact.contactType == ''">--</span>
+                    <span v-if="locationContact.contactType == 'STO'">收货人</span>
+                    <span v-if="locationContact.contactType == 'SFR'">发货人</span>
+                    <span v-if="locationContact.contactType == 'IMG'">紧急联系人</span>
+                    <span v-if="locationContact.contactType == 'DRV'">司机</span>
+                    <span v-if="locationContact.contactType == 'WAH'">库管员</span>
+                    <span><span v-if="locationContact.isDefault == '1'" class="color_r">默认&nbsp;</span>{{locationContact.contactName}}<span v-if="locationContact.contactTel != '' && locationContact.contactTel != undefined">-{{locationContact.contactTel}}</span></span>
+                    <span v-on:click="delConactFun(index)" style="visibility: hidden;">删除</span>
+                </li>
+                <li class="operationItem" v-on:click="goPartyContactPage()">
+                    <span class="txt float_l txtGoPage">+&nbsp;地址联系人</span>
+                    <span class="float_r txtGoPage2"></span>
+                </li>
+            </ul>
+
+        </ul>
+    </div>
+
+    <div class="orderBottom1">
+        <a href="javascript:;" v-on:click="saveNewOrderItemsInfo()" v-if="disableSaveParty == '1' && disableSaveParty0 == '1'">保存</a>
+    </div>
+
+    <div v-if="disableSaveParty == '0'" class="orderBottom2">请先填写保存上一页合作商基本信息，再填写地址信息。</div>
+
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            disableSaveParty0:"1",
+            disableSaveParty:"",
+            cdPartyId:"",
+            cdLocationId:"",
+            selectListData:{},
+            dpDistrictList:{},
+            dpCityList:{},
+            dpProvinceList:{},
+            locationInfo:{
+                provinceCode:"",
+                cityCode:"",
+                districtCode:"",
+                isDefault:""
+            },
+            locationInfoList:[{
+                provinceCode:"",
+                cityCode:"",
+                districtCode:"",
+                isDefault:""
+            }],
+            locationContact:{
+                contactType:"",
+                contactName:"",
+                contactTel:"",
+                contactEmail:"",
+                contactAddress:"",
+                remark:"",
+                isDefault:""
+            },
+            locationContactList:[]
+        },
+        methods:{
+            goPartyContactPage(){
+                var that = this;
+                localStorage.setItem("hasPartyLoc2",JSON.stringify(that.locationInfoList));
+                if(localStorage.getItem("hasCdLocationId") != null){
+                    var hasCdLocationId = localStorage.getItem("hasCdLocationId");
+                    window.location.href = "newPartyHisListsCont.html?type=1&cdLocationId="+hasCdLocationId;
+                }else{
+                    window.location.href = "newPartyHisListsCont.html?type=1";
+                }
+            },
+            delConactFun(index){
+                var that = this;
+                var r = confirm("确定删除当前地址联系人");
+                if (r==true){
+                    that.locationContactList.splice(index,1);
+                    // 调用接口删除，重新赋值 that.locationContactList
+
+                }
+            },
+            selectCity(proviececode){
+                this.cityList = getCityData(proviececode);
+                return this.cityList;
+            },
+            selectDistrict(citycode){
+                this.districtList = getDistrictData(citycode);
+                return this.districtList;
+            },
+            selectCity1(proviececode){
+                this.dpCityList = getCityData(proviececode);
+                this.locationInfo.districtCode = "";
+                this.locationInfo.cityCode = "";
+
+            },
+            selectDistrict1(citycode){
+                this.dpProvinceList = getDistrictData(citycode);
+                this.locationInfo.districtCode = "";
+            },
+            saveNewOrderItemsInfo(){
+                var that = this,hasPartyLoc = [];
+                that.logininf = JSON.parse(localStorage.getItem("logininf"));
+                if(that.locationInfoList.length == 0){
+                    loadData('show', '当前无地址信息', true);
+                    return false;
+                }
+                var check = 0,defaultNum = 0,defaultObj = {};
+                $.each(that.locationInfoList, function (index, item) { // 地址名称、地址类型、地址、街道、是否默认
+                    if(item.locationName == '' || item.locationType == '' || item.provinceCode == '' || item.cityCode == '' || item.districtCode == '' || item.address == '' || item.isDefault == ''){
+                        check += 1;
+                    }
+                });
+                if(check != 0){
+                    loadData('show', '请完整填写必填项', true);
+                    return false;
+                }
+                $.each(that.locationInfoList, function (index, item) {
+                    item.refId = that.cdPartyId;
+                    if(item.isDefault == 1){
+                        defaultNum++;
+                        defaultObj = item;
+                    }
+                });
+                if(defaultNum != 0){
+                    if(localStorage.getItem("hasPartyLocDefault") == null){
+                        localStorage.setItem("hasPartyLocDefault",JSON.stringify(defaultObj));
+                    }else{
+                        var hasDefaultObj = JSON.parse(localStorage.getItem("hasPartyLocDefault"));
+                        loadData('show','您已设置'+hasDefaultObj.locationName+'为默认地址',true)
+                        return false;
+                    }
+                }
+                $.each(that.locationInfoList, function (index, item) {
+                    postRequest(cmdUrl + "/cdLocation/saveCdLocation.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,item,function(data){
+                        if(data != null && data.result != null){
+                            hasPartyLoc.push(data.result);
+                            that.cdLocationId = data.result.cdLocationId;
+                            localStorage.setItem("hasCdLocationId",that.cdLocationId);
+                            if(localStorage.getItem("hasPartyLoc") != null){
+                                var oldArray = JSON.parse(localStorage.getItem("hasPartyLoc"));
+                                $.each(oldArray, function (indexx, itemm) {
+                                    hasPartyLoc.push(itemm);
+                                });
+                            }
+                            localStorage.setItem("hasPartyLoc",JSON.stringify(hasPartyLoc));
+                            that.disableSaveParty0 = '0';
+                            localStorage.setItem("disableSaveParty0",'0');
+                            loadData('show', '保存地址信息成功', true);
+                        }else{
+                            loadData('show', '保存地址信息失败！', true);
+                        }
+                    });
+                });
+            }
+        },
+        created:function(){
+            var that = this;
+            this.dpDistrictList = getProvinceData("100000");
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+
+            if(getUrlParam('cdPartyId') == null){
+                that.disableSaveParty = 0;
+            }else{
+                that.disableSaveParty = 1;
+                that.cdPartyId = getUrlParam('cdPartyId');
+            }
+            switch (getUrlParam('from'))
+            {
+                case '0':  // 从合作商基本信息过来的
+
+                    break;
+                case '1':  // 从新增联系人过来的
+                    if(localStorage.getItem("disableSaveParty0") != null){
+                        that.disableSaveParty0 = '0';
+                    }
+                    if(localStorage.getItem("hasPartyLoc2") != null){
+                        that.locationInfoList = JSON.parse(localStorage.getItem("hasPartyLoc2"));
+                    }
+                    if(localStorage.getItem("hasLocCont") != null){
+                        that.locationContactList = JSON.parse(localStorage.getItem("hasLocCont"));
+                    }
+                    break;
+            }
+        }
+    });
+
+    $(function () {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".content.newPartyMain").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+
+        // 返回
+        $(document).on("click","#goBeforePage",function(){
+            window.location.href = "newPartyHisLists.html";
+        });
+    });
+
+    //根据国家获取省
+    function getProvinceData(countryCode){
+        var getAllData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+        var provinceData = getAllData.provinceList;
+        var listData = [];
+        for(var i = 0;i < provinceData.length;i++){
+            if(provinceData[i].parentCode == countryCode){
+                listData.push(provinceData[i]);
+            }
+        }
+        return listData;
+    }
+
+    //根据省获取市
+    function getCityData(provinceCode){
+        var getAllData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+        var cityData = getAllData.cityList;
+        var listData = [];
+        for(var i = 0;i < cityData.length;i++){
+            if(cityData[i].parentCode == provinceCode){
+                listData.push(cityData[i]);
+            }
+        }
+        return listData;
+    }
+
+    //根据市获取区
+    function getDistrictData(cityCode){
+        var getAllData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+        var districtData = getAllData.districtList;
+        var listData = [];
+        for(var i = 0;i < districtData.length;i++){
+            if(districtData[i].parentCode == cityCode){
+                listData.push(districtData[i]);
+            }
+        }
+        return listData;
+    }
+</script>
+
+</body>
+</html>

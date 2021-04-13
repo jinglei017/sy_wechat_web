@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/newFromToItBaList.css" />
+</head>
+<body>
+
+<div id="newOrderApp">
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="goBackPages()"></a>
+        <p class="txt">{{headerName}}</p>
+        <b class="right"></b>
+    </div>
+
+    <div class="main">
+
+        <div v-if="popupType == 'party'">
+            <div class="itemDiv1" v-for="(partyItem,index) in partyList" v-on:click="selectPaFun(partyItem,index)">
+                <div class="itemCon">
+                    <div class="itemLis itemTxt">
+                        <span>{{partyItem.partyName}}</span>
+                    </div>
+                    <ul class="itemLis">
+                        <li class="float_l text_l itemLi1">
+                            <span>{{partyItem.partyCode}}</span>
+                        </li>
+                        <li class="float_l text_r itemLi2">
+                            <span v-for="contactTypeItem in selectListData.partyTypeList" v-if="contactTypeItem.code == partyItem.partyType">{{contactTypeItem.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="popupType == 'address'">
+            <div class="itemDiv2" v-for="(addressItem,index) in addressList" v-on:click="selectAddress(addressItem,index)">
+                <div class="itemCon">
+                    <ul class="itemLis">
+                        <li class="float_l text_l itemLi1"><span>{{addressItem.locationName}}</span></li>
+                        <li class="float_l text_r itemLi2"><span v-for="locationTypeItem in selectListData.locationTypeList" v-if="locationTypeItem.code == addressItem.locationType">{{locationTypeItem.text}}</span></li>
+                    </ul>
+                    <div class="itemLis itemTxt">
+                        <span>{{addressItem.locationCode}}</span>
+                    </div>
+                    <div class="itemLis itemTxt">
+                        <span>{{addressItem.address}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="popupType == 'contact'">
+            <div class="itemDiv1" v-for="(contactItem,index) in contactList" v-on:click="selectCtFun(contactItem,index)">
+                <div class="itemCon">
+                    <div class="itemLis itemTxt">
+                        <span>{{contactItem.contactName}}</span>
+                    </div>
+                    <ul class="itemLis">
+                        <li class="float_l text_l itemLi1">
+                            <span>{{contactItem.contactTel}}</span>
+                        </li>
+                        <li class="float_l text_r itemLi2">
+                            <span v-for="contactTypeItem in selectListData.contactLists" v-if="contactTypeItem.code == contactItem.contactType">{{contactTypeItem.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            selectListData:{},
+            headerName:"",
+            popupType:"", // 合作商party、联系人contact、地址address
+            orderPartyType:"", // 发货商from、收货商to
+            contanctBtnType:"", // 0-合作商联系人、1-地址联系人
+            partyList:[{}],
+            addressList:[{}],
+            contactList:[{}],
+            currentPage1:1,  // 当前第几页
+            currentPage2:1,
+            currentPage3:1,
+            pages1:[],  // 总页数
+            pages2:[],
+            pages3:[],
+            totalPagesNum1 :"", // 总条数
+            totalPagesNum2 :"",
+            totalPagesNum3 :""
+        },
+        methods:{
+            selectPaFun(partyItem,index){ // 选择合作商 - tr
+                var that = this,trShipperParty = {},trReceiptParty = {};
+                partyItem.cdPartyId = undefined;
+                switch(that.orderPartyType)
+                {
+                    case 'from': // 发货商
+                        trShipperParty = partyItem;
+                        localStorage.setItem("trShipperParty",JSON.stringify(trShipperParty));
+                        break;
+                    case 'to': // 收货商
+                        trReceiptParty = partyItem;
+                        localStorage.setItem("trReceiptParty",JSON.stringify(trReceiptParty));
+                        break;
+                }
+                that.goBackPages();
+            },
+            selectAddress(addressItem,index){ // 选择地址 - tr
+                var that = this,trShipperPartyLocation = {},trReceiptPartyLocation = {};
+                addressItem.cdLocationId = undefined;
+                switch(that.orderPartyType)
+                {
+                    case 'from': // 发货地址
+                        trShipperPartyLocation = addressItem;
+                        localStorage.setItem("trShipperPartyLocation",JSON.stringify(trShipperPartyLocation));
+                        break;
+                    case 'to': // 收货地址
+                        trReceiptPartyLocation = addressItem;
+                        localStorage.setItem("trReceiptPartyLocation",JSON.stringify(trReceiptPartyLocation));
+                        break;
+                }
+                that.goBackPages();
+            },
+            selectCtFun(contactItem,index){ // 选择联系人 - tr
+                var that = this,trShipperPartyContact = {},trShipperPartyLocationContact = {},trReceiptPartyContact = {},trReceiptPartyLocationContact = {};
+                contactItem.cdContactId = undefined;
+                switch(that.contanctBtnType)
+                {
+                    case '0': // 发货商联系人
+                        trShipperPartyContact = contactItem;
+                        localStorage.setItem("trShipperPartyContact",JSON.stringify(trShipperPartyContact));
+                        break;
+                    case '1': //  发货地联系人
+                        trShipperPartyLocationContact = contactItem;
+                        localStorage.setItem("trShipperPartyLocationContact",JSON.stringify(trShipperPartyLocationContact));
+                        break;
+                    case '2': // 收货商联系人
+                        trReceiptPartyContact = contactItem;
+                        localStorage.setItem("trReceiptPartyContact",JSON.stringify(trReceiptPartyContact));
+                        break;
+                    case '3': // 收货地联系人
+                        trReceiptPartyLocationContact = contactItem;
+                        localStorage.setItem("trReceiptPartyLocationContact",JSON.stringify(trReceiptPartyLocationContact));
+                        break;
+                }
+                that.goBackPages();
+            },
+            goBackPages(){
+                var that = this;
+                switch(that.orderPartyType)
+                {
+                    case 'from': // 发货商
+                        window.location.href = "newOrderFrom.html";
+                        break;
+                    case 'to': // 收货商
+                        window.location.href = "newOrderTo.html";
+                        break;
+                }
+            },
+            loadMoreFun(){
+                var that = this;
+                switch(that.popupType)
+                {
+                    case 'party': // 合作商
+                        that.currentPage1 = that.currentPage1 + 1;
+                        if(that.currentPage1 < that.pages1 || that.currentPage1 == that.pages1){
+                            that.loadPartyListFun();
+                        }
+                        break;
+                    case 'address': // 地址
+                        that.currentPage2 = that.currentPage2 + 1;
+                        if(that.currentPage2 < that.pages2 || that.currentPage2 == that.pages2){
+                            that.loadAddressListFun();
+                        }
+                        break;
+                    case 'contact': // 联系人
+                        that.currentPage3 = that.currentPage3 + 1;
+                        if(that.currentPage3 < that.pages3 || that.currentPage3 == that.pages3){
+                            that.loadContactListFun();
+                        }
+                        break;
+                }
+            },
+            loadPartyListFun(){
+                var that = this;
+                var params = {};
+                params.pageInfo = {
+                    pageNum:that.currentPage1,
+                    pageSize:12
+                };
+                postRequest(cmdUrl + "/select/pagePartyByPartyVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    if(res.result != null && res.result.length != 0){
+                        $.each(res.result, function (indexs, val) {
+                            that.partyList.push(val);
+                        });
+                    }
+                    that.currentPage1 = res.pageInfo.pageNum;
+                    that.totalPagesNum1 = res.pageInfo.total;
+                    that.pages1 = res.pageInfo.pages;
+                });
+            },
+            loadAddressListFun(){
+                var that = this;
+                var params = {};
+                params.pageInfo = {
+                    pageNum:that.currentPage2,
+                    pageSize:12
+                };
+                postRequest(cmdUrl + "/select/pageLocationByLocationVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    if(res.result != null && res.result.length != 0){
+                        $.each(res.result, function (indexs, val) {
+                            that.addressList.push(val);
+                        });
+                    }
+                    that.currentPage2 = res.pageInfo.pageNum;
+                    that.totalPagesNum2 = res.pageInfo.total;
+                    that.pages2 = res.pageInfo.pages;
+                });
+            },
+            loadContactListFun(){
+                var that = this;
+                var params = {};
+                params.pageInfo = {
+                    pageNum:that.currentPage3,
+                    pageSize:12
+                };
+                postRequest(cmdUrl + "/select/pageContactByContactVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    if(res.result != null && res.result.length != 0){
+                        $.each(res.result, function (indexs, val) {
+                            that.contactList.push(val);
+                        });
+                    }
+                    that.currentPage3 = res.pageInfo.pageNum;
+                    that.totalPagesNum3 = res.pageInfo.total;
+                    that.pages3 = res.pageInfo.pages;
+                });
+            }
+        },
+        created:function(){
+            var that = this;
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+            that.popupType = getUrlParam('type'); // 合作商party、联系人contact、地址address
+            that.orderPartyType = getUrlParam('orderPartyType'); // 发货商from、收货商to
+            that.contanctBtnType = getUrlParam('contanctBtnType'); // 0-合作商联系人、1-地址联系人
+
+            switch(that.popupType)
+            {
+                case 'party': // 合作商
+                    that.headerName = '全部合作商';
+                    var params = {};
+                    params.pageInfo = {
+                        pageNum:1,
+                        pageSize:12
+                    };
+                    postRequest(cmdUrl + "/select/pagePartyByPartyVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                        that.partyList = res.result;
+                        that.currentPage1 = 1;
+                        that.totalPagesNum1 = res.pageInfo.total;
+                        that.pages1 = res.pageInfo.pages;
+                    });
+                    break;
+                case 'address': // 地址
+                    that.headerName = '全部地址';
+                    var params = {};
+                    params.pageInfo = {
+                        pageNum:1,
+                        pageSize:12
+                    };
+                    postRequest(cmdUrl + "/select/pageLocationByLocationVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                        that.addressList = res.result;
+                        that.currentPage2 = 1;
+                        that.totalPagesNum2 = res.pageInfo.total;
+                        that.pages2 = res.pageInfo.pages;
+                    });
+                    break;
+                case 'contact': // 联系人
+                    that.headerName = '全部联系人';
+                    var params = {};
+                    params.pageInfo = {
+                        pageNum:1,
+                        pageSize:12
+                    };
+                    postRequest(cmdUrl + "/select/pageContactByContactVo.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                        that.contactList = res.result;
+                        that.currentPage3 = 1;
+                        that.totalPagesNum3 = res.pageInfo.total;
+                        that.pages3 = res.pageInfo.pages;
+                    });
+                    break;
+            }
+
+        }
+    });
+
+    /* scroll */
+    $(".main").scroll(function(){
+        if($(".main>div").outerHeight() - $(".main").scrollTop() - $(".main").height() < 10){
+            app.loadMoreFun();
+        }
+    });
+
+    $(function() {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            $(".header").show();
+            $(".main").css({
+                "marginTop": "0.88rem"
+            })
+        }*/
+    })
+
+</script>
+
+</body>
+</html>

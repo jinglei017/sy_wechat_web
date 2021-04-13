@@ -1,0 +1,1197 @@
+body{
+    background: #f3f5f7;
+}
+.header{
+    width: 100%;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    box-sizing: border-box;
+    padding-left: 0.23rem;
+    padding-right: 0.23rem;
+    font-size: 0.3rem;
+    background: #22bcee;
+    color: #fff;
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+}
+.header .txt{
+    text-align: center;
+}
+.header .returnBtn{
+    width: 0.88rem;
+    height: 0.88rem;
+    position: absolute;
+    left: 0.2rem;
+    background: url(../images/return.png) no-repeat left center;
+    background-size: 0.4rem 0.4rem;
+}
+.header .right{
+    position: absolute;
+    width: 2rem;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    right: 0.23rem;
+    top: 0rem;
+    font-weight: normal;
+}
+.header .right .searchBtn{
+    width: 0.46rem;
+    height: 0.46rem;
+    display: block;
+    margin-top: 0.19rem;
+    float: right;
+}
+
+.searchLayer{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0.88rem;
+    background: rgba(0,0,0,0.3);
+    z-index: 999;
+    display: none;
+}
+.searchCon{
+    padding-bottom: 0.3rem;
+    background: #fff;
+}
+.searchCon ul{
+    padding-top: 0.26rem;
+    padding-left: 0.23rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.searchCon ul li{
+    width: 48%;
+    float: left;
+    font-size: 0.26rem;
+    color: #333;
+    padding-bottom: 0.32rem;
+    text-align: right;
+}
+
+.searchCon ul li span{
+    width: 1.2rem;
+    float: left;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-right: 0.2rem;
+}
+.searchCon ul li:nth-of-type(3) span{
+    width: 1.2rem;
+}
+.searchCon ul li:nth-of-type(4) span{
+    width: 1.2rem;
+}
+.searchCon ul li input{
+    width: 2rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-left: 0.12rem;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    float: left;
+}
+.searchCon ul li select{
+    width: 1.76rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-left: 0.12rem;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    color: #666;
+    float: left;
+    background: url(../images/bottom_btn.png) no-repeat 1.26rem center;
+    background-size: 0.32rem auto;
+}
+.searchCon ul li select:focus{
+    outline: none;
+    border: 1px solid #e5e5e5;
+}
+.searchCon ul li{
+    width: 100%;
+}
+.searchCon ul .shortLi{
+    width: 45%;
+}
+.searchCon ul li input{
+    width: 5rem;
+    font-size: 0.26rem;
+    color: #333;
+}
+.searchBox{
+    overflow: hidden;
+    padding-left: 1.2rem;
+}
+.searchBox .searchbtn{
+    width: 1.6rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    margin: 0 auto;
+    border-radius: 0.03rem;
+    float: left;
+}
+.searchCon .mouthSearch{
+    padding-left: 0.23rem;
+    color: #999;
+    font-size: 0.26rem;
+    overflow: hidden;
+    padding-bottom: 0.2rem;
+    float: right;
+}
+.searchCon .mouthSearch p{
+    height: 0.6rem;
+    line-height: 0.6rem;
+    color: #333;
+    padding-left: 0.16rem;
+    padding-right: 0.16rem;
+    border: 1px solid #e5e5e5;
+    margin-right: 0.23rem;
+    float: left;
+}
+.searchCon .mouthSearch .active{
+    background: #22bcee;
+    color: #fff;
+    border: 1px solid #22bcee;
+}
+.main{
+    padding-top: 0.88rem;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.main .ajax-loder-wrap{
+    text-align: center;
+    line-height: 0.56rem;
+    color: #666;
+    font-size: 0.28rem;
+}
+.main .orderCon .order{
+
+}
+.main .orderCon .orderList{
+    padding: 0 0rem 0 0;
+    background: #fff;
+}
+.main .orderCon .orderList .orderItem{
+    padding: 0.23rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+}
+.main .orderCon .orderList .orderItem .ordernum{
+    font-size: 0.28rem;
+    height: 0.5rem;
+    color: #333;
+}
+.main .orderCon .orderList .orderItem .orderSize{
+    font-size: 0.25rem;
+    height: 0.45rem;
+    color: #999;
+}
+.main .orderCon .orderList .orderItem .orderaddress{
+    font-size: 0.26rem;
+    width: 5.2rem;
+    color: #666;
+}
+.main .orderCon .orderList .orderItem .acceptBtn{
+    width: 1.6rem;
+    height: 0.56rem;
+    line-height: 0.56rem;
+    background: #22bcee;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    right: 0rem;
+    bottom: 0.23rem;
+}
+.main .orderCon .orderList .orderItem .photo{
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    right: 0rem;
+    top: 0.2rem;
+}
+.main .orderCon .orderList .orderItem .photo img{
+    width: 1rem;
+    height: 1rem;
+    display: block;
+    margin: 0 auto;
+}
+.main .orderCon .orderList .orderItem .photo .txt{
+    font-size: 0.22rem;
+    color: #666;
+    margin-top: 0.1rem;
+    display: block;
+}
+
+
+.main .orderCon .orderSureBtn{
+    width: 1.72rem;
+    height: 0.72rem;
+    position: fixed;
+    bottom: 1.18rem;
+    background: #ff0000;
+    color: #fff;
+    font-size: 0.28rem;
+    text-align: center;
+    line-height: 0.72rem;
+    font-size: 0.28rem;
+    right: 0.49rem;
+    z-index: 99;
+    display: none;
+}
+
+.main .orderCon .orderList{
+    margin-top: 0.86rem;
+}
+.main .orderCon .orderList .ordernum{
+    font-size: 0.26rem;
+    line-height: 0.6rem;
+    color: #333;
+}
+.main .orderCon .orderList  li{
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 0.3rem;
+    padding-top: 0.12rem;
+    padding-bottom: 0.12rem;
+}
+
+
+.main .orderCon .orderList  li .num{
+    float: left;
+    padding-right: 0.2rem;
+    line-height: 0.56rem;
+    font-size: 0.28rem;
+    color: #333;
+}
+.main .orderCon .orderList li .active{
+    background: url(../images/icon_05.png) no-repeat center center #22bcee;
+    background-size: 0.3rem 0.3rem;
+}
+.main .orderCon .orderList li .done:nth-of-type(1){
+    background: url(../images/icon_5.png) no-repeat center center;
+    background-size: 0.4rem 0.4rem;
+    border: 1px solid #fff;
+}
+.main .orderCon .orderList li .right{
+    float: left;
+    color: #333;
+    line-height: 0.56rem;
+    width: 5.3rem;
+}
+.main .orderCon .orderList li .size{
+    color: #999;
+    line-height: 0.36rem;
+    font-size: 0.24rem;
+}
+.main .orderCon .orderList li .shipAddress{
+    font-size: 0.24rem;
+    color: #999;
+    line-height: 0.42rem;
+}
+.main .orderCon .orderList li .receiverAddress{
+    font-size: 0.25rem;
+    color: #666;
+    font-size: 0.24rem;
+    color: #999;
+    line-height: 0.42rem;
+}
+.orderOperate{
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 50%;
+    text-align: center;
+    background: #ff3a31;
+    color: #fff;
+    font-size: 0.25rem;
+    margin: 0 auto;
+    position: fixed;
+    bottom: 1rem;
+    right: 0.23rem;
+}
+.main .orderCon .orderList li .orderHandle{
+    position: absolute;
+    right: 0.23rem;
+    top: 0.6rem;
+}
+.main .orderCon .orderList li .orderHandle a{
+    width: 1.28rem;
+    height: 0.56rem;
+    line-height: 0.55rem;
+    font-size: 0.24rem;
+    letter-spacing: 0.01rem;
+    border-radius: 0.03rem;
+    text-align: center;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #22bcee;
+    color: #22bcee;
+    margin-right: 0.1rem;
+    margin-bottom: 0.36rem;
+    display: block;
+}
+.main .orderCon .orderList li .orderHandle a.qsedBtn{
+    border: 1px solid #b0b0b0;
+    color: #b0b0b0;
+}
+
+.main .orderCon1 .orderList li .right{
+    width: 4.5rem;
+}
+.main .orderCon1 .orderList li .orderHandle{
+    display: block;
+}
+.main .orderCon5 .orderList li .right{
+    width: 7.04rem;
+}
+.main .orderCon5 .orderList li{
+    padding-left: 0.23rem;
+}
+.main .orderCon5 .orderList li .round{
+    display: none;
+}
+.main .orderCon5 .orderList li .orderHandle{
+    display: none;
+}
+
+
+.main .orderCon2 .orderList li .right{
+    width: 5.6rem;
+}
+.main .orderCon2 .orderList li{
+    padding-left: 0.23rem;
+}
+.main .orderCon2 .orderList li .round{
+    display: none;
+}
+
+
+
+.main .orderCon3 .orderList li .right{
+    width: 5.6rem;
+}
+.main .orderCon3 .orderList li{
+    padding-left: 0.23rem;
+}
+.main .orderCon3 .orderList li .round{
+    display: none;
+}
+
+
+
+.main .orderCon6 .orderList li .right{
+    width: 7.04rem;
+}
+.main .orderCon6 .orderList li{
+    padding-left: 0.23rem;
+}
+.main .orderCon6 .orderList li .round{
+    display: none;
+}
+.main .orderCon6 .orderList li .orderHandle{
+    display: none;
+}
+.main .orderCon6 .allAcceptBtn{
+    display: none;
+}
+.main .orderCon5 .allAcceptBtn{
+    display: none;
+}
+.main .orderCon4 .allAcceptBtn{
+    display: none;
+}
+.main .orderCon .allAcceptBtn{
+    border-bottom: none;
+}
+
+
+.layer{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+.layer .popup{
+    width: 4.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: #fff;
+}
+.layer .popup ul li{
+    line-height: 0.8rem;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 0.2rem;
+}
+.layer .popup ul .active{
+    background: #22bcee;
+    color: #fff;
+}
+
+.orderDesc h3{
+    margin-top: 0.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    background: #fff;
+    padding-left: 0.23rem;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 0.28rem;
+    color: #333;
+}
+.orderDesc textarea{
+    width: 100%;
+    height: 1.8rem;
+    line-height: 0.38rem;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 0.26rem;
+    padding: 0.1rem 0.23rem;
+}
+.orderDesc .submitbtn{
+    width: 5.8rem;
+    height: 0.68rem;
+    line-height: 0.68rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    font-size: 0.3rem;
+    margin: 0 auto;
+    border-radius: 0.06rem;
+    margin-top: 0.36rem;
+}
+.orderDesc .orderinf{
+    color: #333;
+    font-size: 0.26rem;
+    background: #fff;
+    margin-top: 0.2rem;
+}
+.orderDesc .orderinf p{
+    height: 0.72rem;
+    line-height: 0.72rem;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 0.23rem;
+}
+.orderDesc .orderinf p input{
+    padding-left: 0.12rem;
+    font-size: 0.26rem;
+    color: #666;
+}
+.orderDesc .orderinf p select{
+    padding-left: 0.12rem;
+    font-size: 0.26rem;
+    color: #666;
+    height: 0.7rem;
+
+}
+.orderDesc .orderinf p select:focus{
+    border: none;
+}
+
+.maskLayer{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0rem;
+    left: 0rem;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+.maskLayer .popup,.maskLayer .popup1,.maskLayer .popup5,.maskLayer .popup6{
+    width: 6rem;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    margin-left: -3rem;
+    top: 50%;
+    border-radius: 0.16rem;
+    padding-bottom: 0.23rem;
+    transform: translateY(-50%);
+    display: none;
+}
+
+
+.maskLayer .popup2,.maskLayer .popup7{
+    width: 6.5rem;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    margin-left: -3.25rem;
+    top: 50%;
+    border-radius: 0.16rem;
+    padding-bottom: 0.23rem;
+    transform: translateY(-50%);
+    display: none;
+}
+.maskLayer .popup2 .uploadSeal,.maskLayer .popup7 .uploadSeal{
+    padding-left: 0.2rem;
+    font-size: 0.26rem;
+    color: #333;
+    line-height: 0.86rem;
+    display: block;
+}
+.maskLayer .popup2 .uploadSeal ul,.maskLayer .popup7 .uploadSeal ul{
+    overflow: hidden;
+}
+.maskLayer .popup2 .uploadSeal ul li,.maskLayer .popup7 .uploadSeal ul li{
+    width: 1rem;
+    height: 1rem;
+    float: left;
+    padding-right: 0.2rem;
+}
+.maskLayer .popup2 .uploadSeal ul li img,.maskLayer .popup7 .uploadSeal ul li img{
+    width: 1rem;
+    height: 1rem;
+    display: block;
+}
+
+.maskLayer .popup2 .orderCon,.maskLayer .popup7 .orderCon{
+    width: 6rem;
+    padding-top: 0.23rem;
+    margin: 0 auto;
+    font-size: 0.26rem;
+    color: #333;
+    line-height: 0.56rem;
+    position: relative;
+}
+.maskLayer .popup2 .orderDesc,.maskLayer .popup7 .orderDesc{
+    width: 6rem;
+    margin: 0 auto;
+}
+.maskLayer .popup2 .orderCon .closebtn,.maskLayer .popup7 .orderCon .closebtn{
+    position: absolute;
+    width: 0.8rem;
+    height: 1rem;
+    display: block;
+    right: 0rem;
+    background: url(../images/closeBtn2.png) no-repeat center center;
+    background-size: 0.32rem 0.32rem;
+    top: 0rem;
+}
+.maskLayer .popup2 .orderDesc h3,.maskLayer .popup7 .orderDesc h3{
+    border-bottom: none;
+    padding-left: 0rem;
+    margin-top: 0rem;
+}
+.maskLayer .popup2 .orderDesc textarea,.maskLayer .popup7 .orderDesc textarea{
+    width: 6rem;
+    margin: 0 auto;
+    border: 1px solid #e5e5e5;
+}
+.maskLayer .popup2 .orderinf,.maskLayer .popup7 .orderinf{
+    width: 6rem;
+    margin: 0 auto;
+}
+.maskLayer .popup2 .popupBot2,.maskLayer .popup7 .popupBot2{
+    width: 4.2rem;
+    padding-top: 0.36rem;
+    padding-bottom: 0.2rem;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.maskLayer .popup2 .popupBot2 p,.maskLayer .popup7 .popupBot2 p{
+    width: 1.6rem;
+    float: right;
+    font-size: 0.28rem;
+    height: 0.66rem;
+    line-height: 0.66rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    border-radius: 0.09rem;
+}
+.maskLayer .popup2 .popupBot2 .pointAndClick,.maskLayer .popup7 .popupBot2 .pointAndClick{
+    background: url(../images/ajax-loader.gif) no-repeat #22bcee;
+    background-size: 0.38rem auto;
+    background-position: 0.1rem center;
+    width: 1.38rem;
+    opacity: 0.5;
+    padding-left: 0.22rem;
+}
+.maskLayer .popup2 .popupBot2 p:first-child,.maskLayer .popup7 .popupBot2 p:first-child{
+    border: 1px solid #22bcee;
+    color: #22bcee;
+    float: left;
+    background: none;
+}
+.maskLayer .popup2 .popupBot2 .pointAndClick1:first-child,.maskLayer .popup7 .popupBot2 .pointAndClick1:first-child{
+    background: url(../images/ajax-loader.gif) no-repeat;
+    background-size: 0.38rem auto;
+    background-position: 0.1rem center;
+    width: 1.38rem;
+    opacity: 0.5;
+    padding-left: 0.22rem;
+}
+.maskLayer .popup2{
+    height: calc(100vh - 1.2rem);
+    overflow-y: auto;
+}
+
+
+.maskLayer .popup1{
+    padding-bottom: 0rem;
+}
+
+.maskLayer .popup1 .popupTitle{
+    line-height: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.maskLayer .popup1 .popupCon1{
+    width: 5rem;
+    margin: 0 auto;
+    padding-top: 0.16rem;
+    padding-bottom: 0.16rem;
+}
+.maskLayer .popup1 .popupCon1 p{
+    line-height: 0.56rem;
+    font-size: 0.26rem;
+    color: #333;
+}
+.maskLayer .popup1 .popupBot1{
+    width: 100%;	height: 0.88rem;
+    background: none;
+    overflow: hidden;
+    border-radius: 0 0rem 0.16rem 0.16rem;
+}
+.maskLayer .popup1 .popupBot1 a{
+    width: 50%;
+    box-sizing: border-box;
+    display: block;
+    background: #22bcee;
+    color: #fff;
+    float: left;
+    height: 0.88rem;
+    line-height: 0.88rem;
+}
+.maskLayer .popup1 .popupBot1 a:last-child{
+    background: none;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    color: #22bcee;
+}
+.maskLayer .popupTitle{
+    text-align: center;
+    line-height: 0.8rem;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333;
+    font-size: 0.28rem;
+}
+.maskLayer .popupTitle a{
+    position: absolute;
+    width: 0.8rem;
+    height: 1rem;
+    display: block;
+    right: 0.23rem;
+    background: url(../images/closeBtn2.png) no-repeat center center;
+    background-size: 0.32rem 0.32rem;
+    top: 0rem;
+}
+.maskLayer .popupCon{
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 0.2rem;
+}
+.maskLayer .popupCon textarea{
+    width: 5.6rem;
+    margin: 0 auto;
+    padding-top: 0.1rem;
+    height: 2.6rem;
+    display: block;
+    color: #666;
+    line-height: 0.46rem;
+    font-size: 0.26rem;
+}
+.maskLayer .popupBot,.maskLayer .popupBot1{
+    width: 1.8rem;
+    height: 0.66rem;
+    background: #22bcee;
+    border-radius: 0.12rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.66rem;
+    margin: 0 auto;
+}
+
+.maskLayer .popup3{
+    width: 6.5rem;
+    margin: 0 auto;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 0.3rem;
+    display: none;
+}
+.maskLayer .popup3 .popupCon{
+    border-bottom: none;
+    margin-bottom: 0.3rem;
+}
+.maskLayer .popup3 .popupCon .popuptitle{
+    border-bottom: 1px solid #e5e5e5;
+    height: 4.6rem;
+    overflow-y: auto;
+}
+.maskLayer .popup3 .popupCon .infHint{
+    line-height: 0.82rem;
+    padding-top: 0.12rem;
+    font-size: 0.3rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+}
+.maskLayer .popup3 .popupCon .infHint .closeorderinf{
+    position: absolute;
+    width: 0.86rem;
+    height: 0.86rem;
+    display: block;
+    right: 0.23rem;
+    top: 0.1rem;
+    background: url(../images/closeBtn2.png) no-repeat center center;
+    background-size: 0.32rem 0.32rem;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul{
+    padding: 0.2rem;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li{
+    line-height: 0.6rem;
+    overflow: hidden;
+    border-bottom: #e5e5e5;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .txt{
+    float: left;
+    font-size: 0.28rem;
+    color: #333;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .inf{
+    float: right;
+    font-size: 0.26rem;
+    color: #666;
+    width: 3.8rem;
+    text-align: right;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .inf a{
+    color: #22bcee;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .seeAnnex{
+    width: 6.2rem;
+    color: #22bcee;
+    overflow: hidden;
+    float: none;
+    padding-top: 0.2rem;
+    border-top: 1px solid #e5e5e5;
+    text-align: left;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .seeAnnex span{
+    width: 1.35rem;
+    height: 1.35rem;
+    display: block;
+    float: left;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
+}
+.maskLayer .popup3 .popupCon .popuptitle ul li .seeAnnex span img{
+    width: 1.35rem;
+    height: 1.35rem;
+    display: block;
+}
+
+.maskLayer .popup3 .popupCon .orderSort {
+    padding-top: 0.12rem;
+    overflow: hidden;
+}
+.maskLayer .popup3 .popupCon .orderSort ul{
+    overflow: hidden;
+    padding-left: 0.23rem;
+    padding-right: 0.23rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+.maskLayer .popup3 .popupCon .ordersortTitle li{
+    color: #333;
+    color: #f60;
+}
+.maskLayer .popup3 .popupCon .orderSort .ordersortList{
+    height: 3.26rem;
+    overflow-y: scroll;
+}
+.maskLayer .popup3 .popupCon .orderSort li{
+    float: left;
+    line-height: 0.6rem;
+    text-align: center;
+    color: #555;
+}
+.maskLayer .popup3 .popupCon .orderSort li:nth-of-type(1){
+    width: 3rem;
+    text-align: left;
+    padding-right: 0.1rem;
+    box-sizing: border-box;
+}
+.maskLayer .popup3 .popupCon .orderSort .ordersortList li:nth-of-type(1){
+    width: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.maskLayer .popup3 .popupCon .orderSort li:nth-of-type(2){
+    width: 1.5rem;
+    padding-right: 0.1rem;
+    box-sizing: border-box;
+}
+.maskLayer .popup3 .popupCon .orderSort li:nth-of-type(3){
+    width: 1.5rem;
+}
+
+
+
+
+.footer{
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 0.96rem;
+    border-top: 1px solid #e5e5e5;
+    background: #fff;
+    z-index: 2;
+}
+.footer ul{
+    overflow: hidden;
+    padding-top: 0.1rem;
+}
+.footer ul li{
+    width: 50%;
+    float: left;
+    position: relative;
+    text-align: center;
+    font-size: 0.28rem;
+    color: #929292;
+    padding-top: 0.36rem;
+    letter-spacing: 0.01rem;
+}
+.footer ul li a{
+    color: #929292;
+}
+.footer ul li a span{
+    font-size: 0.2rem;
+}
+.footer ul .active a{
+    color: #22bcee;
+}
+.footer ul li:after{
+    content: "";
+    width: 0.16rem;
+    height: 0.03rem;
+    display: block;
+    background: #ff3a31;
+    position: absolute;
+    left: 50%;
+    margin-left: -0.08rem;
+    top: 0.16rem;
+}
+
+
+
+
+/******待确认*****/
+.main .acceptOrder .allAcceptBtn{
+    height: auto;
+    padding-top: 0.12rem;
+    padding: 0rem;
+    /*bottom: 0.8rem;*/
+    bottom: 0.8rem;
+    z-index: 999;
+}
+.main .acceptOrder .allAcceptBtn .btn{
+    width: 1.72rem;
+    height: 0.72rem;
+    background: #22bcee;
+    color: #fff;
+    font-size: 0.28rem;
+    text-align: center;
+    line-height: 0.72rem;
+    font-size: 0.28rem;
+    padding: 0px;
+    float: right;
+    margin-top: 0.12rem;
+}
+.main .acceptOrder .allAcceptBtn .surebtn{
+    background: #22bcee;
+    color: #fff;
+    font-size: 0.28rem;
+    padding-left: 0.3rem;
+    height: 0.72rem;
+    line-height: 0.72rem;
+    float: right;
+    margin-top: 0.18rem;
+}
+
+.acceptOrder .allAcceptBtn .ordestat{
+    padding-bottom: 0.09rem;
+    padding-left: 0.23rem;
+    padding-right: 0.23rem;
+    padding-bottom: 0.3rem;
+    position: relative;
+}
+.acceptOrder .allAcceptBtn .ordestat .sure{
+    position: absolute;
+    width: 1rem;
+    height: 0.46rem;
+    border: 1px solid #22bcee;
+    color: #22bcee;
+    right: 0.2rem;
+    font-size: 0.26rem;
+    text-align: center;
+    line-height: 0.46rem;
+    top: 50%;
+    margin-top: -0.12rem;
+}
+.acceptOrder .allAcceptBtn .acceptstat{
+    border-top: 1px solid #e5e5e5;
+    padding-bottom: 0.2rem;
+}
+.acceptOrder .allAcceptBtn .ordestat .acceptTitle{
+    line-height: 0.72rem;
+    font-size: 0.28rem;
+    color: #555;
+}
+.acceptOrder .allAcceptBtn .ordestat  .allnum{
+    padding-left: 0.3rem;
+    float: none;
+    line-height: 0.36rem;
+    font-size: 0.26rem;
+    color: #666;
+}
+.main .acceptOrder .orderList{
+    margin-top: 0rem;
+    margin-bottom: 1.86rem;
+}
+.main .acceptOrder .orderList li .right{
+    width: 5.26rem;
+}
+.main .acceptOrder .orderList li .orderHandle a:nth-of-type(1){
+    display: block;
+    border: 1px solid #22bcee;
+    margin-right: 0rem;
+    bottom: 50%;
+    transform: translateY(-100%);
+    padding-left: 0.23rem;
+    padding-right: 0.23rem;
+}
+.main .acceptOrder .orderList li .orderHandle .photo{
+    display: none;
+}
+
+.main .orderCon .orderList li .orderHandle .photo{
+    display: none;
+}
+.main .orderCon .orderList{
+    margin-top: 0px;
+}
+.maskLayer .popup5 .popupTitle{
+    border-top: none;
+    border-bottom: none;
+}
+.maskLayer .popup5 .uploadSeal{
+    padding-left: 0.2rem;
+    font-size: 0.26rem;
+    color: #333;
+    line-height: 0.86rem;
+    display: block;
+}
+.maskLayer .popup5 .uploadSeal ul{
+    overflow: hidden;
+}
+.maskLayer .popup5 .uploadSeal ul li{
+    width: 1rem;
+    height: 1rem;
+    float: left;
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
+    padding-top: 0.16rem;
+    padding-bottom: 0.16rem;
+}
+.maskLayer .popup5 .uploadSeal ul li img{
+    width: 1rem;
+    height: 1rem;
+    display: block;
+}
+.maskLayer .popup5 .imgList{
+    padding-top: 0.72rem;
+    overflow: hidden;
+    text-align: center;
+    line-height: 0.72rem;
+    font-size: 0.28rem;
+    color: #333;
+    padding-bottom: 0.23rem;
+    max-height: 8rem;
+    overflow-y: auto;
+}
+.maskLayer .popup5 .popupBot2{
+    width: 4.2rem;
+    padding-bottom: 0.2rem;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.maskLayer .popup5 .popupBot2 p{
+    width: 1.6rem;
+    font-size: 0.28rem;
+    height: 0.66rem;
+    line-height: 0.66rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    border-radius: 0.09rem;
+    float: left;
+}
+.maskLayer .popup5 .popupBot2 p:nth-child(2){
+    border: 1px solid #22bcee;
+    color: #22bcee;
+    float: right;
+    background: none;
+}
+.maskLayer .popup5 .popupBot2 .pointAndClick{
+    background: url(../images/ajax-loader.gif) no-repeat #22bcee;
+    background-size: 0.38rem auto;
+    background-position: 0.1rem center;
+    width: 1.86rem;
+    opacity: 0.5;
+    padding-left: 0.22rem;
+}
+.maskLayer .popup6{
+    width: 6.6rem;
+    padding-bottom: 0rem;
+    overflow: hidden;
+    margin-left: -3.3rem;
+    display: none;
+}
+.maskLayer .popup6 .popupTitle{
+    border-bottom: none;
+    position: relative;
+    z-index: 99;
+}
+
+.swiper-container{
+    position: relative;
+    width: 6.6rem;
+    height: 6.6rem;
+    overflow: hidden;
+    padding-top: 1rem;
+}
+.swiper-container .swiper-wrapper{
+    display: flex;
+}
+.swiper-container .swiper-wrapper .swiper-slide{
+    width: 6.6rem;
+    height: 6.6rem;
+    position: relative;
+    flex-shrink: 0;
+}
+.swiper-container .swiper-wrapper .swiper-slide img{
+    width: 6.6rem;
+    height: 6.6rem;
+    display: block;
+}
+.swiper-pagination{
+    position: absolute;
+    bottom: 0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.swiper-pagination span{
+    width: 0.16rem;
+    height: 0.16rem;
+    float: left;
+    border-radius: 50%;
+    background: #fff;
+    margin-right: 0.16rem;
+}
+.swiper-pagination .swiper-pagination-bullet-active{
+    background: #22bcee;
+}
+
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+.mui-btn-blue, .mui-btn-primary, input[type=submit]{
+    border: none;
+}
+[data-type=date] .mui-dtpicker-title h5, [data-type=date] .mui-picker{
+    box-sizing: border-box;
+}
+.mui-btn,.mui-btn-blue{
+    border: 1px solid #007aff;
+    background-color: #007aff;
+    font-weight: 400;
+    line-height: 1.42;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
+    color: #fff;
+    border-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background-clip: padding-box;
+}
+.mui-btn{
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+}
+.mui-btn-blue{
+    background-color: #007aff;
+    border: 1px solid #007aff;
+    color: #fff;
+}
+
+
+
+
+.maskLayer .popup7 textarea.qsTextarea{
+    width: 5rem;
+    height: 2rem;
+    margin: 0 auto;
+    border: 1px solid #e5e5e5;
+    color: #666;
+    font-size: 0.26rem;
+    padding: 0.1rem 0.23rem;
+    line-height: 0.38rem;
+}
+.maskLayer .popup2 .orderDesc textarea,.maskLayer .popup7 .orderDesc textarea{
+    width: 6rem;
+    margin: 0 auto;
+    border: 1px solid #e5e5e5;
+}
+.score_div img,.score_div2 img{ width: 30px;height: auto; }

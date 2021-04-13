@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>班次列表</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" href="css/mui.picker.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/classesList.css" />
+    <script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" id="goBeforePage" onclick="javascript:history.back(-1)"></a>
+        <p class="txt">班次列表</p>
+        <p class="right">
+            <img src="images/search1.png" class="searchBtn" alt="" />
+        </p>
+    </div>
+
+    <div class="searchLayer">
+        <div class="searchCon">
+            <ul>
+                <li>
+                    <span>开始时间:</span>
+                    <input type="选择日期时间" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+                </li>
+                <li>
+                    <span>结束时间:</span>
+                    <input type="选择日期时间" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='endTime' class="btn"/>
+                </li>
+
+            </ul>
+            <div class="searchBox">
+                <p class="searchbtn">查询</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main">
+        <div id="tableBodyClasses">
+            <!--<div class="itemDiv">
+                <div class="itemCon">
+                    <div class="itemTxt">
+                        <p>班次号：<span>TFO201910100046</span></p>
+                    </div>
+                    <div class="itemLis">
+                        <p class="itemLi1">司机信息：<span>卢新彬（沪DL0440）</span></p>
+                        <p class="itemLi2">排单数：<span>6</span></p>
+                        <p class="itemLi1">件毛体：<span>2800件 * 12kg * 30m³</span></p>
+                        <p class="itemLi2">是否满载：<span>否</span></p>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+    (function($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.btn');
+        var flag = true;
+        btns.each(function(i, btn) {
+            btn.addEventListener('tap', function() {
+                var that = this;
+                setTimeout(function(){
+                    flag = true;
+                },100);
+                if(flag){
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function(rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag  = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/classesList.js?v=" + verson + "'></s" + "cript>");
+</script>
+</body>
+</html>

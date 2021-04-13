@@ -1,0 +1,238 @@
+body{
+	background: #f3f5f7;
+}
+.header{
+	width: 100%;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.3rem;
+	background: #22bcee;
+	color: #fff;
+	position: fixed;
+	top: 0px;
+	z-index: 999;
+}
+.header .txt{
+	text-align: center;
+}
+.header .returnBtn{
+	width: 0.88rem;
+	height: 0.88rem;
+	position: absolute;
+	left: 0.2rem;
+	background: url(../images/return.png) no-repeat left center;
+	background-size: 0.4rem 0.4rem;
+}
+.header .right{
+	position: absolute;
+	width: 2rem;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    right: 0.23rem;
+    top: 0rem;
+    font-weight: normal;
+    text-align: right;
+}
+.header .right .searchBtn{
+	width: 0.46rem;
+	height: 0.46rem;
+	display: block;
+	margin-top: 0.19rem;
+	float: right;
+}
+
+
+.main{
+	padding-top: 0.88rem;
+}
+
+.main .orderList{
+	padding: 0 0rem 0 0;
+	overflow: hidden;
+	padding-top: 0.16rem;
+	padding-left: 0.16rem;
+}
+.main .orderList li{
+	width: 33.33333%;
+	float: left;
+	box-sizing: border-box;
+	padding-bottom: 0.16rem;
+	line-height: 0.5rem;
+	padding-right: 0.16rem;
+	font-size: 0.26rem;
+	color: #333;
+	height: 3rem;
+}
+.main .orderList li .orderInf{
+	height: 2.62rem;
+	border-radius: 0.06rem;
+	padding: 0.1rem;
+	background: #fff;
+	box-shadow: 0.06rem 0.06rem 0.16rem rgba(0,0,0,0.16);
+	border: 1px solid #dad9d9;
+	overflow-y: auto;
+}
+.main .orderList .pickOnLi .orderInf{
+	color: #fff;
+	background: #22bcee;
+	border: 1px solid #22bcee;
+}
+.main .orderList li p{
+	word-break:break-all;
+}
+.main .orderList li:nth-of-type(3n){
+	border-right: 0px;
+}
+
+
+.maskLayer{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0rem;
+	left: 0rem;
+	background: rgba(0,0,0,0.5);
+	z-index: 999;
+	display: none;
+}
+
+.maskLayer .popup7{
+	width: 6.5rem;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	margin-left: -3.25rem;
+	top: 50%;
+	border-radius: 0.16rem;
+	padding-bottom: 0.23rem;
+	transform: translateY(-50%);
+	display: block;
+}
+.maskLayer .popup7 .uploadSeal{
+	font-size: 0.26rem;
+	color: #333;
+	line-height: 0.86rem;
+	display: block;
+}
+.maskLayer .popup7 .uploadSeal ul{
+	overflow: hidden;
+}
+.maskLayer .popup7 .uploadSeal ul li{
+	width: 1rem;
+	height: 1rem;
+	float: left;
+	padding-right: 0.2rem;
+}
+.maskLayer .popup7 .uploadSeal ul li img{
+	width: 1rem;
+	height: 1rem;
+	display: block;
+}
+
+.maskLayer .popup7 .orderCon{
+	width: 6rem;
+	padding-top: 0.23rem;
+	margin: 0 auto;
+	font-size: 0.26rem;
+	color: #333;
+	line-height: 0.5rem;
+	position: relative;
+}
+.maskLayer .popup7 .orderDesc{
+	width: 6rem;
+	margin: 0 auto;
+}
+.maskLayer .popup7 .orderCon .closebtn{
+	position: absolute;
+	width: 0.8rem;
+	height: 1rem;
+	display: block;
+	right: 0rem;
+	background: url(../images/closeBtn2.png) no-repeat center center;
+	background-size: 0.32rem 0.32rem;
+	top: 0rem;
+}
+.maskLayer .popup7 .orderDesc h3{
+	border-bottom: none;
+	padding-left: 0rem;
+	margin-top: 0rem;
+}
+.maskLayer .popup7 .orderDesc textarea{
+	width: 6rem;
+	margin: 0 auto;
+	border: 1px solid #e5e5e5;
+}
+.maskLayer .popup7 .orderinf{
+	width: 6rem;
+	margin: 0 auto;
+}
+.maskLayer .popup7 .popupBot2{
+	width: 4.2rem;
+	padding-top: 0.36rem;
+	padding-bottom: 0.2rem;
+	overflow: hidden;
+	margin: 0 auto;
+}
+.maskLayer .popup7 .popupBot2 p{
+	width: 1.6rem;
+	float: right;
+	font-size: 0.28rem;
+	height: 0.66rem;
+	line-height: 0.66rem;
+	text-align: center;
+	background: #22bcee;
+	color: #fff;
+	border-radius: 0.09rem;
+}
+.maskLayer .popup7 .popupBot2 .pointAndClick{
+	background: url(../images/ajax-loader.gif) no-repeat #22bcee;
+	background-size: 0.38rem auto;
+	background-position: 0.1rem center;
+	width: 1.38rem;
+	opacity: 0.5;
+	padding-left: 0.22rem;
+}
+.maskLayer .popup7 .popupBot2 p:first-child{
+	border: 1px solid #22bcee;
+	color: #22bcee;
+	float: left;
+	background: none;
+}
+.maskLayer .popup7 .popupBot2 .pointAndClick1:first-child{
+	background: url(../images/ajax-loader.gif) no-repeat;
+	background-size: 0.38rem auto;
+	background-position: 0.1rem center;
+	width: 1.38rem;
+	opacity: 0.5;
+	padding-left: 0.22rem;
+}
+.maskLayer .popup2{
+	height: calc(100vh - 1.2rem);
+	overflow-y: auto;
+}
+.upLoadLayer{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	background: rgba(0,0,0,0.36);
+	z-index: 999;
+	display: none;
+}
+.upLoadLayer .hint{
+	text-align: center;
+	color: #fff;
+	font-size: 0.3rem;
+	position: absolute;
+	width: 70%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	left: 15%;
+	top: 36%;
+	border-radius: 0.06rem;
+	background: rgba(0,0,0,0.5);
+}

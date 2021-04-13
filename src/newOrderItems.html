@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>订单商品信息</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+<div id="newOrderApp">
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" id="goBeforePage" v-on:click="goIndexPage()"></a>
+		<p class="txt">订单商品信息</p>
+		<b class="right"></b>
+	</div>
+
+	<div class="content newOrderMain">
+		<div class="orderInf parcelInf">
+			<ul v-for="(orderItemDetail,index) in packageGoodsList" class="adsRightConInp">
+				<li class="twoItem">
+					<span class="txt">商品名称</span>
+					<p class="inp">
+						<input type="text" name="itemName" v-model="orderItemDetail.orderItem.itemName" placeholder="请输入商品名称" />
+					</p>
+					<!--<p class="select" v-on:click="selectPackageGoods(index)">选择商品</p>-->
+				</li>
+				<li>
+					<span class="txt">商品编码</span>
+					<p class="inp">
+						<input type="text" name="itemCode" v-model="orderItemDetail.orderItem.itemCode" placeholder="请输入商品编码" />
+					</p>
+				</li>
+				<li>
+					<span class="txt">批次号</span>
+					<p class="inp">
+						<input type="text" name="lotNo" v-model="orderItemDetail.orderItem.lotNo" placeholder="请输入批次号" />
+					</p>
+				</li>
+				<li class="twoItem">
+					<span class="txt">单价</span>
+					<p class="inp">
+						<input type="number" name="unitPrice" v-model="orderItemDetail.orderItem.unitPrice" placeholder="单价" />
+					</p>
+					<select class="select" name="currency" v-model="orderDetail.priceUnit">
+						<option value="">请选择单位</option>
+						<option v-for="currencyItem in selectListData.currencyList" v-bind:value="currencyItem.code">{{currencyItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">数量</span>
+					<p class="inp">
+						<input type="number" name="qty" v-model="orderItemDetail.orderItem.qty" placeholder="数量" />
+					</p>
+					<select class="select" name="qtyUnit" v-model="orderDetail.qtyUnit">
+						<option value="">请选择单位</option>
+						<option v-for="qtyUnitItem in selectListData.qtyUnitList" v-bind:value="qtyUnitItem.code">{{qtyUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">重量</span>
+					<p class="inp">
+						<input type="number" name="weight" v-model="orderItemDetail.orderItem.weight" placeholder="重量" />
+					</p>
+					<select class="select" name="weightUnit" v-model="orderDetail.weightUnit">
+						<option value="">请选择单位</option>
+						<option v-for="weightUnitItem in selectListData.weightUnitList" v-bind:value="weightUnitItem.code">{{weightUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">体积</span>
+					<p class="inp">
+						<input type="number" name="volume" v-model="orderItemDetail.orderItem.volume" placeholder="体积" />
+					</p>
+					<select class="select" name="volumeUnit" v-model="orderDetail.volumeUnit">
+						<option value="">请选择单位</option>
+						<option v-for="volumeUnitItem in selectListData.volumeUnitList" v-bind:value="volumeUnitItem.code">{{volumeUnitItem.text}}</option>
+					</select>
+				</li>
+				<li class="twoItem">
+					<span class="txt">总价值</span>
+					<p class="inp">
+						<input type="number" name="amount" v-model="orderItemDetail.orderItem.amount" placeholder="总价值" />
+					</p>
+					<select class="select" name="currency" v-model="orderDetail.currency">
+						<option value="">请选择单位</option>
+						<option v-for="currencyItem in selectListData.currencyList" v-bind:value="currencyItem.code">{{currencyItem.text}}</option>
+					</select>
+				</li>
+				<li>
+					<span class="txt">商品描述</span>
+					<p class="inp">
+						<input type="text" name="itemDesc" v-model="orderItemDetail.orderItem.itemDesc" placeholder="请输入商品描述" />
+					</p>
+				</li>
+				<li class="operationItem">
+					<span class="txt float_l" v-on:click="delPackageGoodsListInfo(index)">删除该商品</span>
+					<p class="inp float_r" v-on:click="savePackageGoodsListInfo(index)">保存该商品</p>
+				</li>
+			</ul>
+			<ul>
+				<li class="operationItem">
+					<span class="txt float_l" v-on:click="addPackageGoods()">+新增商品</span>
+				</li>
+			</ul>
+		</div>
+
+		<!--<div class="orderBottom1">
+            <a href="javascript:;" v-on:click="saveNewOrderItemsInfo()">保存</a>
+        </div>-->
+
+	</div>
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+	var app = new Vue({
+		el: '#newOrderApp',
+		data: {
+            orderDetail:{
+                priceUnit:[],
+                qtyUnit:[],
+                weightUnit:[],
+                volumeUnit:[],
+                currency:[]
+            },
+			selectListData:{},
+            itemInfoList:{},
+		    packageGoodsList:[{
+		    	orderItem:{
+		    		itemName:"",
+                    itemCode:"",
+                    lotNo:"",
+                    unitPrice:"",
+		    		currency:"",
+                    qty:"",
+		    		qtyUnit:"",
+                    weight:"",
+                    volume:"",
+		    		volumeUnit:"",
+		    		weightUnit:""
+		    	}
+		    }]
+		},
+		methods:{
+            goIndexPage(){ // 页面返回按钮
+                window.location.href = "newOrder.html";
+            },
+			addPackageGoods(){ //添加一条新商品
+				this.packageGoodsList.push({
+					orderItem:{
+                        itemName:"",
+                        itemCode:"",
+                        lotNo:"",
+                        unitPrice:"",
+                        currency:"",
+                        qty:"",
+                        qtyUnit:"",
+                        weight:"",
+                        weightUnit:"",
+                        volume:"",
+                        volumeUnit:"",
+                        amount:""
+		    		}
+				});
+			},
+            savePackageGoodsListInfo(index){  //保存单个商品
+                var that = this;
+                // if(localStorage.getItem("omOrderId") == null){
+                //     alert("请先保存订单信息");
+                //     return false;
+                // }
+                var param = that.packageGoodsList[index];
+                if(param.orderItem.itemName == ''){
+                    loadData('show', '商品名称为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.itemCode == ''){
+                    loadData('show', '商品编码为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.lotNo == ''){
+                    loadData('show', '批次号为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.unitPrice == ''){
+                    loadData('show', '单价为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.qty == ''){
+                    loadData('show', '数量为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.weight == ''){
+                    loadData('show', '重量为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.volume == ''){
+                    loadData('show', '体积为必填项', true);
+                    return false;
+                }
+                if(param.orderItem.amount == '' || param.orderItem.amount == null){
+                    loadData('show', '总价值为必填项', true);
+                    return false;
+                }
+                param.orderItem.omOrderId = localStorage.getItem("omOrderId");
+                param.orderItem.seq = index + 1;
+                postRequest(omsUrl + "/save/orderItemInfo?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,param.orderItem,function(data){
+                    loadData('show', '保存成功', true);
+                    var orderItemList = [];
+                    console.log(data.result);
+                    $.each(data.result, function (indexs, val) {
+                        var param = {
+                            orderItem:val
+                        };
+                        orderItemList.push(param);
+                    });
+                    that.packageGoodsList = orderItemList;
+
+                })
+                localStorage.setItem("newOrderItemsInfo",JSON.stringify(that.packageGoodsList));
+                window.location.href = "newOrder.html";
+            },
+            delPackageGoodsListInfo(index){ //删除该商品
+                var that = this;
+                var params = that.packageGoodsList[index].orderItem.omOrderItemId;
+                console.log(params);
+                var r = confirm("是否删除该商品");
+                if(r == true){
+                    if(localStorage.getItem("omOrderId") != null){
+                        that.packageGoodsList.splice(index, 1);
+                        localStorage.setItem("newOrderItemsInfo", JSON.stringify(that.packageGoodsList));
+                        if(that.packageGoodsList.length == 0){
+                            localStorage.removeItem("newOrderItemsInfo");
+                        }
+                        return false;
+                    }
+                    getRequest(omsUrl + "/delete/orderItemInfoById.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp+"&orderItemId="+params,function(res){
+                        loadData('show', '已删除', true);
+                        that.packageGoodsList.splice(index, 1);
+                    })
+				}
+            },
+            selectPackageGoods(index){
+                var that = this;
+                localStorage.setItem("curOrderItemsInfo",JSON.stringify(that.packageGoodsList)); // 保存临时商品信息
+                window.location.href = "itemInfos.html?index="+index;
+			},
+			saveNewOrderItemsInfo(){
+				var that = this,newArray = [];
+				that.logininf = JSON.parse(localStorage.getItem("logininf"));
+				if(that.packageGoodsList.length == 0){
+                    loadData('show', '当前无商品', true);
+					return false;
+				}
+				var check = 0;
+                $.each(that.packageGoodsList, function (index, item) { // 商品名、商品编码、批次号、单价、数量、数量单位、重量、重量单位、体积、体积单位、总价值、金额单位
+                    if(item.orderItem.itemName == '' || item.orderItem.itemCode == '' || item.orderItem.lotNo == '' || item.orderItem.unitPrice == ''
+						|| item.orderItem.qty == '' || item.orderItem.qtyUnit == '' || item.orderItem.weight == '' || item.orderItem.weightUnit == ''
+                        || item.orderItem.volume == '' || item.orderItem.volumeUnit == '' || item.orderItem.amount == '' || item.orderItem.currency == ''){
+                        check += 1;
+					}
+                });
+                if(check != 0){
+                    loadData('show', '请完整填写商品信息', true);
+                    return false;
+				}
+                if(localStorage.getItem("newOrderItemsInfo") == null){
+                    localStorage.setItem("newOrderItemsInfo",JSON.stringify(that.packageGoodsList));
+                }else{
+                    newArray = that.packageGoodsList;
+                    var oldArray = JSON.parse(localStorage.getItem("newOrderItemsInfo"));
+                    $.each(oldArray, function (indexx, itemm) {
+                        newArray.push(itemm);
+                    });
+                    localStorage.setItem("newOrderItemsInfo",JSON.stringify(newArray));
+				}
+                window.location.href = "newOrder.html";
+			}
+		},
+		created:function(){
+			var that = this;
+		  	that.logininf = JSON.parse(localStorage.getItem("logininf"));
+		  	that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+            that.orderDetail.priceUnit = that.selectListData.currencyList[0].code;
+            that.orderDetail.qtyUnit = that.selectListData.qtyUnitList[0].code;
+            that.orderDetail.weightUnit = that.selectListData.weightUnitList[0].code;
+            that.orderDetail.volumeUnit = that.selectListData.volumeUnitList[0].code;
+            that.orderDetail.currency = that.selectListData.currencyList[0].code;
+
+            // 取 商品信息
+            if(localStorage.getItem("newOrderItemsInfo") != null){
+                that.packageGoodsList = JSON.parse(localStorage.getItem("newOrderItemsInfo"));
+            }
+
+            if(localStorage.getItem("itemInfoIndex") != null){
+                var index = localStorage.getItem("itemInfoIndex");
+                var param = JSON.parse(localStorage.getItem("itemInfo"));
+                if(param.orderItem.currency == null || param.orderItem.currency == undefined){
+                    param.orderItem.currency = '';
+                }
+                if(param.orderItem.qtyUnit == null || param.orderItem.qtyUnit == undefined){
+                    param.orderItem.qtyUnit = '';
+                }
+                if(param.orderItem.weightUnit == null || param.orderItem.weightUnit == undefined){
+                    param.orderItem.weightUnit = '';
+                }
+                if(param.orderItem.volumeUnit == null || param.orderItem.volumeUnit == undefined){
+                    param.orderItem.volumeUnit = '';
+                }
+                that.packageGoodsList[index] = param;
+            }
+
+            // if(localStorage.getItem("omOrderId") != null){ // 已下单 获取已有商品（查订单详情）
+            //     loadData('show');
+            //     getRequest(omsUrl + "/query/OrderInfoDetail.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp+"&orderId="+localStorage.getItem("omOrderId"),function(data){
+            //         // 包裹商品
+            //         if (data.result.orderItemInfoList != null){
+            //             that.packageGoodsList = data.result.orderItemInfoList;
+            //         }else {
+            //             that.packageGoodsList = [{
+            //                 orderItem:{
+            //                     itemName:"",
+            //                     itemCode:"",
+            //                     lotNo:"",
+            //                     unitPrice:"",
+            //                     currency:"",
+            //                     qty:"",
+            //                     qtyUnit:"",
+            //                     weight:"",
+            //                     volume:"",
+            //                     volumeUnit:"",
+            //                     weightUnit:""
+            //                 }
+            //             }];
+            //         }
+            //         loadData('show', '查询订单已有商品', true);
+            //     })
+			//
+            // }
+		}
+	});
+
+    $(function () {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".content.newOrderMain").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+    });
+</script>
+	
+</body>
+</html>

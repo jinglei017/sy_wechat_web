@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>班次物料</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/material.css"/>
+    <link rel="stylesheet" href="css/mui.picker.min.css" />
+
+    <script src="js/jquery-2.1.0.js" type="text/javascript" ></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+    <script src="js/env_config.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="materialApp">
+
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="returnBack()" onclick="javascript:history.back(-1)"></a>
+        <p class="txt">班次物料</p>
+        <p class="right">
+            <img src="images/search1.png" class="searchBtn" v-on:click="isSearchLayer()" />
+        </p>
+    </div>
+
+    <div class="searchLayer">
+        <div class="searchCon">
+            <ul>
+                <li>
+                    <span>班次号:</span>
+                    <input type="text" v-model="tripsLot" class="ordernum orderNo" placeholder="请输入班次号" />
+                </li>
+                <li class="shortLi">
+                    <span>物料状态:</span>
+                    <span>
+                        <input type="radio" name="check1" value="OFICAR" v-model="actCode"/>
+                        <label>未回收</label>
+                    </span>
+                    <span>
+                        <input type="radio" name="check1" value="IFICAR" v-model="actCode"/>
+                        <label>已回收</label>
+                    </span>
+                </li>
+                <li>
+                    <span>发货时间:</span>
+                    <input type="选择日期时间" placeholder="例：2017-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+                </li>
+                <li>
+                    <span>结束时间:</span>
+                    <input type="选择日期时间" placeholder="例：2017-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='endTime' class="btn"/>
+                </li>
+            </ul>
+            <div class="searchBox">
+                <p class="searchbtn" v-on:click="getClassesList('1')">
+                    查询
+                </p>
+                <div class="mouthSearch">
+                    <p class="currentMouth active" v-on:click="getClassesList('1','30')">最近一个月</p>
+                    <p class="paseMouth" v-on:click="getClassesList('1','90')">最近三个月</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="orderList carList">
+            <ul class="listTitle">
+                <li>班次</li>
+                <li>状态</li>
+                <li>司机</li>
+                <li>回收情况</li>
+                <li>操作</li>
+            </ul>
+            <div class="listCon">
+                <ul class="listItem" v-for="(classItem,index) in classesList">
+                    <li>{{classItem.tripsLot}}</li>
+
+                    <li v-if="classItem.completeStatus == 0">未开始</li>
+                    <li v-if="classItem.completeStatus == 1">已完成</li>
+                    <li v-if="classItem.completeStatus == 2">处理中</li>
+                    <li v-if="classItem.completeStatus == 3">配送中</li>
+                    <li v-if="classItem.completeStatus == 'INIT'">初始化</li>
+                    <li v-if="classItem.completeStatus == null">--</li>
+                    <li v-if="classItem.completeStatus == 4">--</li>
+
+                    <li v-if="classItem.driverName">{{classItem.driverName}}</li>
+                    <li v-if="!classItem.driverName">--</li>
+                    <li>{{actCode | changeActCode}}</li>
+
+                    <li><span class="operate" v-on:click="getRecycleItem(classItem)">回收</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="maskLayer1">
+        <div class="popupE">
+            <div class="contentE">
+                <div class="headEquip">
+                    <p>物料回收<span v-on:click="overEquip()"><img src="images/closeBtn2.png" alt=""></span></p>
+                </div>
+                <div class="bodyEquip">
+                    <div class="backEquip">
+                        <ul class="totalInfoEquip lookJumpEquipHead">
+                            <li>名称</li>
+                            <li>类型</li>
+                            <li>数量</li>
+                            <li>回收</li>
+                            <li>操作</li>
+                        </ul>
+                        <div>
+                            <ul class="totalInfoEquip totalInfoEquipM" v-for="(item,index) in recycleList">
+                                <li>{{item.itemName}}</li>
+                                <li>{{item.itemNature | changeItemNature}}</li>
+                                <li>{{item.qty}}个</li>
+                                <li v-if="item.receivedQty == null"><input type="text" placeholder="数量" v-model="receivedQtyList[index]">个</li>
+                                <li v-else>{{item.receivedQty}}个</li>
+                                <li>
+                                    <span v-on:click="uploadOrderImg(item.omOrderItemId)">图片</span>
+                                    <span v-if="item.receivedQty == null" v-on:click="saveOrderItem(item,receivedQtyList[index])">确认</span>
+                                    <span v-else class="active">已确认</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="overEquip">
+                        <span v-on:click="overEquip()">完成回收</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popupM">
+            <div class="contentM">
+                <div class="headEquip">
+                    <p>上传图片<span v-on:click="closeMasker2()"><img src="images/closeBtn2.png" alt=""></span></p>
+                </div>
+                <ul class="uploadImgList uploadImgList1">
+                    <li v-for="imgSrc in imgliList"><img v-on:click="openThisImg(imgSrc,'1')" v-bind:src="imgSrc.src" alt=""></li>
+                </ul>
+                <ul class="uploadImgList uploadImgList2">
+                    <li class="lastLi" v-on:click="uoloadImgEqp()" v-show="imgliList2.length < 4 && ua"><img src="images/cameraIcon.png" alt="" /></li>
+                    <input accept="image/*" type="file" v-on:change="uploadImgPc($event)" v-show="imgliList2.length < 4 && !ua" class="lastInput" style="margin-bottom: 0.2rem;"/>
+                    <li v-for="(img,index) in imgliList2"><img v-on:click="openThisImg(img,'2',index)" v-bind:src="img" alt=""></li>
+                </ul>
+                <div class="sureMBot">
+                    <span v-on:click="sureUploadImg()">确定上传</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="popupI">
+            <img v-bind:src="currentImgSrc" alt="">
+            <p class="deleteThisImg" v-on:click="deleteThisImg()">删除</p>
+            <p class="closeThisImg" v-on:click="closeThisImg()">关闭</p>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="js/wxScanQRCode.js" type="text/javascript"></script>
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/material.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script>
+    (function($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.btn');
+        var flag = true;
+        btns.each(function(i, btn) {
+            btn.addEventListener('tap', function() {
+                var that = this;
+                setTimeout(function(){
+                    flag = true;
+                },100);
+                if(flag){
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function(rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag  = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+</body>
+</html>

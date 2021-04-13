@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>运输时效监控</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/mui.picker.min.css"/>
+    <link rel="stylesheet" href="css/timeVehicle.css"/>
+</head>
+<body>
+
+<div id="timeVehicleApp">
+
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="returnBack()" onclick="javascript:history.back(-1)"></a>
+        <p class="txt">运输时效监控&nbsp;&nbsp;<span>{{showTimeSpan}}</span></p>
+        <p class="right" v-on:click="openSearch()">
+            <img src="images/search1.png" class="searchBtn" alt=""/>
+        </p>
+    </div>
+
+    <div class="searchLayer" v-show="isSearchLayer">
+        <div class="searchCon">
+            <ul>
+                <li>
+                    <span>请选择日期:</span>
+                    <input type="text" placeholder="选择您要查找的日期"
+                           data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+                </li>
+            </ul>
+            <div class="searchBox">
+                <p class="searchbtn" v-on:click="getSearchVal('1')">查询</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main" v-on:scroll="onScroll()">
+        <div id="tableBodyDetails">
+            <div class="itemDiv" v-for="tableOrderItem in tableOrderList">
+                <div class="itemCon">
+                    <ul class="itemLis itemUlTitle">
+                        <li>
+                            <span>司机信息：</span>
+                            <span style="padding: 0 0.1rem 0 0.15rem;">{{tableOrderItem.collectName}}</span>
+                            <a href="tel:15050481321" style="color:#22bcee;">{{tableOrderItem.collectCode}}</a>
+                        </li>
+                    </ul>
+                    <ul class="itemLis">
+                        <li>
+                            <span>总时长：</span>
+                            <span>{{tableOrderItem.totalTime | formatSeconds}}</span>
+                        </li>
+                        <li>
+                            <span>总天数：</span>
+                            <span>{{tableOrderItem.totalDay}}天</span>
+                        </li>
+                    </ul>
+                    <ul class="itemLis">
+                        <li>
+                            <span>月时长：</span>
+                            <span>{{tableOrderItem.monthTime | formatSeconds}}</span>
+                        </li>
+                        <li>
+                            <span>月天数：</span>
+                            <span>{{tableOrderItem.monthDay}}天</span>
+                        </li>
+                    </ul>
+                    <ul class="itemLis">
+                        <li>
+                            <span>平均时长：</span>
+                            <span>{{tableOrderItem.monthAvgTime | formatSeconds}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="notAvailable" v-if="!tableOrderList.length">
+            <p>---暂无监控信息---</p>
+        </div>
+    </div>
+
+    <div class="carAmountInf">
+        <ul>
+            <li class="carAmountInfLiTit">
+                <img src="images/total.png">
+                <span>月度运输成本汇总：</span>
+            </li>
+            <li>
+                <p>总运费：<span v-if="generalInfo.totalAmount">{{generalInfo.totalAmount}}</span><span v-else>0</span>元</p>
+            </li>
+            <li>
+                <p>总件数：<span v-if="generalInfo.totalQty">{{generalInfo.totalQty}}</span><span v-else>0</span>件</p>
+            </li>
+            <li>
+                <p>总重量：<span v-if="generalInfo.totalWeight">{{generalInfo.totalWeight}}</span><span v-else>0</span>kg</p>
+            </li>
+            <li>
+                <p>总体积：<span v-if="generalInfo.totalVolume">{{generalInfo.totalVolume}}</span><span v-else>0</span>m³</p>
+            </li>
+            <li>
+                <p>运费/件：<span v-if="generalInfo.qtyAmount">{{generalInfo.qtyAmount}}</span><span v-else>0</span>元</p>
+            </li>
+            <li>
+                <p>运费/kg：<span v-if="generalInfo.weightAmount">{{generalInfo.weightAmount}}</span><span v-else>0</span>元</p>
+            </li>
+            <li>
+                <p>运费/m³：<span v-if="generalInfo.volumeAmount">{{generalInfo.volumeAmount}}</span><span v-else>0</span>元</p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="carAmountInf"></div>
+
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/timeVehicle.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script>
+    (function ($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.btn');
+        var flag = true;
+        btns.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                var that = this;
+                setTimeout(function () {
+                    flag = true;
+                }, 100);
+                if (flag) {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>应收费用</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/mui.picker.min.css"/>
+    <link rel="stylesheet" href="css/orderCostListDj00.css"/>
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn"></a>
+    <p class="txt">应收费用</p>
+    <p class="right">
+        <img src="images/search1.png" class="searchBtn" alt=""/>
+    </p>
+</div>
+
+<div class="searchLayer">
+    <div class="searchCon">
+        <ul>
+            <li>
+                <span>请选择日期:</span>
+                <input type="text" placeholder="选择您要查找的日期"
+                       data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+            </li>
+        </ul>
+        <div class="searchBox">
+            <p class="searchbtn">
+                查询
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="main" style="padding-bottom: 1rem;">
+    <div class="orderList carList">
+        <ul class="listTitle">
+            <li>司机-车牌号</li>
+            <li>现付</li>
+            <li>到付</li>
+<!--            <li>月结</li>-->
+        </ul>
+        <div class="listCon">
+
+        </div>
+    </div>
+</div>
+<div class="carAmountInf"></div>
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+    (function ($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.btn');
+        var flag = true;
+        btns.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                var that = this;
+                setTimeout(function () {
+                    flag = true;
+                }, 100);
+                if (flag) {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/orderCostListDj00.js?v=" + verson + "'></s" + "cript>");
+</script>
+</body>
+</html>

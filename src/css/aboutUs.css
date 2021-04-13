@@ -1,0 +1,46 @@
+
+.header{
+	width: 100%;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.3rem;
+	background: #22bcee;
+	color: #fff;
+}
+.header .txt{
+	text-align: center;
+}
+.header .returnBtn{
+	width: 0.88rem;
+	height: 0.88rem;
+	position: absolute;
+	left: 0.2rem;
+	background: url(../images/return.png) no-repeat left center;
+	background-size: 0.4rem 0.4rem;
+}
+
+
+.main .aboutUs{
+	padding: 0.23rem;
+}
+.main .aboutUs .pic img{
+    width: 3.2rem;
+    display: inline-block;
+    margin: 0.3rem 0;
+}
+.main .aboutUs h3{
+	font-size: 0.3rem;
+	line-height: 0.72rem;
+	color: #333;
+	text-align: center;
+	padding-top: 0.2rem;
+}
+.main .aboutUs .desc{
+	font-size: 0.26rem;
+	color: #555;
+	text-indent: 2em;
+	line-height: 0.5rem;
+}

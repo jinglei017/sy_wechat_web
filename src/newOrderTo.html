@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>收货商信息</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" href="css/mui.picker.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+<div id="newOrderApp">
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="goBackNewOrder()"></a>
+        <p class="txt">收货商信息</p>
+        <b class="right"></b>
+    </div>
+    <div class="content newOrderMain">
+        <div class="orderInf fromToInf">
+            <!--新样式-->
+            <div class="oederFroms">
+                <div class="float_l">
+                    <ul class="oederFromsUl">
+                        <li>
+                            <span class="oederFromsLi1">收货商名称</span>
+                            <p class="oederFromsLi2">
+                                <input disabled type="text" v-model="receiptParty.partyName" placeholder="收货商名称" class="form-control"/>
+                            </p>
+                        </li>
+                        <li>
+                            <span class="oederFromsLi1">收货商代码</span>
+                            <p class="oederFromsLi2">
+                                <input disabled type="text" v-model="receiptParty.partyCode" placeholder="收货商代码" class="form-control"/>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="float_l" v-on:click="choosePartyContactAddressFun('party','to','')">可选收货商</div>
+            </div>
+            <div class="oederFroms">
+                <div class="float_l">
+                    <ul class="oederFromsUl">
+                        <li>
+                            <span class="oederFromsLi1">收货商联系人</span>
+                            <p class="oederFromsLi2">
+                                <input v-model="receiptPartyContact.contactName" type="text" placeholder="收货商联系人" />
+                            </p>
+                        </li>
+                        <li>
+                            <span class="oederFromsLi1">联系人电话</span>
+                            <p class="oederFromsLi2">
+                                <input v-model="receiptPartyContact.contactTel" type="text" placeholder="联系人电话" />
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="float_l" v-on:click="choosePartyContactAddressFun('contact','to','2')">可选联系人</div>
+            </div>
+            <ul style="padding-bottom: 0.1rem;">
+                <li class="twoItem twoItem2">
+                    <span class="txt">收货地址名称</span>
+                    <p class="inp">
+                        <input v-model="receiptPartyLocation.locationName" type="text" placeholder="收货地址名称" />
+                    </p>
+                    <p class="select" v-on:click="choosePartyContactAddressFun('address','to','')">可选地址</p>
+                </li>
+                <li>
+                    <span class="txt">地址编码</span>
+                    <p class="inp">
+                        <input v-model="receiptPartyLocation.locationCode" type="text" placeholder="地址编码" />
+                    </p>
+                </li>
+                <li class="fourItem">
+                    <span class="txt">国省市区</span>
+                    <select v-model="receiptPartyLocation.countryCode" v-on:change="selectLocLevelFun('countryCode',receiptPartyLocation,receiptPartyLocation.countryCode)" name="">
+                        <option value="">国/洲</option>
+                        <option v-for="addressItem in getAllCountryList" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                    </select>
+                    <select v-model="receiptPartyLocation.provinceCode" v-on:change="selectLocLevelFun('provinceCode',receiptPartyLocation,receiptPartyLocation.provinceCode)"  name="">
+                        <option value="">省份/自治区</option>
+                        <option v-for="addressItem in getAllProviceList(receiptPartyLocation.countryCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                    </select>
+                    <select v-model="receiptPartyLocation.cityCode" v-on:change="selectLocLevelFun('cityCode',receiptPartyLocation,receiptPartyLocation.cityCode)" name="">
+                        <option value="">城市/地区</option>
+                        <option v-for="addressItem in getAllCityList(receiptPartyLocation.provinceCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                    </select>
+                    <select v-model="receiptPartyLocation.districtCode" v-on:change="selectLocLevelFun('districtCode',receiptPartyLocation,receiptPartyLocation.districtCode)" name="">
+                        <option value="">区/县</option>
+                        <option v-for="addressItem in getAllDistrictList(receiptPartyLocation.cityCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                    </select>
+                </li>
+                <li>
+                    <span class="txt">街道</span>
+                    <p class="inp">
+                        <input v-model="receiptPartyLocation.street" v-on:blur="changeAddress(receiptPartyLocation,receiptPartyLocation.street,'1')" type="text" placeholder="街道" />
+                    </p>
+                </li>
+            </ul>
+            <div class="oederFroms">
+                <div class="float_l">
+                    <ul class="oederFromsUl">
+                        <li>
+                            <span class="oederFromsLi1">收货地联系人</span>
+                            <p class="oederFromsLi2">
+                                <input v-model="receiptPartyLocationContact.contactName" type="text" placeholder="收货地联系人" />
+                            </p>
+                        </li>
+                        <li>
+                            <span class="oederFromsLi1">联系人电话</span>
+                            <p class="oederFromsLi2">
+                                <input v-model="receiptPartyLocationContact.contactTel" type="text" placeholder="联系人电话" />
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="float_l" v-on:click="choosePartyContactAddressFun('contact','to','3')">可选联系人</div>
+            </div>
+
+        </div>
+        <div class="orderBottom1">
+            <a href="javascript:;" v-on:click="saveNewOrderToInfo()">保存</a>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            selectListData:{},
+            receiptParty:{
+                partyName:"",
+                partyCode:"",
+                isBuyer:null,
+                isVendor:null,
+                isTruck:null,
+                isWarehouse:null,
+                is3pl:null
+            },
+            receiptPartyContact:{
+                contactName:"",
+                contactTel:"",
+                contactEmail:""
+            },
+            receiptPartyLocation:{
+                locationName:"",
+                //    locationType:null,
+                locationCode:"",
+                countryCode:"100000",
+                provinceCode:"",
+                cityCode:"",
+                districtCode:"",
+                street:"",
+                postCode:"",
+                address:""
+            },
+            receiptPartyLocationContact:{
+                contactName:"",
+                contactTel:""
+            },
+            getAllCountryList:{}, // 国家列表
+            address00:"", // 改变 address —— 国
+            address0:"", // 改变 address —— 省
+            address1:"", // 改变 address —— 市
+            address2:"", // 改变 address —— 区
+            address3:"" // 改变 address —— 街道
+        },
+        methods:{
+            goBackNewOrder(){
+                window.location.href = "newOrder.html";
+            },
+            // 跳去 合作商、联系人、地址 列表，入参：type（合作商party、联系人contact、地址address）、orderPartyType（发货商from、收货商to）、contanctBtnType（0-合作商联系人、1-地址联系人）
+            choosePartyContactAddressFun(type,orderPartyType,contanctBtnType){
+                window.location.href = "newOrderselectList.html?type="+type+"&orderPartyType="+orderPartyType+"&contanctBtnType="+contanctBtnType;
+            },
+            // cdm基础数据 选择国省市区，以及输入街道改变详细地址 ——————— start
+            selectLocLevelFun(level,paramObj,code){ // 选中国省市区触发事件，入参：地址级别，对象，当前 国、省、市、区 编码 [ 便于扩展实时改变 详细地址address ]
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode':
+                        paramObj.provinceCode = "";
+                        paramObj.cityCode = "";
+                        paramObj.districtCode = "";
+                        break;
+                    case 'provinceCode':
+                        paramObj.cityCode = "";
+                        paramObj.districtCode = "";
+                        break;
+                    case 'cityCode':
+                        paramObj.districtCode = "";
+                        break;
+                    case 'districtCode':
+
+                        break;
+                }
+                that.changeAddressFun(level,paramObj,code);
+            },
+            getAllProviceList(countryCode){ // 根据所选的 countryCode 获取对应 省列表
+                return getProvinceData(countryCode);
+            },
+            getAllCityList(provinceCode){ // 根据所选的 provinceCode 获取对应 市列表
+                return getCityData(provinceCode);
+            },
+            getAllDistrictList(cityCode){ // 根据所选的 cityCode 获取对应 区列表
+                return getDistrictData(cityCode);
+            },
+            changeAddressFun(level,paramObj,code){ // 选择国省市区，实时改变 详细地址 address ，入参：地址级别，当前 国、省、市、区 编码
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode': // 选择 国 ，改变 address
+                        if(code == ''){
+                            that.address00 = '';
+                        }else{
+                            $.each(that.getAllCountryList, function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address00 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        break;
+                    case 'provinceCode': // 选择 省 ，改变 address
+                        if(code == ''){
+                            that.address0 = '';
+                        }else{
+                            $.each(that.getAllProviceList(paramObj.countryCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address0 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address1 = '';
+                        that.address2 = '';
+                        break;
+                    case 'cityCode': // 选择 市 ，改变 address
+                        if(code == ''){
+                            that.address1 = '';
+                        }else{
+                            $.each(that.getAllCityList(paramObj.provinceCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address1 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address2 = '';
+                        break;
+                    case 'districtCode': // 选择 区 ，改变 address
+                        if(code == ''){
+                            that.address2 = '';
+                        }else{
+                            $.each(that.getAllDistrictList(paramObj.cityCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address2 = val.chineseName;
+                                }
+                            });
+                        }
+                        break;
+                }
+                if(paramObj.street != '' && paramObj.street != undefined && paramObj.street != null){
+                    that.address3 = paramObj.street;
+                }else{
+                    that.address3 = '';
+                }
+                paramObj.address = that.address00 + that.address0 + that.address1 + that.address2 + that.address3;
+            },
+            changeAddress(paramObj,street,type){ // 输入街道，改变 address
+                var that = this;
+                if(street == undefined){
+                    return false;
+                }
+                that.address3 = street;
+                switch(type)
+                {
+                    case '0': // 发货商，改变 address
+                        that.changeAddressFun('countryCode',that.shipperPartyLocation,that.shipperPartyLocation.countryCode);
+                        that.changeAddressFun('provinceCode',that.shipperPartyLocation,that.shipperPartyLocation.provinceCode);
+                        that.changeAddressFun('cityCode',that.shipperPartyLocation,that.shipperPartyLocation.cityCode);
+                        that.changeAddressFun('districtCode',that.shipperPartyLocation,that.shipperPartyLocation.districtCode);
+                        break;
+                    case '1': // 收货商，改变 address
+                        that.changeAddressFun('countryCode',that.receiptPartyLocation,that.receiptPartyLocation.countryCode);
+                        that.changeAddressFun('provinceCode',that.receiptPartyLocation,that.receiptPartyLocation.provinceCode);
+                        that.changeAddressFun('cityCode',that.receiptPartyLocation,that.receiptPartyLocation.cityCode);
+                        that.changeAddressFun('districtCode',that.receiptPartyLocation,that.receiptPartyLocation.districtCode);
+                        break;
+                }
+                paramObj.address = that.address00 + that.address0 + that.address1 + that.address2 + that.address3;
+            },
+            resetAddressParamFun(type){ // 重置 改变address 参数，入参：类型（全重置、默认国家“中国”）
+                var that = this;
+                switch(type)
+                {
+                    case '0':
+                        that.address00 = '';
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        that.address3 = '';
+                        break;
+                    case '1':
+                        that.address00 = '中国';
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        that.address3 = '';
+                        break;
+                }
+            },
+            getAddressParamFun(level,paramObj,code){ // 赋值 改变address 参数
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllCountryList, function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address00 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address00 = '';
+                            paramObj.countryCode = "";
+                        }
+                        break;
+                    case 'provinceCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllProviceList(paramObj.countryCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address0 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address0 = '';
+                            paramObj.provinceCode = "";
+                        }
+                        break;
+                    case 'cityCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllCityList(paramObj.provinceCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address1 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address1 = '';
+                            paramObj.cityCode = "";
+                        }
+                        break;
+                    case 'districtCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllDistrictList(paramObj.cityCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address2 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address2 = '';
+                            paramObj.districtCode = "";
+                        }
+                        break;
+                }
+            },
+            // cdm基础数据 选择国省市区，以及输入街道改变详细地址 ——————— end
+            saveNewOrderToInfo(){
+                var that = this;
+                if(that.receiptParty.partyName == "" || that.receiptParty.partyCode == ""){
+                    loadData("show","请选择收货商",true)
+                    return false;
+                }
+                if(that.receiptPartyContact.contactName == "" || that.receiptPartyContact.contactTel == ""){
+                    loadData("show","请填写发货商联系人、联系人电话",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.locationName == "" || that.receiptPartyLocation.locationCode == ""){
+                    loadData("show","请填写收货地址名称、地址编码",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.countryCode == ""){
+                    loadData("show","请选择国/洲",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.provinceCode == ""){
+                    loadData("show","请选择省份/自治区",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.cityCode == ""){
+                    loadData("show","请选择城市/地区",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.districtCode == ""){
+                    loadData("show","请选择区/县",true)
+                    return false;
+                }
+                if(that.receiptPartyLocation.street == ""){
+                    loadData("show","请填写街道",true)
+                    return false;
+                }
+                if(that.receiptPartyLocationContact.contactName == "" || that.receiptPartyLocationContact.contactTel == ""){
+                    loadData("show","请填写收货地联系人、联系人电话",true)
+                    return false;
+                }
+                var receiptPartyInfoModel = {};
+                receiptPartyInfoModel.party = that.receiptParty;  // 1-收货商基本信息
+                receiptPartyInfoModel.imgContact = that.receiptPartyContact;  // 2-收货商紧急联系人
+                receiptPartyInfoModel.location = that.receiptPartyLocation;  // 3-收货商地址信息
+                receiptPartyInfoModel.contact = that.receiptPartyLocationContact;  // 4-收货商地址联系人
+                localStorage.setItem("newOrderToInfo",JSON.stringify(receiptPartyInfoModel));
+                var orderHeadModel = {};
+                var orderDetail = JSON.parse(localStorage.getItem("newOrderBaseInfo"));
+                delete(orderDetail["orderFormTenantName"]);
+                orderHeadModel.order = orderDetail;
+                orderHeadModel.shipperPartyInfo = JSON.parse(localStorage.getItem("newOrderFromInfo"));
+                orderHeadModel.receiptPartyInfo = JSON.parse(localStorage.getItem("newOrderToInfo"));
+                postRequest(omsUrl + "/inster/omOrderHeadInfo?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,orderHeadModel,function(data){
+                    if(data.result != null){
+                        console.log(data.result);
+                        var omOrderId = data.result.order.omOrderId;
+                        localStorage.setItem("omOrderId",omOrderId);
+                        var omOrderAllInfo = data.result;
+                        localStorage.setItem("omOrderAllInfo",JSON.stringify(omOrderAllInfo));
+                        app.submitNewOrderInfoShow = '1';
+                        setTimeout(function () {
+                            window.location.href = "newOrder.html";
+                        },100)
+                    }else{
+                        loadData('show', '订单保存失败', true); // 弹出接口返回的订单创建失败的描述
+                    }
+                });
+            }
+        },
+        created:function(){
+            var that = this;
+            that.getAllCountryList = getCountryData();
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            initSelectData(that);
+            that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+            // 已保存的收货商
+            if(localStorage.getItem("newOrderToInfo") != null){
+                var receiptPartyInfoModel = JSON.parse(localStorage.getItem("newOrderToInfo"));
+                that.receiptParty = receiptPartyInfoModel.party;  // 收货商
+                that.receiptPartyContact = receiptPartyInfoModel.imgContact;  // 紧急联系人
+                that.receiptPartyLocation = receiptPartyInfoModel.location;  // 地址信息
+                that.receiptPartyLocationContact = receiptPartyInfoModel.contact;  // 收货地联系人信息
+            }
+            // 所选收货商
+            if(localStorage.getItem("trReceiptParty") != null){
+                that.receiptParty = JSON.parse(localStorage.getItem("trReceiptParty"));
+            }
+            // 所选收货商联系人
+            if(localStorage.getItem("trReceiptPartyContact") != null){
+                that.receiptPartyContact = JSON.parse(localStorage.getItem("trReceiptPartyContact"));
+            }
+            // 所选收货地址
+            if(localStorage.getItem("trReceiptPartyLocation") != null){
+                that.receiptPartyLocation = JSON.parse(localStorage.getItem("trReceiptPartyLocation"));
+            }
+            // 所选收货地址联系人
+            if(localStorage.getItem("trReceiptPartyLocationContact") != null){
+                that.receiptPartyLocationContact = JSON.parse(localStorage.getItem("trReceiptPartyLocationContact"));
+            }
+        }
+    });
+
+    function initSelectData(that){
+        that.receiptParty = { // 收货商
+            partyName:"",
+            partyCode:"",
+            isBuyer:null,
+            isVendor:null,
+            isTruck:null,
+            isWarehouse:null,
+            is3pl:null
+        };
+        that.receiptPartyContact = { // 收货商 联系人
+            contactName:"",
+            contactTel:"",
+            contactEmail:""
+        };
+        that.receiptPartyLocation = { // 收货地
+            locationName:"",
+            //    locationType:null,
+            locationCode:"",
+            countryCode:"100000",
+            provinceCode:"",
+            cityCode:"",
+            districtCode:"",
+            street:"",
+            postCode:"",
+            address:""
+        };
+        that.receiptPartyLocationContact = { // 收货地 联系人
+            contactName:"",
+            contactTel:""
+        };
+    }
+
+    $(function(){
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".content.newOrderMain").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+    })
+</script>
+
+<script>
+    (function($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.muiDateBtn');
+        var flag = true;
+        btns.each(function(i, btn) {
+            btn.addEventListener('tap', function() {
+                var that = this;
+                setTimeout(function(){
+                    flag = true;
+                },100);
+                if(flag){
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function(rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag  = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+
+</body>
+</html>

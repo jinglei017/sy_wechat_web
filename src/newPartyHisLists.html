@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>新增合作商</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/newFromToItBa.css" />
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn" id="goBeforePage"></a>
+    <p class="txt">新增合作商</p>
+    <b class="right"></b>
+</div>
+<div class="content newPartyMain" id="newOrderApp">
+    <div class="orderInf parcelInf">
+        <!--基本信息-->
+        <ul class="adsRightConInp">
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>合作方类型</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.partyType" name="">
+                        <option value="">请选择</option>
+                        <option v-for="contactTypeItem in selectListData.contactLists" v-bind:value="contactTypeItem.code">{{contactTypeItem.text}}</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>合作商名称</span>
+                <p class="inp">
+                    <input type="text" v-model="partyBaseInfo.partyName" placeholder="合作商名称" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_r">*&nbsp;</span>合作方代码</span>
+                <p class="inp">
+                    <input type="text" v-model="partyBaseInfo.partyCode" placeholder="合作方代码" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>拼音缩写</span>
+                <p class="inp">
+                    <input type="text" v-model="partyBaseInfo.partyAbbr" placeholder="拼音缩写" />
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>是否买家</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.isBuyer" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>是否卖家</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.isVendor" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>是否卡车公司</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.isTruck" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>是否仓库</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.isWarehouse" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+            <li class="newPartyLi">
+                <span class="txt"><span class="color_w">*&nbsp;</span>是否第三方物流</span>
+                <p class="inp">
+                    <select v-model="partyBaseInfo.is3pl" name="">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </p>
+            </li>
+        </ul>
+        <!--保存基本信息-->
+        <div class="orderBottom1" style="padding-top: 0;padding-bottom: 0.3rem;" v-if="disableSaveParty == '1'">
+            <a href="javascript:;" v-on:click="saveNewOrderItemsInfo()">保存基本信息</a>
+        </div>
+        <!--联系人信息-->
+        <ul class="adsRightConInp adsRightConInpDet">
+            <li class="newPartyLiDet" v-for="(partyContact,index) in partyContactlList">
+                <span v-if="partyContact.contactType == ''">--</span>
+                <span v-else="partyContact.contactType != ''">
+                    <span v-for="contactTypeItem in selectListData.contactLists" v-if="contactTypeItem.code == partyContact.contactType">{{contactTypeItem.text}}</span>
+                </span>
+                <span><span v-if="partyContact.isDefault == '1'" class="color_r">默认&nbsp;</span>{{partyContact.contactName}}<span v-if="partyContact.contactTel != '' && partyContact.contactTel != undefined">-{{partyContact.contactTel}}</span></span>
+                <span v-on:click="delConactFun(index)" style="visibility: hidden;">删除</span>
+            </li>
+        </ul>
+        <!--新增联系人-->
+        <ul>
+            <li class="operationItem" v-on:click="goPartyContactPage()">
+                <span class="txt float_l txtGoPage">+&nbsp;联系人</span>
+                <span class="float_r txtGoPage2"></span>
+            </li>
+        </ul>
+        <!--地址信息-->
+        <ul class="adsRightConInp adsRightConInpDet">
+            <li class="newPartyLiDet" v-for="(locationInfo,index) in locationInfoList">
+                <span v-if="locationInfo.locationType == ''">--</span>
+                <span v-if="locationInfo.locationType == 'STO'">收货地址</span>
+                <span v-if="locationInfo.locationType == 'SFR'">发货地址</span>
+                <span v-if="locationInfo.locationType == 'OTHER'">其他</span>
+                <span><span v-if="locationInfo.isDefault == '1'" class="color_r">默认&nbsp;</span>{{locationInfo.locationName}}-{{locationInfo.address}}</span>
+                <span v-on:click="delLocationFun(index)" style="visibility: hidden;">删除</span>
+            </li>
+        </ul>
+        <!--新增地址-->
+        <ul>
+            <li class="operationItem" v-on:click="goPartyLocPage()">
+                <span class="txt float_l txtGoPage">+&nbsp;地址</span>
+                <span class="float_r txtGoPage2"></span>
+            </li>
+        </ul>
+        <!--设备信息-->
+        <ul class="adsRightConInp adsRightConInpDet">
+            <li class="newPartyLiDet" v-for="(contactEqpInfos,index) in contactEqplList">
+                <span v-if="contactEqpInfos.eqpType == ''">--</span>
+                <span v-else="contactEqpInfos.eqpType != ''">
+                    <span v-for="eqpTypeItem in selectListData.eqpTypeList" v-if="eqpTypeItem.code == contactEqpInfos.eqpType">{{eqpTypeItem.text}}</span>
+                </span>
+                <span><span v-if="contactEqpInfos.isDefault == '1'" class="color_r">默认&nbsp;</span>{{contactEqpInfos.eqpName}}-{{contactEqpInfos.eqpNo}}</span>
+                <span v-on:click="delEqpFun(index)" style="visibility: hidden;">删除</span>
+            </li>
+        </ul>
+        <!--新增设备-->
+        <ul>
+            <li class="operationItem" v-on:click="goPartyEqpPage()">
+                <span class="txt float_l txtGoPage">+&nbsp;设备</span>
+                <span class="float_r txtGoPage2"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            cdPartyId:"",
+            selectListData:{},
+            partyBaseInfo:{
+                partyType:"",
+                isBuyer:"",
+                isVendor:"",
+                isTruck:"",
+                isWarehouse:"",
+                is3pl:""
+            },
+            disableSaveParty:"1",
+            partyContactlList:[],
+            locationInfoList:[],
+            contactEqplList:[]
+            /*partyContactlList:[
+                {
+                   contactType:"STO",
+                   contactName:"张晨",
+                   contactTel:"17612154691",
+                   isDefault:"1"
+                },
+                {
+                    contactType:"IMG",
+                    contactName:"张姗姗",
+                    contactTel:"",
+                    isDefault:"0"
+                },
+                {
+                    contactType:"WAH",
+                    contactName:"小米",
+                    contactTel:"17612154691",
+                    isDefault:"0"
+                }
+            ],
+            locationInfoList:[
+                {
+                    locationType:"STO",
+                    locationName:"磁湖路",
+                    address:"磁湖路11号",
+                    isDefault:"1"
+                },
+                {
+                    locationType:"SFR",
+                    locationName:"中环就休商务园商务园商务园商务园商务园",
+                    address:"锦绣路3891号锦绣路3891号",
+                    isDefault:"0"
+                },
+                {
+                    locationType:"OTHER",
+                    locationName:"地铁站",
+                    address:"高科西路",
+                    isDefault:"0"
+                }
+            ],
+            contactEqplList:[
+                {
+                    eqpType:"",
+                    eqpName:"陕西",
+                    eqpNo:"沪BNH001",
+                    isDefault:"1"
+                },
+                {
+                    eqpType:"TRUCK",
+                    eqpName:"五菱",
+                    eqpNo:"沪BLL001",
+                    isDefault:"0"
+                },
+                {
+                    eqpType:"MBC",
+                    eqpName:"陕西西",
+                    eqpNo:"沪BNH003",
+                    isDefault:"0"
+                }
+            ]*/
+        },
+        methods:{
+            goPartyContactPage(){
+                var that = this;
+                localStorage.setItem("hasPartyBaseInfo",JSON.stringify(that.partyBaseInfo));
+                if(that.cdPartyId != ''){
+                    window.location.href = "newPartyHisListsCont.html?type=0&cdPartyId="+that.cdPartyId;
+                }else{
+                    window.location.href = "newPartyHisListsCont.html?type=0";
+                }
+            },
+            goPartyLocPage(){
+                var that = this;
+                localStorage.setItem("hasPartyBaseInfo",JSON.stringify(that.partyBaseInfo));
+                if(that.cdPartyId != ''){
+                    window.location.href = "newPartyHisListsLoc.html?from=0&cdPartyId="+that.cdPartyId;
+                }else{
+                    window.location.href = "newPartyHisListsLoc.html?from=0";
+                }
+            },
+            goPartyEqpPage(){
+                var that = this;
+                localStorage.setItem("hasPartyBaseInfo",JSON.stringify(that.partyBaseInfo));
+                if(that.cdPartyId != ''){
+                    window.location.href = "newPartyHisListsEqp.html?cdPartyId="+that.cdPartyId;
+                }else{
+                    window.location.href = "newPartyHisListsEqp.html";
+                }
+            },
+            delConactFun(index){
+                var that = this;
+                var r = confirm("确定删除该联系人？");
+                if (r==true){
+                    that.partyContactlList.splice(index,1);
+                    // 调用接口删除，重新赋值 that.partyContactlList
+
+                }
+            },
+            delLocationFun(index){
+                var that = this;
+                var r = confirm("确定删除该地址？");
+                if (r==true){
+                    that.locationInfoList.splice(index,1);
+                    // 调用接口删除，重新赋值 that.locationInfoList
+
+                }
+            },
+            delEqpFun(index){
+                var that = this;
+                var r = confirm("确定删除该设备？");
+                if (r==true){
+                    that.contactEqplList.splice(index,1);
+                    // 调用接口删除，重新赋值 that.contactEqplList
+
+                }
+            },
+            saveNewOrderItemsInfo(){
+                var that = this;
+                that.logininf = JSON.parse(localStorage.getItem("logininf"));
+                if (that.partyBaseInfo.partyType == "" || that.partyBaseInfo.partyType == undefined){
+                    loadData('show', '请选择合作方类型', true);
+                    return false;
+                }
+                if (that.partyBaseInfo.partyName == "" || that.partyBaseInfo.partyName == undefined){
+                    loadData('show', '请填写合作方名称', true);
+                    return false;
+                }
+                if (that.partyBaseInfo.partyCode == "" || that.partyBaseInfo.partyCode == undefined){
+                    loadData('show', '请填写合作方代码', true);
+                    return false;
+                }
+                postRequest(cmdUrl + "/cdParty/saveCdParty.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,that.partyBaseInfo,function(data){
+                    if(data != null && data.result != null){
+                        that.cdPartyId = data.result.cdPartyId;
+                        localStorage.setItem("hasCdPartyId",that.cdPartyId);
+                        that.partyBaseInfo = data.result;
+                        localStorage.setItem("hasPartyBaseInfo",JSON.stringify(that.partyBaseInfo));
+                        that.disableSaveParty = '0';
+                        localStorage.setItem("disableSaveParty",'0');
+                        loadData('show', '保存合作商基本信息成功', true);
+                    }else{
+                        loadData('show', '保存合作商信息失败！', true);
+                    }
+                });
+            }
+        },
+        created:function(){
+            var that = this;
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));    //获取下拉数据
+            if(localStorage.getItem("hasPartyBaseInfo") != null){
+                that.partyBaseInfo = JSON.parse(localStorage.getItem("hasPartyBaseInfo"));
+            }
+            if(localStorage.getItem("hasCdPartyId") != null){
+                that.cdPartyId = localStorage.getItem("hasCdPartyId");
+            }
+            if(localStorage.getItem("disableSaveParty") != null){
+                that.disableSaveParty = '0';
+            }
+            // 展示 新增的合作商 联系人、地址、设备
+            if(localStorage.getItem("hasPartyCont") != null){
+                that.partyContactlList = JSON.parse(localStorage.getItem("hasPartyCont"));
+            }
+
+            if(localStorage.getItem("hasPartyLoc") != null){
+                that.locationInfoList = JSON.parse(localStorage.getItem("hasPartyLoc"));
+            }
+            localStorage.removeItem("disableSaveParty0");
+            localStorage.removeItem("hasLocCont");
+            localStorage.removeItem("hasCdLocationId");  // 清除合作商地址cdLocationId（新增一个地址会重新存的，在基本信息页清除之后，再进 新增合作商地址 页面，就是新的新增地址，跳去 新增地址联系人 页面也是新的）
+
+            if(localStorage.getItem("hasPartyEqp") != null){
+                that.contactEqplList = JSON.parse(localStorage.getItem("hasPartyEqp"));
+            }
+
+        }
+    });
+
+    $(function () {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+       /* if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".content.newPartyMain").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+
+        // 返回
+        $(document).on("click","#goBeforePage",function(){
+            window.location.href = "partyHisLists.html";
+        });
+    });
+</script>
+
+</body>
+</html>

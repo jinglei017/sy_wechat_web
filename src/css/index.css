@@ -1,0 +1,230 @@
+body{
+	background: #f3f5f7;
+}
+.header{
+	width: 100%;
+	height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.24rem;
+	color: #fff;
+	position: fixed;
+	top: 0px;
+	z-index: 99;
+}
+.header .headerIcon1{
+	width: 0.96rem;
+	position: absolute;
+	left: 0.23rem;
+	top: 0.13rem;
+
+	cursor: pointer;
+}
+.header .headerIcon1 img{
+	width: 0.36rem;
+	height: 0.36rem;
+	display: block;
+	margin-left: 0.16rem;
+}
+.header .headerIcon1 span{
+	display: block;
+	padding-top: 0.06rem;
+}
+.header .searchInp{
+	width: 4.8rem;
+	padding-right: 0.3rem;
+	height: 0.6rem;
+	line-height: 0.6rem;
+	background: #fff;
+	border-radius: 0.56rem;
+	margin: 0 auto;
+	margin-top: 0.18rem;
+}
+.header .searchInp input{
+	width: 3.8rem;
+	padding-left: 0.3rem;
+	height: 0.6rem;
+	float: left;
+}
+.header .searchInp img{
+	width: 0.42rem;
+	height: 0.42rem;
+	display: block;
+	float: right;
+	padding-top: 0.06rem;
+}
+.header .headerIcon2{
+	position: absolute;
+	right: 0.23rem;
+	top: 0.13rem;
+
+	cursor: pointer;
+}
+.header .headerIcon2 img{
+	width: 0.36rem;
+	height: 0.36rem;
+	display: block;
+	margin: 0 auto;
+}
+.header .headerIcon2 span{
+	display: block;
+	padding-top: 0.06rem;
+}
+
+.swiper-container{
+	position: relative;
+	width: 100%;
+	height: 4.8rem;
+	overflow: hidden;
+}
+.swiper-container .swiper-wrapper{
+	display: flex;
+}
+.swiper-container .swiper-wrapper .swiper-slide{
+	position: relative;
+	flex-shrink: 0;
+}
+.swiper-container .swiper-wrapper .swiper-slide img{
+	width: 100%;
+	height: 4.8rem;
+	display: block;
+}
+
+.swiper-pagination{
+	position: absolute;
+	bottom: 0.2rem;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.swiper-pagination span{
+	width: 0.16rem;
+	height: 0.16rem;
+	float: left;
+	border-radius: 50%;
+	background: #fff;
+	margin-right: 0.16rem;
+}
+.swiper-pagination .swiper-pagination-bullet-active{
+	background: #22bcee;
+}
+.indexContent{
+	display: none;
+}
+.indexContent6{
+	display: none;
+}
+/*
+.orderClassify{
+	padding-bottom: 0.23rem;
+}
+.orderClassify ul{
+	width: 100%;
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+	overflow: hidden;
+	padding-top: 0.2rem;
+	padding-bottom: 0.02rem;
+}
+.orderClassify ul li{
+	width: 25%;
+	box-sizing: border-box;
+	float: left;
+	text-align: center;
+	font-size: 0.28rem;
+	color: #666;
+	line-height: 0.6rem;
+}
+.orderClassify ul li img{
+	width: 0.78rem;
+	height: 0.78rem;
+	margin: 0 auto;
+	display: block;
+
+}*/
+
+.main .selectRole{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(0,0,0,0.5);
+	top: 0rem;
+	left: 0rem;
+	z-index: 999;
+}
+.main .selectRole h3{
+	text-align: center;
+	line-height: 0.88rem;
+	padding-top: 0.3rem;
+	font-weight: normal;
+	border-top: none;
+	color: #fff;
+
+}
+.main .selectRole .selectRoleCon{
+	width: 3.6rem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+.main .selectRole .selectRoleCon ul{
+	border-top: none;
+}
+.main .selectRole ul li{
+	width: 3.6rem;
+	height: 0.88rem;
+	color: #fff;
+	text-align: center;
+	line-height: 0.88rem;
+	border-radius: 0.88rem;
+	background: none;
+	border: none;
+	font-size: 0.3rem;
+	margin-top: 0.6rem;
+	border: 1px solid #fff;
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+}
+.main .selectRole ul li:last-child{
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+}
+.main ul{
+	overflow: hidden;
+	border-top: 1px solid #e5e5e5;
+}
+.main ul li{
+	width: 33.33333%;
+	float: left;
+	padding-top: 0.6rem;
+	padding-bottom: 0.7rem;
+	border-right: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	background: #fff;
+}
+.main ul li:nth-of-type(3n){
+	border-right: none;
+}
+.main ul li a img{
+	width: 0.72rem;
+	height: 0.72rem;
+	display: block;
+	margin: 0 auto;
+}
+.main ul li a .txt{
+	font-size: 0.28rem;
+	color: #666;
+	line-height: 0.6rem;
+	text-align: center;
+}
+.main ul li:last-child{
+	padding-top: 0.1rem;
+	padding-bottom: 0.2rem;
+}
+.main ul li:last-child a img{
+	width: 100%;
+	height: 2.34rem;
+	display: block;
+}

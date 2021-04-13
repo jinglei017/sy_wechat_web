@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>司机位置</title>
+	<link rel="stylesheet" href="css/common.css" />
+
+	<style type="text/css">
+		.header{
+			width: 100%;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			box-sizing: border-box;
+			padding-left: 0.23rem;
+			padding-right: 0.23rem;
+			font-size: 0.3rem;
+			background: #22bcee;
+			color: #fff;
+			position: fixed;
+			top: 0px;
+			z-index: 999;
+		}
+		.header .txt{
+			text-align: center;
+		}
+		.header .returnBtn{
+			width: 0.88rem;
+			height: 0.88rem;
+			position: absolute;
+			left: 0.23rem;
+			background: url(images/return.png) no-repeat left center;
+			background-size: 0.4rem 0.4rem;
+		}
+		.header .right{
+			position: absolute;
+			height: 0.88rem;
+			line-height: 0.88rem;
+			right: 0.23rem;
+			top: 0rem;
+			font-weight: normal;
+		}
+		.driverInf{
+			width: 6.9rem;
+			position: fixed;
+			left: 0.3rem;
+			bottom: 0.23rem;
+			z-index: 99;
+			background: #fff;
+			border-radius: 0.12rem;
+			overflow: hidden;
+		}
+		.driverInf .driverinfTop{
+			overflow: hidden;
+			border-bottom: 1px solid #e5e5e5;
+		}
+		.driverInf .driverinfTop .img{
+			width: 3rem;
+			height: auto;
+			float: left;
+			padding-top: 0.12rem;
+			padding-left: 0.2rem;
+		}
+		.driverInf .driverinfTop .img img{
+			width: 3rem;
+			height: auto;
+			display: block;
+		}
+		.driverInf .driverinfTop .txt{
+			float: left;
+			padding-top: 0.23rem;
+			font-size: 0.26rem;
+			padding-left: 1rem;
+			padding-right: 0.2rem;
+			padding-top: 0.7rem;
+		}
+		.driverInf .driverinfTop .txt span{
+			display: block;
+			font-size: 0.24rem;
+			color: #999;
+			padding-left: 0.1rem;
+		}
+		.driverInf .driverinfTop .txt h5{
+			font-size: 0.3rem;
+			font-weight: normal;
+			color: #000;
+			padding-top: 0.1rem;
+			padding-bottom: 0.06rem;
+			padding-left: 0.1rem;
+		}
+		.driverInf .driverinfTop .txt b{
+			display: block;
+			width: auto;
+			padding: 0.06rem 0.12rem;
+			background: #f1f1f1;
+			font-size: 0.3rem;
+
+		}
+		.driverBottom{
+			font-size: 0.26rem;
+			color: #555;
+			line-height: 0.72rem;
+		}
+		.driverBottom a{
+			width: 50%;
+			height: 0.72rem;
+			line-height: 0.72rem;
+			text-align: center;
+			color: #555;
+			font-size: 0.26rem;
+			display: block;
+			box-sizing: border-box;
+			float: left;
+			color: #22bcee;
+			position: relative;
+			padding-left: 0.3rem;
+		}
+		.driverBottom a img{
+			width: 0.32rem;
+			height: auto;
+			display: inline-block;
+			padding-right: 0.1rem;
+			position: absolute;
+			left: 0.76rem;
+			top: 0.19rem;
+
+		}
+		.driverBottom a:nth-of-type(1){
+			border-right: 1px solid #e5e5e5;
+		}
+		.driverBottom a:nth-of-type(1) img{
+			left: 0.86rem;
+			top: 0.2rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">司机位置</p>
+		<b class="right"></b>
+	</div>
+
+	<div class="driverInf">
+
+	</div>
+	<div class="container" style="width: 100%; height: 100%; position: absolute;" id="container"></div>
+	<div id="panel" style="display: none;"></div>
+	<script src="js/jquery-2.1.0.js"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/env_config.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+        document.write("<s" + "cript type='text/javascript' src='https://webapi.amap.com/maps?v=1.4.6&key=" + AmapQdKey + "&plugin=AMap.Driving'></s" + "cript>");
+	</script>
+	<script type="text/javascript">
+		var getCurrentOrderId = localStorage.getItem("itemOrderId");
+		console.log(getCurrentOrderId);
+		var map = new AMap.Map("container", {
+	        resizeEnable: true,
+	        center: [121.47, 31.23],//地图中心点
+	        mapStyle: 'amap://styles/692385c0456b39aa7ddc41e56c88596f',
+	        zoom: 13 //地图显示的缩放级别
+	  	});
+
+    	function changeMarker(currentPoint){
+    		new AMap.Marker({
+	            map: map,
+	            position: currentPoint,
+	            icon: new AMap.Icon({
+	                size: new AMap.Size(40, 50),  //图标大小
+	                image: "images/car_icon.png",  // 图片路径
+	                imageOffset: new AMap.Pixel(0, -60)
+	            })
+	        });
+    	}
+
+	    //构造路线导航类
+	    var driving = new AMap.Driving({
+	        map: map,
+	        panel: "panel"
+	    });
+	    var logininf = localStorage.getItem("logininf");
+		if(logininf == "" || logininf == null || logininf == undefined  || logininf == "null" || logininf == "undefined"){
+
+		}else{
+			logininf =  JSON.parse(localStorage.getItem("logininf"));
+			var pageInfo = {
+				refId:getCurrentOrderId,
+				refTo:"om_order"
+			}
+			$.ajax({
+				url: omsUrl + '/query/ActInfoDetail?token='+logininf.token+'&timeStamp='+logininf.timeStamp,
+			    type:"post",
+			    contentType: 'application/json',
+			    data: JSON.stringify(pageInfo),
+			    success: function(data) {
+			    	var currentLocationCode = data.result.actCurrent.latLng;
+			    	var waypointsArr = [];
+			    	for(var i = 0; i < data.result.actList.length;i++){
+			    		if(data.result.actList[i].latLng == null || data.result.actList[i].latLng == "null" || data.result.actList[i].latLng == ""){
+
+			    		}else{
+			    			waypointsArr.push([data.result.actList[i].latLng.split(",")[0],data.result.actList[i].latLng.split(",")[1]]);
+			    		}
+			    	}
+			    	var locationCode1 = "";
+			    	var locationCode2 = "";
+			    	var locationCode3 = "";
+			    	var locationCode4 = "";
+			    	$.ajax({
+						//url: omsUrl + '/query/OrderInfoDetail?token='+logininf.token+'&timeStamp='+logininf.timeStamp,
+						url: omsUrl + '/wx/get/OrderInfoDetail?token='+logininf.token+'&timeStamp='+logininf.timeStamp+"&orderId="+getCurrentOrderId,
+					    type:"get",
+					    success: function(data) {
+					    	if(data.result.carDrvEqpNo == "" || data.result.carDrvEqpNo == null){
+					    		data.result.carDrvEqpNo = "暂无车牌信息"
+					    	}
+					    	if(data.result.carDrvContactName == "" || data.result.carDrvContactName == null){
+					    		data.result.carDrvContactName = "暂无司机姓名"
+					    	}
+					    	if(data.result.carDrvEqpName == "" || data.result.carDrvEqpName == null){
+					    		data.result.carDrvEqpName = "暂无设备名称"
+					    	}
+					    	if(data.result.carDrvContactTel == "" || data.result.carDrvContactTel == null){
+					    		data.result.carDrvContactTel = "-"
+					    	}
+					    	if(data.result.carContactTel == "" || data.result.carContactTel == null){
+					    		data.result.carContactTel = "-"
+					    	}
+
+
+					    	var driverinfItem = '<div class="driverinfTop">'+
+									'<div class="txt">'+
+										'<b>'+data.result.carDrvEqpNo+'</b>'+
+										'<h5>'+data.result.carDrvContactName+'</h5>'+
+										'<span>'+data.result.carDrvEqpName+'</span>'+
+									'</div>'+
+									'<p class="img"><img src="images/car.png"/></p>'+
+								'</div>'+
+								'<div class="driverBottom">'+
+									'<a href="tel:'+data.result.carDrvContactTel+'"><img src="images/sj_icon.png" alt="" />联系司机</a>'+
+									'<a href="tel:'+data.result.carContactTel+'"><img src="images/cys_icon.png" alt="" />联系承运商</a>'+
+								'</div>'
+
+					    	$(".driverInf").append(driverinfItem);
+					    	console.log(data);//receiptPartyInfo
+					    	locationCode1 = data.result.sfrLatLng.split(",");  //发货地址
+					    	locationCode3 = data.result.stoLatLng.split(",");  //收货地址
+					    	if(currentLocationCode == null || currentLocationCode == "null" || currentLocationCode == "undefined" || currentLocationCode == undefined || currentLocationCode == ""){
+					    		loadData("show","暂无司机位置信息，将显示收发货两点轨迹",true)
+					    		//currentLocationCode = locationCode1;
+					    		driving.search(new AMap.LngLat(locationCode1[0], locationCode1[1]), new AMap.LngLat(locationCode3[0],locationCode3[1]),{waypoints:waypointsArr});
+					    	}else{
+					    		currentLocationCode = currentLocationCode.split(",");
+					    		console.log(waypointsArr);
+					    		changeMarker([currentLocationCode[0], currentLocationCode[1]]);
+					    		driving.search(new AMap.LngLat(locationCode1[0], locationCode1[1]), new AMap.LngLat(locationCode3[0],locationCode3[1]),{waypoints:waypointsArr});
+					    	}
+					    }
+					})
+
+			    }
+			})
+
+		}
+
+        // 获取当前位置
+        getLocationFun();
+
+		/* 微信中不隐去.header */
+		/*$(function(){
+			var ua = window.navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+				$(".header").show();
+				$(".container").css({
+					"marginTop":"0.88rem"
+				})
+			}
+		})*/
+
+	</script>
+</body>
+</html>

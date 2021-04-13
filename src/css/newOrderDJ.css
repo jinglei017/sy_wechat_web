@@ -1,0 +1,61 @@
+body{background: #f3f5f7;overflow: hidden;}
+.header{width: 100%;height: 0.88rem;line-height: 0.88rem;box-sizing: border-box;padding-left: 0.23rem;padding-right: 0.23rem;font-size: 0.3rem;background: #22bcee;color: #fff;position: fixed;top: 0;z-index: 999;}
+.header .txt{text-align: center;}
+.header .returnBtn{width: 0.88rem;height: 0.88rem;position: absolute;left: 0.2rem;background: url(../images/return.png) no-repeat left center;background-size: 0.4rem 0.4rem;}
+.header .right{position: absolute;height: 0.88rem;line-height: 0.88rem;right: 0.23rem;top: 0;font-weight: normal;}
+#newOrderApp{width: 100%;height: 100%;}
+.main{padding-top: 1.64rem;width: 100%;height: 100%;box-sizing: border-box;overflow-y: auto;position: relative;}
+.main .mapDiv{width: 100%;height: 100%;background-image: url('../images/xdbg.png');background-size: 100%;opacity: 0.2}
+
+.main .contDivEdit{ position: absolute;top: 2.43rem;width: 100%;background: #fff;box-shadow: 0 -0.08rem 0.8rem 0.08rem rgba(0,0,0,.08);}
+.main .contDivEdit.contDivEditTop1{top: 1.38rem !important;}
+.main .contDivEdit.contDivEditTop2{top: 3.78rem !important;}
+.main .contDivEdit .contDivEditCont{ position: relative;padding: .4rem .64rem .72rem;}
+.main .contDivEdit .contDivEditIcon{width: 0.55rem;position: absolute;left: 0;top: 0.4rem;}
+.main .contDivEdit .contDivEditIcon:before{width: 1.1rem;height: 0.9rem;text-align: center;font-size: 0.26rem;color: #fff;
+    padding: 0.06rem 0.1rem;border-top-right-radius: .08rem;border-bottom-right-radius: .08rem;box-shadow: 0.05rem 0.05rem 0.05rem rgba(0,0,0,.12);}
+.main .contDivEdit .contDivEditIcon.contDivEditIcon0:before{content: "发";background: #000;}
+.main .contDivEdit .contDivEditIcon.contDivEditIcon1:before{content: "收";background: #dc1e32;}
+.main .contDivEdit .contDivEditIcon.contDivEditIcon2:before{content: "单";background: #2ea8fb;}
+.main .contDivEdit .contDivEditTit{font-size: .35rem;font-weight: 400;}
+.main .contDivEdit .contDivEditUl{padding-top: 0.3rem;}
+.main .contDivEdit .contDivEditUl li{ height: 0.8rem;  position: relative;}
+.main .contDivEdit .contDivEditUl li.contDivEditLiSelectLi{ height: 2.4rem;}
+.main .contDivEdit .contDivEditUl li .contDivEditLi1{display:inline-block;height: 0.8rem;line-height: .8rem;width: 1.8rem;float: left;overflow: hidden;color: #333;font-size: .27rem;}
+.main .contDivEdit .contDivEditUl li.repuiredTits:before{ position: absolute;left: -0.3rem;
+    top: 0.2rem; text-align: center;font-size: 0.3rem;color: red;padding: 0.06rem 0.1rem;content: "*";}
+.main .contDivEdit .contDivEditUl li .contDivEditLi2{display:inline-block;height: 0.8rem;line-height: .8rem;width: calc(100vw - 0.64rem - 0.64rem - 1.8rem);float: left;}
+.main .contDivEdit .contDivEditUl li .contDivEditLi2.contDivEditLiSelect select{display:block;line-height: .6rem;width: 100%;float: left;}
+
+.main .contDivEdit .contDivEditUl li input,.main .contDivEdit .contDivEditUl li select{ width: 100%;padding: .08rem 0;font-size: .27rem;color: #666;
+    word-break: break-word;box-sizing: border-box;-webkit-appearance: none;outline: none;border-radius: 0;background: none;border: 0;border-bottom: 1px solid #d6d6d6;}
+/*.main .contDivEdit .contDivEditUl li option{font-size: .27rem;color: #666;height: 0.8rem;line-height: .8rem;}*/
+.main .contDivEdit .contDivEditUl li.textareaLi{height: 1.3rem;}
+.main .contDivEdit .contDivEditUl li.textareaLi .contDivEditLi2{height: 1.3rem;}
+.main .contDivEdit .contDivEditUl li textarea{width: 100%;height: 1.3rem;padding: .08rem 0;font-size: .27rem;color: #333;resize:none;
+    word-break: break-word;box-sizing: border-box;-webkit-appearance: none;outline: none;border-radius: 0;background: none;border: 0;border-bottom: 1px solid #d6d6d6;}
+.main .contDivEdit .contDivEditNext{position: absolute;bottom: -0.4rem;right: 0;width: 1rem;height: 0.8rem;background-color: #716f6f;color: #fff;text-align: center;line-height: 0.8rem;}
+.main .contDivEdit .contDivEditNext img{margin-top: 0.08rem;}
+.main .contDivEdit .contDivEditNext.contDivEditBtn{right: calc(50vw - 0.5rem);background-color: #22bcee;}
+
+.main .contDivHas{ position: absolute;top: 1.18rem; width:92%;margin: 0 4%;}
+.main .contDiv .contDivItem{height: 1.1rem;padding: 0.12rem;border-bottom: 1px solid #969595;border-top: 1px solid #969595;background-color: #fff;border-radius: 0.12rem;}
+.main .contDiv .contDivItem:nth-of-type(1){border-bottom-left-radius: 0;border-bottom-right-radius: 0;border-top: none;}
+.main .contDiv .contDivItem:nth-of-type(2){border-top-left-radius: 0;border-top-right-radius: 0;border-bottom: none;}
+.main .contDiv .contDivItem:nth-of-type(1)>li.float_l:nth-of-type(2){width: calc(100% - 0.55rem);}
+.main .contDiv .contDivItem>li{height: 0.9rem;line-height: 0.9rem;}
+.main .contDiv .contDivItem>li.float_l{font-size: 0.28rem;}
+.main .contDiv .contDivItem>li img.imgRig{ display:inline-block;width: 0.4rem;height: 0.4rem;float: right}
+.main .contDiv .contDivItem>li.orderIcons{width: 0.55rem;}
+.main .contDiv .contDivItem>li.orderIcons:before{width: 1.1rem;height: 0.9rem;text-align: center;font-size: 0.26rem;color: #fff;padding: 0.06rem 0.1rem;border-radius: .08rem;}
+.main .contDiv .contDivItem>li.orderBase:before{content: "发";background: #000;}
+.main .contDiv .contDivItem>li.orderTo:before{content: "收";background: #dc1e32;}
+.main .contDiv .contDivItem>li.hasContentLi{width: 90%;line-height: 0.58rem;}
+
+.textSuo{display:block;width: 100%;height:0.45rem;text-align:left;overflow: hidden;word-break: break-all;text-overflow: ellipsis;
+    display: -webkit-box;display: -moz-box;-webkit-box-orient: vertical;-moz-box-orient: vertical;-webkit-line-clamp: 1;-moz-line-clamp: 1; font-size: 0.28rem;}
+.textSuo span.spanCol{color: #716f6f;}
+
+.checkSave{width: .24rem;height: .24rem;border: 1px solid #000; border-radius: 3px;}
+.activeCheck{background: url("../images/icon_5.png");background-size: 100% 100%;}
+.main .contDivEdit .contDivEditUl .checkSaveParent{color: #666;margin:.3rem 0;padding-right: .5rem;float:right;}

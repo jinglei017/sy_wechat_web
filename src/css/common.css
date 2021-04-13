@@ -1,0 +1,260 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+select{
+	appearance:none;
+   -moz-appearance:none;
+   -webkit-appearance:none;
+   border: none;
+   box-shadow: none;
+   font-size: 0.28rem;
+   background: none;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body {
+	font-family: "Microsoft Yahei";
+	font-size: .28rem;
+	color: #000;
+	-webkit-font-smoothing: antialiased;
+	background: #fff;
+}
+.butOperatePermission{
+    display: none;
+}
+input,img,textarea{
+	outline: none;
+	border: 0;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-appearance: none;
+	background: none;
+	font-size: 0.28rem;
+	font-family: "微软雅黑";
+}
+a {
+	text-decoration: none;
+	color: #000;
+	-webkit-tap-highlight-color: transparent;
+}
+
+a{
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0)}
+li{
+	list-style: none;
+}
+input:disabled{
+	color: #333 !important;
+}
+input,
+img,
+textarea {
+	outline: 0;
+	border: 0;
+	color: #666;
+}
+input{
+	-webkit-appearance: none;
+	color: #666;
+}
+button {
+	background: none;
+	outline: none;
+}
+h1,h2,h3,h4{
+	font-weight: normal;
+}
+i {
+	font-style: normal;
+}
+
+u {
+	text-decoration: none;
+}
+
+em {
+	font-style: normal;
+	font-weight: normal;
+}
+
+/*header-back*/
+
+.header-back {
+	width: 100%;
+	height: .88rem;
+	line-height: .88rem;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+}
+
+
+.markmsg{
+	padding-left: 0.24rem;
+	padding-right: 0.24rem;
+	padding-top: 0.16rem;
+	padding-bottom: 0.16rem;
+	line-height: 0.36rem;
+	border-radius: 0.12rem;
+	background:rgba(0,0,0,0.3);
+	font-size: 0.28rem;
+	letter-spacing: 0.01rem;
+	color: #fff;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 60%;
+	z-index: 999;
+	display: none;
+}
+
+/*浮动*/
+.float_l{float: left;}
+.float_r{float: right;}
+
+/*文字居中，偏左，偏右*/
+.text_l{text-align: left;}
+.text_c{text-align: center;}
+.text_r{text-align: right;}
+
+/* display */
+.display_none{display: none;}
+.display_in_b{display: inline-block;}
+.display_b{display: block;}
+
+/* background-color */
+.bg_white{background-color: #fff;}
+
+/*color*/
+.color_blue{color: #22bcee;}
+.color_blank{color: #000;}
+
+/*font*/
+.font_28{font-size: 0.28rem;}
+
+/*左箭头*/
+.page_title_l_arrow{
+    display:inline-block;width:0;height:0;
+    border-bottom:6px solid #fff;
+    border-left:6px solid #22bcee;
+    border-top:6px solid #fff;
+    border-right:6px solid #fff;
+}
+
+/*图表*/
+.pageCharts{margin: 0.2rem 0;}
+
+/*查询内容为空*/
+.contentISBlank{width: 100%;height: 2rem;line-height: 2rem;text-align: center;}
+
+/*width*/
+.w_100{width: 100%;}
+.w_60{width: 60%;}
+.w_50{width: 50%;}
+.w_40{width: 40%;}
+.w_30{width: 30%;}
+.w_20{width: 20%;}
+
+/*height*/
+.h_100{height: 100%;}
+
+
+/* 预加载、提示框 */
+.loading{
+	position: fixed;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*background: rgba(0,0,0,0.2);*/
+	z-index: 1000;
+	display: none;
+}
+.loading .fixed_content{
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: 70%;
+	padding: 0.15rem 0.12rem;
+	box-sizing:  border-box;
+	border-radius: 0.04rem;
+	line-height: 0.45rem;
+	background: rgba(0,0,0,.6);
+	text-align: center;
+	color: #fff;
+}
+
+.ajax-loder-wrap{
+	text-align: center;
+	line-height: 0.56rem;
+	color: #666;
+	font-size: 0.28rem;
+}
+.meauShowPermission{
+	display: none;
+}
+
+
+.ajax-load-pupup{
+	width:100%;
+	height:100%;
+	position:absolute;
+	left:0;
+	top:0;
+	background:rgba(0,0,0,0.3);
+	z-index: 1010;
+}
+.ajax-load-pupup .ajax-load-hint{
+	width: 70%;
+	position: absolute;
+	left: 15%;
+	top: 50%;
+	transform: translateY(-160px);
+	background: rgba(0,0,0,0.4);
+	border-radius: 12px;
+	text-align: center;
+	font-size: 15px;
+	font-size: 0.3rem;
+
+	letter-spacing: 2px;
+	color: #f2f2f2;
+	padding: 1%;
+	z-index: 1011;
+}
+.ajax-load-pupup .ajax-load-hint img{
+	/*width: 45px;
+	height: 45px;*/
+	width: 15%;
+	height: 45%;
+
+	display: block;
+	padding-top: 5px;
+	float: left;
+	padding-left: 40%;
+}
+.ajax-load-pupup .ajax-load-hint img.closeTip{
+	display: none;
+	/*width: 21px;
+	height: 21px;*/
+	width: 8%;
+	height: 25%;
+
+	position: absolute;
+	top: 0;
+	right: 10px;
+	z-index: 1012;
+}

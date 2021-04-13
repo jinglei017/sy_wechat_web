@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" href="css/vehicle.css" />
+    <style>
+        body{overflow: hidden;}
+        .orderList.vehicleOrderList .listCon{height: 5.68rem;overflow: auto;}
+    </style>
+</head>
+
+<body>
+
+<div id="vehicleApp">
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+        <p class="txt"></p>
+        <p class="right">
+            <img src="images/refresh.png" class="searchBtn" alt="" v-on:click="refreshFun()"/>
+        </p>
+    </div>
+    <div class="main">
+
+        <div class="vehicleMapDivs">
+            <!--高德地图-->
+            <div class="truckDriveContMap" id="container" style="display: none;"></div>
+            <!--百度地图-->
+            <div class="truckDriveContMap" id="allmap"></div>
+            <!--详细路线-->
+            <ul class="truckDriveContBtn">
+                <li v-on:click="showLayerFun()">详细路线</li>
+                <li v-on:click="saveOrderSortingFun()">保存排序</li>
+            </ul>
+
+        </div>
+
+        <div class="orderList carDetails vehicleOrderList">
+            <ul class="vehicleListTitle">
+                <li>顺序-订单号</li>
+                <li>件.毛.体</li>
+                <li>状态</li>
+            </ul>
+            <div class="listCon driverOrderListRowDrop" style="padding-bottom: 1.1rem;" v-if="driverOrderList.length != 0">
+                <ul class="listItem" v-for="(driverOrderItem,index) in driverOrderList" v-bind:orderid="driverOrderItem.omOrderId" v-bind:orderstatus="driverOrderItem.completeStatus == '1' ? 1 : 0" v-on:click="orderInfoFun(driverOrderItem)">
+                    <li>{{driverOrderItem.orderNo}} <span class="associationNo">原单号：{{driverOrderItem.customerOriginalNo}}</span></li>
+                    <li>{{driverOrderItem.totalQty}}*{{driverOrderItem.totalWeight}}*{{driverOrderItem.totalVolume}}</li>
+                    <li class='notdone' v-if="driverOrderItem.completeStatus == 0">未开始</li>
+                    <li class='done' v-if="driverOrderItem.completeStatus == 1">已完成</li>
+                    <li class='notdone' v-if="driverOrderItem.completeStatus == 2">处理中</li>
+                    <li class='notdone' v-if="driverOrderItem.completeStatus == 3">配送中</li>
+                    <li class='notdone' v-if="driverOrderItem.completeStatus == 'INIT'">初始化</li>
+                    <div class="stoPartyLi"><span class="seqNo">{{driverOrderItem.seq}}-</span>收货商：{{driverOrderItem.stoPartyName}}</div>
+                </ul>
+            </div>
+            <div class="listCon" style="padding-bottom: 1.1rem;" v-if="driverOrderList.length == 0">
+                <p class="noContent" style="width: 3rem; height: auto; margin: 0 auto; padding-top: 0.36rem;">
+                    <img src="images/noContent.png" alt=""  style="width: 3rem; height: auto; display: block;"/>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!--整车件毛体-->
+    <div class="carAmountInf vehicleCarAmountInf"></div>
+
+    <!--路线规划 按钮-->
+    <img src="images/pathImg.png" class="pathImg" v-on:click="sortOrderSortingFun()" v-if="driverOrderList.length != 0">
+
+    <!--路线规划 详细-->
+    <div class="searchLayer vehicleSearchLayer">
+        <div class="searchCon">
+            <p class="searchbtn">
+                <span class="bg_white searchspan" v-on:click="closeLayerFun()">关闭</span>
+            </p>
+            <!--高德地图-->
+            <div id="panel" style="display: none;"></div>
+            <!--百度地图-->
+            <div id="r-result"></div>
+
+        </div>
+    </div>
+</div>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='https://webapi.amap.com/maps?v=1.4.6&key=" + AmapQdKey + "&plugin=AMap.TruckDriving'></s" + "cript>");
+</script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='https://api.map.baidu.com/api?v=2.0&ak=" + BmapQdAk + "'></s" + "cript>");
+</script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="js/Sortable.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/drivePathOrder.js?v=" + verson + "'></s" + "cript>");
+</script>
+
+</body>
+</html>

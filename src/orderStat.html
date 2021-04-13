@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>我的订单</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" href="css/orderstat.css" />
+
+</head>
+
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">我的订单</p>
+	</div>
+	<!--订单号   类型  完成状态   操作-->
+	
+	<div class="main">
+		<div class="todayOrder">
+			<h3 class="title">今日订单</h3>
+			<ul class="con todayStat">
+				<li>
+					<p class="left">
+						订单总数
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						完成订单
+					</p>
+					
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						在途订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						异常订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+			</ul>
+			
+			<h3 class="title">前一周订单</h3>
+			<ul class="con weekStat">
+				<li>
+					<p class="left">
+						订单总数
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						完成订单
+					</p>
+					
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						在途订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						异常订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+			</ul>
+			
+			<h3 class="title">本月订单</h3>
+			<ul class="con monthStat">
+				<li>
+					<p class="left">
+						订单总量
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						完成订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						在途订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+				<li>
+					<p class="left">
+						异常订单
+					</p>
+					<p class="line">
+						<i style="width: 1%;"></i>
+					</p>
+					<p class="num"></p>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="footer" style="display: none;">
+		<ul>
+			<li>
+				<a href="javascript:;">库存</a>
+			</li>
+			<li class="active">
+				<a href="javascript:;">订单</a>
+			</li>
+			<li>
+				<a href="javascript:;">分析</a>
+			</li>
+		</ul>
+	</div>
+
+	<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+        document.write("<s" + "cript type='text/javascript' src='js/orderStat.js?v=" + verson + "'></s" + "cript>");
+	</script>
+
+</body>
+</html>

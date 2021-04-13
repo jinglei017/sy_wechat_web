@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>异常订单</title>
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/mui.picker.min.css" />
+	<link rel="stylesheet" href="css/allOrder.css" />
+	<!--<link rel="stylesheet" href="css/mui.min.css" />-->
+    <style>
+        .main{padding-bottom:0;overflow-y: auto}
+        .main .orderCon{height: auto;}
+    </style>
+
+</head>
+<body>
+	
+	<div class="header">
+		<a href="javascript:;" class="returnBtn"  onclick="javascript:history.back(-1)"></a>
+		<p class="txt">异常订单</p>
+		<p class="right right1">
+			<img src="images/search1.png" class="searchBtn" alt="" />
+		</p>
+	</div>
+	
+	<div class="searchLayer">
+		<div class="searchCon">
+			<ul>
+				<li>
+					<span>订单号:</span>
+					<input type="text" class="ordernum orderNo" placeholder="请输入订单号" />
+				</li>
+				<li>
+					<span>追踪号:</span>
+					<input type="text" class="ordernum trackingNo" placeholder="请输入追踪号" />
+				</li>
+				<li>
+					<span>开始时间:</span>
+					<input type="选择日期时间" placeholder="例：2017-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+				</li>
+				<li>
+					<span>结束时间:</span>
+					<input type="选择日期时间" placeholder="例：2017-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='endTime' class="btn"/>
+				</li>
+				<li>
+					<span>完成状态:</span>
+					<select name="status" class="statusSelect">
+						<option value="">全部</option>
+						<option value="DIST">接单</option>
+						<option value="COFM">装车</option>
+						<option value="LONT">配送</option>
+						<option value="ACPT">签收</option>
+					</select>
+				</li>
+			</ul>
+			<div class="searchBox">
+				<p class="searchbtn">
+					查询
+				</p>
+				<div class="mouthSearch">
+					<p class="currentMouth active">最近三个月</p>
+					<p class="paseMouth">过去三个月</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="main">
+		<div class="orderCon orderCon5">
+			<ul class="orderList" style="margin-bottom: 0px;">
+				<!--<li>
+					<div class="right">
+						<p class="ordernum">订单号：810-597889-01</p>
+						<p class="shipAddress">
+							 重量：2000kg 体积：123cm3
+						</p>
+						<p class="receiverAddress">
+							客户：百联  收货地址：科盛路216科盛路216科盛路216科盛路216科盛路216
+						</p>
+					</div>
+					<div class="orderHandle">
+						<a href="javascript:;" class="truck">签收</a>
+						<p class="photo">
+							<img src="images/cameraIcon.png" alt="" />
+							<span class="txt">上传签收单</span>
+						</p>
+					</div>
+					<p class="round"></p>
+				</li>-->
+			</ul>
+		</div>
+	</div>
+	
+	<div class="maskLayer">
+		<div class="popup3">
+			<div class="popupCon">
+				<h3 class="infHint">订单详细信息 <a href="javascript:;" class="closeorderinf"></a></h3>
+				<div class="popuptitle">
+					<ul>
+						
+					</ul>
+				</div>
+				<div class="orderSort">
+					<ul class="ordersortTitle">
+						<li>品名</li>
+						<li>数量（件）</li>
+						<li>规格</li>
+					</ul>
+					<div class="ordersortList">
+						<!--<ul>
+							<li>牛前腱</li>
+							<li>x60</li>
+							<li>1970</li>
+						</ul>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="popup6">
+			<div class="popupTitle">
+				<a href="javascript:;"></a>
+			</div>
+			<div class="swiper-container">
+			    <ul class="swiper-wrapper imgList">
+			      
+			    </ul>
+			    <div class="swiper-pagination"></div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="markmsg">订单已接受</div>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/swiper-4.2.6.min.js"></script>
+	<script type="text/javascript" src="js/env_config.js"></script>
+	
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	
+	<script src="js/mui.js"></script>
+	<script src="js/mui.picker.min.js"></script>
+	<script>
+		(function($) {
+			$.init();
+			var result = $('#result')[0];
+			var btns = $('.btn');
+			var flag = true;
+			btns.each(function(i, btn) {
+				btn.addEventListener('tap', function() {
+					var that = this;
+					setTimeout(function(){
+						flag = true;
+					},100);
+					if(flag){
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							that.value = rs.text;
+							picker.dispose();
+						});
+						
+						flag  = false;
+					}
+					
+				}, false);
+			});
+		})(mui);
+	</script>
+	
+	<script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+		document.write("<s" + "cript type='text/javascript' src='js/abnormal.js?v=" + verson + "'></s" + "cript>");
+	</script>
+</body>
+</html>

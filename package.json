@@ -1,0 +1,21 @@
+{
+  "name": "wechat-web",
+  "version": "1.0.0",
+  "description": "clep backend admin web",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason.Yang",
+  "license": "ISC",
+  "devDependencies": {
+    "generator-env-config": "0.0.2",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-replace": "^0.8.0",
+    "grunt-requirejs": "^0.4.2",
+    "grunt-zip": "^0.16.2"
+  }
+}

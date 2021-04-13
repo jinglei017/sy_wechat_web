@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>关于我们</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="css/aboutUs.css" />
+
+</head>
+
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">关于我们</p>
+	</div>
+	<div class="main">
+		<div class="aboutUs">
+			<p class="pic" style="text-align: center;"><img src="images/logo_2.png" alt="" /></p>
+<!--			<h3>VTMS</h3>-->
+			<p class="desc">VTMS秉承“客户至上、服务领先”的经营理念，以客户为中心随时候命、持续创新，坚持自建平台、搭建最优线路、优化运力成本，
+                    为客户提供快速高效、 便捷及时、安全可靠的服务体验。为客户提供定制化的配送方案，并在这一过程中提供最可靠和高效的配送和网络管理方案为客户及社会创造价值。</p>
+		</div>
+	</div>
+	<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    </script>
+	<script type="text/javascript">
+		$(function () {
+			/* 微信中不隐去.header */
+			var ua = window.navigator.userAgent.toLowerCase();
+			/*if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				$(".header").show();
+				$(".main").css({
+					"marginTop": "0.88rem"
+				})
+			}*/
+            // 获取位置信息上传
+            getLocationFun();
+		})
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我要下单</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/newOrderSuccess.css" />
+</head>
+<body>
+
+<div id="newOrderApp">
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="goIndexPage()"></a>
+        <p class="txt">确认信息</p>
+    </div>
+    <div class="main">
+        <div class="imgDiv">
+            <img src="images/success.jpg" alt="">
+            <h4>订单提交成功</h4>
+        </div>
+        <button class="overDiv" v-on:click="overTo()">完成</button>
+        <button class="continueDiv" v-on:click="continueTo()">继续下单</button>
+    </div>
+</div>
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script>
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {},
+        methods:{
+            //完成
+            overTo(){
+                window.location.href = "index.html";
+            },
+            //继续下单
+            continueTo(){
+                window.location.href = "newOrderDJ.html";
+            },
+            //返回上一页
+            goIndexPage(){
+                window.location.href = "newOrderDJ.html";
+            }
+        }
+    });
+
+    $(function(){
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+        }*/
+    })
+</script>
+</body>
+</html>

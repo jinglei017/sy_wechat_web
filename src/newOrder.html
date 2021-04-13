@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我要下单</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/newOrder.css" />
+</head>
+<body>
+
+    <div id="newOrderApp">
+        <div class="header">
+            <a href="javascript:;" class="returnBtn" v-on:click="goIndexPage('0')"></a>
+            <p class="txt">我要下单</p>
+        </div>
+
+        <div class="main">
+            <div class="mapDiv" id="mapDiv"></div>
+
+            <div class="contDiv" style="border:0">
+                <ul class="contDivItem noContDiv" style="border:1px solid #dadada">
+                    <li class="float_l orderIcons orderBase"></li>
+                    <li class="float_l noContentLi goOrderBase">
+                        请填写订单基本信息
+                    </li>
+                </ul>
+                <ul class="contDivItem hasContDiv" style="border:1px solid #dadada">
+                    <li class="float_l orderIcons orderBase"></li>
+                    <li class="float_l hasContentLi goOrderBase ">
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{reserveNum}}</span>
+                                <span style="float: right;padding-right:.25rem;">运输单 | {{reserveType}}</span>
+                            </div>
+                        </div>
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{reserveJian}}*{{reserveMao}}*{{reserveTi}}&nbsp;&nbsp;|&nbsp;&nbsp;{{reserveValue}}</span>
+                                <span style="float: right;padding-right:.25rem;">{{reserveOverTime}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="contDivItem noContDiv" style="border:1px solid #dadada;margin-top: -1px;">
+                    <li class="float_l orderIcons orderFrom"></li>
+                    <li class="float_l noContentLi goOrderFrom">
+                        请填写发货商信息
+                    </li>
+                    <!--<li class="float_r goPartyHisLists orderFroms">通讯录</li>-->
+                </ul>
+                <ul class="contDivItem hasContDiv hasContDivLis" style="border:1px solid #dadada;margin-top: -1px">
+                    <li class="float_l orderIcons orderFrom"></li>
+                    <li class="float_l hasContentLi goOrderFrom">
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{shipperParty.partyName}}</span>
+                            </div>
+                        </div>
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{shipperPartyContact.contactName}}</span>&nbsp;&nbsp;
+                                <span>{{shipperPartyContact.contactTel}}</span>
+                            </div>
+                        </div>
+                        <div class="contDivItemAddress">
+                            <span>{{shipperPartyLocation.address}}</span>
+                        </div>
+                    </li>
+                    <!--<li class="float_r goPartyHisLists orderFroms">通讯录</li>-->
+                </ul>
+                <ul class="contDivItem noContDiv" style="border:1px solid #dadada;border-top: 0">
+                    <li class="float_l orderIcons orderTo"></li>
+                    <li class="float_l noContentLi goOrderTo">
+                        请填写收货商信息
+                    </li>
+                    <!--<li class="float_r goPartyHisLists orderTos">通讯录</li>-->
+                </ul>
+                <ul class="contDivItem hasContDiv hasContDivLis" style="border:1px solid #dadada;border-top: 0">
+                    <li class="float_l orderIcons orderTo"></li>
+                    <li class="float_l hasContentLi goOrderTo">
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{receiptParty.partyName}}</span>
+                            </div>
+                        </div>
+                        <div class="textSuo">
+                            <div class="textSuo1">
+                                <span>{{receiptPartyContact.contactName}}</span>&nbsp;&nbsp;
+                                <span>{{receiptPartyContact.contactTel}}</span>
+                            </div>
+                        </div>
+                        <div class="contDivItemAddress">
+                            <span>{{receiptPartyLocation.address}}</span>
+                        </div>
+                    </li>
+                    <!--<li class="float_r goPartyHisLists orderTos">通讯录</li>-->
+                </ul>
+                <ul class="contDivItem hasContDiv" style="border:1px solid #dadada;border-top: 0;">
+                    <li class="float_l orderIcons orderAdd"></li>
+                    <li class="float_l noContentLi goOrderAdd" style="color: #000;display: -webkit-flex;-webkit-justify-content: space-between">
+                        <span>{{orderAddName}}&nbsp;|&nbsp;{{orderAddCode}}</span>
+                        <span>{{orderAddQty}}*{{orderAddWeight}}*{{orderAddVolume}}&nbsp;|&nbsp;{{orderAddVal}}</span>
+                        <span style="padding-right: .25rem;">更多</span>
+                    </li>
+                </ul>
+                <button class="contDivItemBut">新增货品</button>
+            </div>
+
+            <div class="resetOrderBtn">下单</div>
+        </div>
+
+    </div>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/env_config.js" type="text/javascript"></script>
+    <script src="js/vue.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+        document.write("<s" + "cript type='text/javascript' src='https://webapi.amap.com/maps?v=1.4.6&key=" + AmapQdKey + "&plugin=AMap.Geocoder'></s" + "cript>");
+    </script>
+    <script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='https://webapi.amap.com/maps?v=1.4.6&key=" + AmapQdKey + "&plugin=AMap.Driving'></s" + "cript>");
+    </script>
+    <script>
+        loadData('show');
+        var map,dictListDatas = [],partyListDatas = []; // 地图，基础数据
+        var omOrderAllInfo =  JSON.parse(localStorage.getItem("omOrderAllInfo"));
+        if(omOrderAllInfo != "" && omOrderAllInfo != null){
+            if(omOrderAllInfo.shipperPartyInfo.location.latLng != null && omOrderAllInfo.shipperPartyInfo.location.latLng != undefined) {
+                var OrderFromlatLng = omOrderAllInfo.shipperPartyInfo.location.latLng.split(',');
+            }
+            if(omOrderAllInfo.receiptPartyInfo.location.latLng != null && omOrderAllInfo.receiptPartyInfo.location.latLng != undefined) {
+                var OrderTolatLng = omOrderAllInfo.receiptPartyInfo.location.latLng.split(',');
+            }
+        }
+        $(function () {
+            // 获取当前位置
+            getLocationFun();
+
+            /* 微信中不隐去.header */
+            var ua = window.navigator.userAgent.toLowerCase();
+            // if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            //     $(".header").show();
+            //     $(".main").css({
+            //         "marginTop":"0.88rem"
+            //     })
+            // }
+            map = new AMap.Map('mapDiv', {
+                resizeEnable: true,
+                center: [121.468808,31.222616],  // 上海
+                mapStyle: 'amap://styles/692385c0456b39aa7ddc41e56c88596f',
+                zoom: 13
+            });
+
+            var userPositionMarker,addNewOrderInfsTimes = 0; //“下单”点，点击“下单”点的次数
+            markUserPosition();
+            // 标记点
+            function markUserPosition(){
+                if(OrderFromlatLng != null && OrderTolatLng != null){
+                    var OrderCenterlatLng0 = (OrderFromlatLng[0]*1 + OrderTolatLng[0]*1)/2;
+                    var OrderCenterlatLng1 = (OrderFromlatLng[1]*1 + OrderTolatLng[1]*1)/2;
+                    map.setZoomAndCenter(11, [OrderCenterlatLng0,OrderCenterlatLng1]);
+                    // var driving = new AMap.Driving({
+                    //     map: map,
+                    //     panel: "panel"
+                    // });
+                    // driving.search(new AMap.LngLat(OrderFromlatLng[0], OrderFromlatLng[1]), new AMap.LngLat(OrderTolatLng[0], OrderTolatLng[1]), function(status, result) {
+                    //
+                    // });
+                }
+                lineArr = new Array();
+                if(OrderFromlatLng != null) {
+                    userPositionMarker = new AMap.Marker({
+                        map: map,
+                        position: [OrderFromlatLng[0], OrderFromlatLng[1]]
+                    });
+                    lineArr.push(new AMap.LngLat(OrderFromlatLng[0], OrderFromlatLng[1]));
+                }
+                if(OrderTolatLng != null) {
+                    userPositionMarker = new AMap.Marker({
+                        map: map,
+                        position: [OrderTolatLng[0], OrderTolatLng[1]]
+                    });
+                    lineArr.push(new AMap.LngLat(OrderTolatLng[0], OrderTolatLng[1]));
+                }
+                var polyline = new AMap.Polyline({
+                    map:map,
+                    path:lineArr,
+                    strokeColor:"#ed900e",//线颜色
+                    strokeOpacity:1,//线透明度
+                    strokeWeight:3,//线宽
+                    strokeStyle:"solid",//线样式
+                });
+                // userPositionMarker.on('click', userPositionMarkerClick);
+                // userPositionMarker.emit('click', {target: userPositionMarker});
+            }
+            $(".resetOrderBtn").click(function(){
+                userPositionMarkerClick();
+                submitNewOrderInfo();
+            })
+            function submitNewOrderInfo(){
+                var logininf = JSON.parse(localStorage.getItem("logininf"));
+                if(JSON.parse(localStorage.getItem("newOrderBaseInfo")) != null && JSON.parse(localStorage.getItem("newOrderFromInfo")) != null && JSON.parse(localStorage.getItem("newOrderToInfo")) != null){
+                    var omOrderId = localStorage.getItem("omOrderId");
+                    getRequest(omsUrl + "/save/submitOrderInfo?token="+logininf.token+"&timeStamp="+logininf.timeStamp+"&omOrderId="+omOrderId,function(data){
+                        if(data.result != null){
+                            var submitNewOrderInfoShow = '0';
+                            var submitNewOrderInfoPar = '1';
+                            localStorage.setItem("submitNewOrderInfoPar",'1');
+                            window.location.href = "newOrderSuccess.html";
+                        }else{
+                            loadData("show","订单提交失败！",true)
+                        }
+                    })
+                }else if(JSON.parse(localStorage.getItem("newOrderBaseInfo")) == null){
+                    loadData('show', '请填写订单基本信息', true);
+                    return false;
+                }else if(JSON.parse(localStorage.getItem("newOrderFromInfo")) == null){
+                    loadData('show', '请填写发货商信息', true);
+                    return false;
+                }else if(JSON.parse(localStorage.getItem("newOrderToInfo")) == null){
+                    loadData('show', '请填写收货商信息', true);
+                    return false;
+                }
+            }
+            // 标记点的点击事件
+            function userPositionMarkerClick(){
+                addNewOrderInfsTimes += 1;
+                if(addNewOrderInfsTimes > 1){
+                    var logininf = JSON.parse(localStorage.getItem("logininf"));
+                    if(JSON.parse(localStorage.getItem("newOrderBaseInfo")) == null){
+                        loadData('show', '请填写订单基本信息', true);
+                        return false;
+                    }
+                    if(JSON.parse(localStorage.getItem("newOrderFromInfo")) == null){
+                        loadData('show', '请填写发货商信息', true);
+                        return false;
+                    }
+                    if(JSON.parse(localStorage.getItem("newOrderToInfo")) == null){
+                        loadData('show', '请填写收货商信息', true);
+                        return false;
+                    }
+                    // 新增订单（保存订单）
+                    var orderHeadModel = {};
+                    var orderDetail = JSON.parse(localStorage.getItem("newOrderBaseInfo"));
+                    delete(orderDetail["orderFormTenantName"]);
+                    orderHeadModel.order = orderDetail;
+                    orderHeadModel.shipperPartyInfo = JSON.parse(localStorage.getItem("newOrderFromInfo"));
+                    orderHeadModel.receiptPartyInfo = JSON.parse(localStorage.getItem("newOrderToInfo"));
+                    postRequest(omsUrl + "/inster/omOrderHeadInfo?token="+logininf.token+"&timeStamp="+logininf.timeStamp,orderHeadModel,function(data){
+                        if(data.result != null){
+                            var omOrderId = data.result.order.omOrderId;
+                            localStorage.setItem("omOrderId",omOrderId);
+                            app.submitNewOrderInfoShow = '1';
+                            // 提交包裹商品
+                            /*if(JSON.parse(localStorage.getItem("newOrderItemsInfo")) != null){
+                                var packageGoodsLists = JSON.parse(localStorage.getItem("newOrderItemsInfo"));
+                                if(packageGoodsLists.length != 0){
+                                    var packageGoodsSuc = 0;
+                                    $.each(packageGoodsLists, function (index, item) { // 商品名、商品编码、批次号、单价、数量、数量单位、重量、重量单位、体积、体积单位、总价值、金额单位
+                                        if(item.orderItem.itemName != '' && item.orderItem.itemCode != '' && item.orderItem.lotNo != '' && item.orderItem.unitPrice != ''
+                                            && item.orderItem.qty != '' && item.orderItem.qtyUnit != '' && item.orderItem.weight != '' && item.orderItem.weightUnit != ''
+                                            && item.orderItem.volume != '' && item.orderItem.volumeUnit != '' && item.orderItem.amount != '' && item.orderItem.currency != ''){
+                                            item.orderItem.omOrderId = omOrderId;
+                                            item.orderItem.seq = index + 1;
+                                            postRequest(omsUrl + "/save/orderItemInfo?token="+logininf.token+"&timeStamp="+logininf.timeStamp,item.orderItem,function(data){
+                                                packageGoodsSuc += 1;
+                                                //  console.log(data);
+                                            });
+                                        }
+                                    });
+                                    if(packageGoodsSuc == packageGoodsLists.length){
+                                        loadData('show', '订单提交成功！', true);
+                                        $('.noContDiv').show();
+                                        $('.hasContDiv').hide();
+                                        localStorage.removeItem("newOrderBaseInfo");
+                                        localStorage.removeItem("newOrderFromInfo");
+                                        localStorage.removeItem("newOrderToInfo");
+                                        localStorage.removeItem("newOrderItemsInfo");
+                                    }
+                                }
+                            }*/
+                        }else{
+                            loadData('show', '订单保存失败', true); // 弹出接口返回的订单创建失败的描述
+                        }
+                    });
+                }
+            }
+
+            /* 页面跳转 */
+            $(".contDiv").on("click",".goOrderBase",function(){
+                window.location.href = "newOrderBase.html";
+            });
+            $(".contDiv").on("click",".goOrderFrom",function(){
+                if(localStorage.getItem("newOrderBaseInfo") == null){
+                    $(".goOrderBase").css("color","red");
+                    $(".goOrderBase").parent(".contDivItem").css("border-color","red");
+                    $(".goOrderFrom").parent(".contDivItem").css("border-top-color","red");
+                    return false;
+                }else{
+                    window.location.href = "newOrderFrom.html";
+                }
+            });
+            $(".contDiv").on("click",".goOrderTo",function(){
+                if(localStorage.getItem("newOrderFromInfo") == null){
+                    if(localStorage.getItem("newOrderBaseInfo") == null){
+                        $(".goOrderBase").css("color","red");
+                        $(".goOrderBase").parent(".contDivItem").css("border-color","red");
+                        $(".goOrderFrom").parent(".contDivItem").css("border-top-color","red");
+                        $(".goOrderFrom").css("color","red");
+                        $(".goOrderFrom").parent(".contDivItem").css("border-color","red");
+                        return false;
+                    }else{
+                        $(".goOrderFrom").css("color","red");
+                        $(".goOrderFrom").parent(".contDivItem").css("border-color","red");
+                        return false;
+                    }
+                }else{
+                    window.location.href = "newOrderTo.html";
+                }
+            });
+            $(".contDivItemBut").on("click",function(){
+                if(localStorage.getItem("newOrderToInfo") == null){
+                    if(localStorage.getItem("newOrderFromInfo") == null){
+                        if(localStorage.getItem("newOrderBaseInfo") == null){
+                            $(".goOrderBase").css("color","red");
+                            $(".goOrderBase").parent(".contDivItem").css("border-color","red");
+                            $(".goOrderFrom").parent(".contDivItem").css("border-top-color","red");
+                            $(".goOrderFrom").css("color","red");
+                            $(".goOrderFrom").parent(".contDivItem").css("border-color","red");
+                            $(".goOrderTo").css("color","red");
+                            $(".goOrderTo").parent(".contDivItem").css("border-color","red");
+                            return false;
+                        }else{
+                            $(".goOrderFrom").css("color","red");
+                            $(".goOrderFrom").parent(".contDivItem").css("border-color","red");
+                            $(".goOrderTo").css("color","red");
+                            $(".goOrderTo").parent(".contDivItem").css("border-color","red");
+                            return false;
+                        }
+                    }else{
+                        $(".goOrderTo").css("color","red");
+                        $(".goOrderTo").parent(".contDivItem").css("border-color","red");
+                        $(".goOrderFrom").parent(".contDivItem").css("border-bottom-color","red");
+                        return false;
+                    }
+                }else{
+                    window.location.href = "newOrderItems.html";
+                }
+            });
+            $(".contDiv").on("click",".goOrderAdd",function(){
+                window.location.href = "newOrderItems.html";
+            });
+            $(".contDiv").on("click",".goOrderItems",function(){
+                window.location.href = "newOrderItems.html";
+            });
+            $(".contDiv").on("click",".goPartyHisLists",function(){
+                var partyHisType = '';
+                if($(this).hasClass('orderFroms')){
+                    partyHisType = 'orderFroms';
+                }
+                if($(this).hasClass('orderTos')){
+                    partyHisType = 'orderTos';
+                }
+                window.location.href = "partyHisLists.html?partyHisType="+partyHisType;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#newOrderApp',
+            data: {
+                submitNewOrderInfoPar:'0',
+                submitNewOrderInfoShow:'0',
+                orderDetail:{
+                    orderFrom:"",
+                    orderFormTenantName:"",
+                    orderTo:"",
+                    customerRefNo:"",
+                    orderType:"",
+                    completeTime:GetNowdate(),
+                    expireTime:GetNowdate(),
+                    totalQty:"",
+                    qtyUnit:"",
+                    totalWeight:"",
+                    weightUnit:"",
+                    totalVolume:"",
+                    volumeUnit:"",
+                    totalAmount:"",
+                    currency:""
+                },
+                /*selectListData:{
+                    qtyUnitList:[],
+                    volumeUnitList:[],
+                    currencyList:[],
+                    weightUnitList:[],
+                    orderTypeList:[],
+                    orderToList:[],
+                    orderFromList:[],
+                    partyList:[]
+                },*/
+                selectListData:{
+                    qtyUnitList:[],
+                    volumeUnitList:[],
+                    currencyList:[],
+                    weightUnitList:[],
+                    orderTypeList:[],
+                    orderToList:[],
+                    orderFromList:[]
+                },
+                shipperParty:{
+                    cdPartyId:""
+                },
+                shipperPartyContact:{
+                    cdContactId:""
+                },
+                reserveNum:{},
+                reserveType:{},
+                reserveJian:{},
+                reserveMao:{},
+                reserveTi:{},
+                reserveValue:{},
+                reserveOverTime:{},
+                shipperPartyLocation:{
+                    cdLocationId:"",
+                    countryCode:"",
+                    provinceCode:"",
+                    cityCode:"",
+                    districtCode:""
+                },
+                shipperPartyLocationContact:{
+                    cdContactId:""
+                },
+                shipperPartyLocationContactList:{},
+                shipperPartyContactList:{},
+                shipperPartyLocationList:{},
+                receiptParty:{
+                    cdPartyId:""
+                },
+                receiptPartyContact:{
+                    cdContactId:""
+                },
+                receiptPartyLocation:{
+                    countryCode:"",
+                    provinceCode:"",
+                    cityCode:"",
+                    districtCode:"",
+                    cdLocationId:""
+                },
+                receiptPartyLocationContact:{
+                    cdContactId:""
+                },
+                receiptPartyLocationContactList:{},
+                receiptPartyContactList:{},
+                receiptPartyLocationList:{},
+                orderAddName:{},
+                orderAddCode:{},
+                orderAddQty:{},
+                orderAddWeight:{},
+                orderAddVolume:{},
+                orderAddVal:{},
+        packageGoodsList:[{
+                    orderItem:{
+                        itemName:"",
+                        itemCode:"",
+                        lotNo:"",
+                        unitPrice:"",
+                        currency:"",
+                        qty:"",
+                        qtyUnit:"",
+                        weight:"",
+                        volume:"",
+                        volumeUnit:"",
+                        weightUnit:""
+                    }
+                }]
+            },
+            methods:{
+                closeMaskLayer(){
+                    var that = this;
+                    if(that.submitNewOrderInfoPar == '0'){
+                        var r1 = confirm("当前订单未提交，是否先提交？");
+                        if(r1 == true){
+                            that.submitNewOrderInfo();  // 订单提交
+                        }else{
+                            var r3 = confirm("确定不提交当前订单，直接关闭该弹窗？关闭之后将清除原订单信息，您可以继续下单。");
+                            if(r3 == true){
+                                that.closeMaskLayerFun();
+                            }
+                        }
+                    }else{
+                        var r2 = confirm("确定关闭该弹窗吗？关闭之后将清除原订单信息，您可以继续下单。");
+                        if(r2 == true){
+                            that.closeMaskLayerFun();
+                        }
+                    }
+                },
+                // 关闭弹窗，继续下单。    清除之前的localStorage
+                closeMaskLayerFun(){
+                    $(".maskLayer").hide();
+                    $('.noContDiv').show();
+                    $('.hasContDiv').hide();
+                    localStorage.removeItem("newOrderBaseInfo");
+                    localStorage.removeItem("newOrderFromInfo");
+                    localStorage.removeItem("newOrderToInfo");
+                    localStorage.removeItem("newOrderItemsInfo");
+                    localStorage.removeItem("omOrderAllInfo")
+                    localStorage.removeItem("omOrderId");
+                    localStorage.removeItem("submitNewOrderInfoPar");
+                    window.location.reload();
+                },
+                goIndexPage(type){
+                    var that = this;
+                    if(type == '1'){
+                        if(that.submitNewOrderInfoPar == '0'){
+                            var r1 = confirm("当前订单未提交，是否先提交？");
+                            if(r1 == true){
+                                that.submitNewOrderInfo();  // 订单提交
+                            }else{
+                                var r3 = confirm("确定不提交当前订单，返回主页吗？");
+                                if(r3 == true){
+                                    that.goIndexPageFun();
+                                }
+                            }
+                        }else{
+                            var r2 = confirm("确定返回主页吗？");
+                            if(r2 == true){
+                                that.goIndexPageFun();
+                            }
+                        }
+                    }else{
+                        that.goIndexPageFun();
+                    }
+                },
+                goIndexPageFun(){
+                    if(localStorage.getItem("omOrderId") == null){ // 未下单 的返回主页
+                        window.location.href = "index.html";
+                    }else{   // 已下单 的返回主页
+                        $(".maskLayer").hide();
+                        $('.noContDiv').show();
+                        $('.noContDiv').eq(3).hide();
+                        $('.hasContDiv').hide();
+                        localStorage.removeItem("newOrderBaseInfo");
+                        localStorage.removeItem("newOrderFromInfo");
+                        localStorage.removeItem("newOrderToInfo");
+                        localStorage.removeItem("newOrderItemsInfo");
+                        localStorage.removeItem("omOrderAllInfo");
+                        localStorage.removeItem("omOrderId");
+                        localStorage.removeItem("submitNewOrderInfoPar");
+                        window.location.href = "index.html";
+                    }
+                },
+                addOrderItems(){
+                    window.location.href = "newOrderItems.html?from=neworder";
+                }
+            },
+            created:function(){
+                localStorage.removeItem("curOrderItemsInfo");  // 清除临时商品信息
+                localStorage.removeItem("itemInfoIndex");  // 清除所选商品 - index
+                localStorage.removeItem("itemInfo");  // 清除所选商品
+                localStorage.removeItem("trShipperParty"); // 清除所选发货商
+                localStorage.removeItem("trReceiptParty"); // 清除所选收货商
+                localStorage.removeItem("trShipperPartyLocation"); // 清除所选发货地址
+                localStorage.removeItem("trReceiptPartyLocation"); // 清除所选收货地址
+                localStorage.removeItem("trShipperPartyContact"); // 清除所选发货商联系人
+                localStorage.removeItem("trShipperPartyLocationContact"); // 清除所选发货地联系人
+                localStorage.removeItem("trReceiptPartyContact"); // 清除所选收货商联系人
+                localStorage.removeItem("trReceiptPartyLocationContact"); // 清除所选收货地联系人
+
+                var that = this;
+                that.logininf = JSON.parse(localStorage.getItem("logininf"));
+                initSelectData(that);
+                if(localStorage.getItem("newOrderBasicData") != null){ //获取下拉数据
+                    that.selectListData = JSON.parse(localStorage.getItem("newOrderBasicData"));
+                    // 订、发、收、商、货
+                    if(localStorage.getItem("newOrderBaseInfo") != null){
+                        $('.noContDiv').eq(0).hide();
+                        $('.hasContDiv').eq(0).show();
+                        var orderDetail = JSON.parse(localStorage.getItem("newOrderBaseInfo"));
+                        that.reserveNum = orderDetail.customerRefNo;  // 关联单号
+                        that.reserveType = orderDetail.general; // 普货、危货
+                        that.reserveJian = orderDetail.totalQty;  // 件
+                        that.reserveMao = orderDetail.totalWeight;  // 毛
+                        that.reserveTi = orderDetail.totalVolume;  // 体
+                        that.reserveValue = orderDetail.totalAmount;  // 货值
+                        that.reserveOverTime = orderDetail.completeTime;  // 要求完成时间
+                    }
+                    if(localStorage.getItem("newOrderFromInfo") != null){
+                        $('.noContDiv').eq(1).hide();
+                        $('.hasContDiv').eq(1).show();
+                        var shipperPartyInfoModel = JSON.parse(localStorage.getItem("newOrderFromInfo"));
+                        that.shipperParty = shipperPartyInfoModel.party;  // 发货商
+                        that.shipperPartyContact = shipperPartyInfoModel.imgContact;  // 紧急联系人
+                        that.shipperPartyLocation = shipperPartyInfoModel.location;  // 地址信息
+                    }
+                    if(localStorage.getItem("newOrderToInfo") != null){
+                        $('.noContDiv').eq(2).hide();
+                        $('.hasContDiv').eq(2).show();
+                        var receiptPartyInfoModel = JSON.parse(localStorage.getItem("newOrderToInfo"));
+                        that.receiptParty = receiptPartyInfoModel.party;  // 收货商
+                        that.receiptPartyContact = receiptPartyInfoModel.imgContact;  // 紧急联系人
+                        that.receiptPartyLocation = receiptPartyInfoModel.location;  // 地址信息
+                    }
+                    //新增货品
+                    if(localStorage.getItem("newOrderItemsInfo") != null){
+                        $('.hasContDiv').eq(3).show();
+                        var orderAddInfoList = JSON.parse(localStorage.getItem("newOrderItemsInfo"));
+                        var orderAddInfo = orderAddInfoList[0].orderItem;
+                        that.orderAddName = orderAddInfo.itemName;  // 商品名称
+                        that.orderAddCode = orderAddInfo.itemCode;  // 商品编码
+                        that.orderAddQty = orderAddInfo.qty;  // 件
+                        that.orderAddWeight = orderAddInfo.weight;  // 毛
+                        that.orderAddVolume = orderAddInfo.volume;  // 体
+                        that.orderAddVal = orderAddInfo.amount;  // 货值
+                    }else{
+                        $('.hasContDiv').eq(3).hide();
+                    }
+                    loadData('hide');
+                }else{
+                    var basicDataObj = {
+                        qtyUnitList:[],
+                        volumeUnitList:[],
+                        currencyList:[],
+                        weightUnitList:[],
+                        orderTypeList:[],
+                        orderToList:[],
+                        orderFromList:[]
+                    };
+                    $.ajax({
+                        url: "/icdp-cdm-app-1.0.0/dictionary/all/all.json?token="+ that.logininf.token + '&timeStamp=' + that.logininf.timeStamp,
+                        type: "get",
+                        success: function(res) {
+                            dictListDatas = res.result.dictList;
+                            basicDataObj.qtyUnitList = getDictDataLists('om_order', 'qty_unit');  //数量单位
+                            basicDataObj.volumeUnitList = getDictDataLists('om_order', 'volume_unit');  //体积单位
+                            basicDataObj.currencyList = getDictDataLists('om_order', 'currency');  //金额单位
+                            basicDataObj.weightUnitList = getDictDataLists('om_order', 'weight_unit');  //重量单位
+                            basicDataObj.orderTypeList = getDictDataLists('om_order', 'order_type');	//订单类型
+                            basicDataObj.orderToList = getDictDataLists('om_order','order_to');	//发单方
+                            basicDataObj.orderFromList = getDictDataLists('om_order','order_from');	//接单方
+                        //    basicDataObj.partyList = getPartyDataLists(that.logininf.umTenantId);
+                        //    basicDataObj.contactLists = getDictDataLists('om_contact','contact_type');  // 联系人类型
+                            basicDataObj.contactLists = getDictDataLists('cd_contact','contact_type');  // 联系人类型
+                            basicDataObj.eqpTypeList = getDictDataLists('cd_eqp','eqp_type');  //设备类型
+                            basicDataObj.countryList = res.result.countryList;  // 国家
+                            basicDataObj.provinceList = res.result.provinceList;  // 省
+                            basicDataObj.cityList = res.result.cityList;  // 市
+                            basicDataObj.districtList = res.result.districtList;  // 区
+                            basicDataObj.partyTypeList = getDictDataLists('cd_party', 'party_type'); 	//合作商类型
+                            basicDataObj.locationTypeList = getDictDataLists('cd_location', 'location_type');  // cd 地址类型
+                            that.selectListData = basicDataObj;
+                            localStorage.setItem("newOrderBasicData",JSON.stringify(basicDataObj));
+                            // 订、发、收、商
+                            if(localStorage.getItem("newOrderBaseInfo") != null){
+                                $('.noContDiv').eq(0).hide();
+                                $('.hasContDiv').eq(0).show();
+                                var orderDetail = JSON.parse(localStorage.getItem("newOrderBaseInfo"));
+                                that.reserveNum = orderDetail.customerRefNo;  // 关联单号
+                                that.reserveType = orderDetail.general; // 普货、危货
+                                that.reserveJian = orderDetail.totalQty;  // 件
+                                that.reserveMao = orderDetail.totalWeight;  // 毛
+                                that.reserveTi = orderDetail.totalVolume;  // 体
+                                that.reserveValue = orderDetail.totalAmount;  // 货值
+                                that.reserveOverTime = orderDetail.completeTime;  // 要求完成时间
+                            }
+                            if(localStorage.getItem("newOrderFromInfo") != null){
+                                $('.noContDiv').eq(1).hide();
+                                $('.hasContDiv').eq(1).show();
+                                var shipperPartyInfoModel = JSON.parse(localStorage.getItem("newOrderFromInfo"));
+                                that.shipperParty = shipperPartyInfoModel.party;  // 发货商
+                                that.shipperPartyContact = shipperPartyInfoModel.imgContact;  // 紧急联系人
+                                that.shipperPartyLocation = shipperPartyInfoModel.location;  // 地址信息
+                            }
+                            if(localStorage.getItem("newOrderToInfo") != null){
+                                $('.noContDiv').eq(2).hide();
+                                $('.hasContDiv').eq(2).show();
+                                var receiptPartyInfoModel = JSON.parse(localStorage.getItem("newOrderToInfo"));
+                                that.receiptParty = receiptPartyInfoModel.party;  // 收货商
+                                that.receiptPartyContact = receiptPartyInfoModel.imgContact;  // 紧急联系人
+                                that.receiptPartyLocation = receiptPartyInfoModel.location;  // 地址信息
+                            }
+                            //新增货品
+                            if(localStorage.getItem("newOrderItemsInfo") != null){
+                                $('.hasContDiv').eq(3).show();
+                                var orderAddInfoList = JSON.parse(localStorage.getItem("newOrderItemsInfo"));
+                                var orderAddInfo = orderAddInfoList[0].orderItem;
+                                that.orderAddName = orderAddInfo.itemName;  // 商品名称
+                                that.orderAddCode = orderAddInfo.itemCode;  // 商品编码
+                                that.orderAddQty = orderAddInfo.qty;  // 件
+                                that.orderAddWeight = orderAddInfo.weight;  // 毛
+                                that.orderAddVolume = orderAddInfo.volume;  // 体
+                                that.orderAddVal = orderAddInfo.amount;  // 货值
+                            }else{
+                                $('.hasContDiv').eq(3).hide();
+                            }
+                            loadData('hide');
+                        }
+                    });
+                }
+
+                if(localStorage.getItem("omOrderId") != null){ // 已下单
+                    if(localStorage.getItem("submitNewOrderInfoPar") == '1'){   // 订单已提交
+                        that.submitNewOrderInfoPar = '1';
+                        that.submitNewOrderInfoShow = '0';
+                    }else{
+                        that.submitNewOrderInfoPar = '0';
+                        that.submitNewOrderInfoShow = '1';
+                    }
+                    $(".maskLayer").show();
+                }
+            }
+        });
+
+        //根据  tableName  columnName  匹配基础数据
+        function getDictDataLists(tableName,columnName){
+            var listData = [];
+            for(var i = 0;i < dictListDatas.length;i++){
+                if(dictListDatas[i].tableName == tableName && dictListDatas[i].columnName == columnName){
+                    listData.push(dictListDatas[i]);
+                }
+            }
+            return listData;
+        }
+
+        //获取合作商数据
+        function getPartyDataLists(tenantId){
+            var listData = [];
+            for(var i = 0;i < partyListDatas.length;i++){
+                if (tenantId === partyListDatas[i].umTenantId) {
+                    listData.push(partyListDatas[i]);
+                }
+            }
+            return listData;
+        }
+
+        function initSelectData(that){
+            that.submitNewOrderInfoPar = '0';
+            that.submitNewOrderInfoShow = '0';
+            that.orderDetail = {
+                orderFrom:"",
+                orderFormTenantName:"",
+                orderTo:"",
+                customerRefNo:"",
+                orderType:"",
+                completeTime:GetNowdate(),
+                expireTime:GetNowdate(),
+                totalQty:"",
+                qtyUnit:"",
+                totalWeight:"",
+                weightUnit:"",
+                totalVolume:"",
+                volumeUnit:"",
+                totalAmount:"",
+                currency:""
+            };
+            /*that.selectListData = {
+                qtyUnitList:[],
+                volumeUnitList:[],
+                currencyList:[],
+                weightUnitList:[],
+                orderTypeList:[],
+                orderToList:[],
+                orderFromList:[],
+                partyList:[]
+            };*/
+            that.selectListData = {
+                qtyUnitList:[],
+                volumeUnitList:[],
+                currencyList:[],
+                weightUnitList:[],
+                orderTypeList:[],
+                orderToList:[],
+                orderFromList:[]
+            };
+            // 发货商
+            that.shipperPartyContact = {
+                cdContactId:""
+            };
+            that.shipperParty = {
+                cdPartyId:""
+            };
+            that.shipperPartyLocation = {
+                cdLocationId:"",
+                countryCode:"",
+                provinceCode:"",
+                cityCode:"",
+                districtCode:""
+            };
+            that.shipperPartyLocationContact = {
+                cdContactId:""
+            };
+            // 收货商
+            that.receiptPartyLocationContact = {
+                cdContactId:""
+            };
+            that.receiptPartyLocation = {
+                countryCode:"",
+                provinceCode:"",
+                cityCode:"",
+                districtCode:"",
+                cdLocationId:""
+            };
+            that.receiptParty = {
+                cdPartyId:""
+            };
+            that.receiptPartyContact = {
+                cdContactId:""
+            };
+            // 包裹商品
+            that.packageGoodsList = [{
+                orderItem:{
+                    itemName:"",
+                    itemCode:"",
+                    lotNo:"",
+                    unitPrice:"",
+                    currency:"",
+                    qty:"",
+                    qtyUnit:"",
+                    weight:"",
+                    volume:"",
+                    volumeUnit:"",
+                    weightUnit:""
+                }
+            }]
+        }
+    </script>
+</body>
+</html>

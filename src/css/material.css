@@ -1,0 +1,529 @@
+body{
+    background: #f3f5f7;
+}
+#materialApp{
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    box-sizing: border-box;
+    padding-left: 0.23rem;
+    padding-right: 0.23rem;
+    font-size: 0.3rem;
+    background: #22bcee;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+.header .txt{
+    text-align: center;
+}
+.header .returnBtn{
+    width: 0.88rem;
+    height: 0.88rem;
+    position: absolute;
+    left: 0.2rem;
+    background: url(../images/return.png) no-repeat left center;
+    background-size: 0.4rem 0.4rem;
+}
+.header .right{
+    position: absolute;
+    width: 2rem;
+    height: 0.88rem;
+    line-height: 0.88rem;
+    right: 0.23rem;
+    top: 0;
+    font-weight: normal;
+}
+.header .right .searchBtn{
+    width: 0.46rem;
+    height: 0.46rem;
+    display: block;
+    margin-top: 0.19rem;
+    float: right;
+}
+
+
+.main{
+    padding-top: 0.88rem;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.main .ajax-loder-wrap{
+    text-align: center;
+    line-height: 0.56rem;
+    color: #666;
+    font-size: 0.28rem;
+}
+.orderList{
+    padding-top: 0.76rem;
+}
+.orderList .listTitle{
+    width: 100%;
+    position: fixed;
+    top: 0.88rem;
+    left: 0;
+    box-sizing: border-box;
+    background: #fff;
+    z-index: 99;
+}
+.orderList ul{
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
+}
+.orderList ul:nth-of-type(1){
+    border-top: 1px solid #e5e5e5;
+}
+.orderList .listItem:nth-of-type(1){
+    border-top: none;
+}
+.orderList ul li{
+    float: left;
+    font-size: 0.28rem;
+    color: #333;
+    text-align: center;
+    line-height: 0.76rem;
+    box-sizing: border-box;
+}
+.orderList ul li{
+    width: 18%;
+    padding: 0 0.1rem;
+}
+.orderList .listCon .listItem{
+    background: #fff;
+}
+.orderList ul li:first-child{
+    width: 30%;
+}
+.orderList ul li:last-child{
+    width: 16%;
+}
+.orderList .listItem .operate{
+    background: #22bcee;
+    color: #fff;
+    padding: 0.02rem 0.1rem;
+    border-radius: 0.05rem;
+}
+.orderList .listCon .listItem li{
+    font-size: 0.26rem;
+}
+
+
+/*searchLayer*/
+.searchLayer{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0.88rem;
+    background: rgba(0,0,0,0.3);
+    z-index: 999;
+    display: none;
+}
+.searchCon{
+    padding-bottom: 0.3rem;
+    background: #fff;
+}
+.searchCon ul{
+    padding-top: 0.26rem;
+    padding-left: 0.23rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.searchCon ul li{
+    width: 48%;
+    float: left;
+    font-size: 0.26rem;
+    color: #333;
+    padding-bottom: 0.32rem;
+    text-align: right;
+}
+
+.searchCon ul li span{
+    width: 1.2rem;
+    float: left;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-right: 0.2rem;
+}
+.searchCon ul li:nth-of-type(3) span{
+    width: 1.2rem;
+}
+.searchCon ul li:nth-of-type(4) span{
+    width: 1.2rem;
+}
+.searchCon ul li input{
+    width: 2rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-left: 0.12rem;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    float: left;
+}
+.searchCon ul li select{
+    width: 1.76rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    padding-left: 0.12rem;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    color: #666;
+    float: left;
+    background: url(../images/bottom_btn.png) no-repeat 1.26rem center;
+    background-size: 0.32rem auto;
+}
+.searchCon ul li select:focus{
+    outline: none;
+    border: 1px solid #e5e5e5;
+}
+.searchCon ul li{
+    width: 100%;
+}
+.searchCon ul .shortLi input[type="radio"]{
+    -webkit-appearance: radio;
+    width: auto;
+    padding: 0;
+    border: none;
+}
+.searchCon ul .shortLi label{
+    float: left;
+    padding-left: 0.08rem;
+}
+.searchCon ul li input{
+    width: 5rem;
+    font-size: 0.26rem;
+    color: #333;
+}
+.searchBox{
+    overflow: hidden;
+    padding-left: 1.2rem;
+}
+.searchCon .mouthSearch{
+    padding-left: 0.23rem;
+    color: #999;
+    font-size: 0.26rem;
+    overflow: hidden;
+    padding-bottom: 0.2rem;
+    float: right;
+}
+.searchCon .mouthSearch p{
+    height: 0.6rem;
+    line-height: 0.6rem;
+    color: #333;
+    padding-left: 0.16rem;
+    padding-right: 0.16rem;
+    border: 1px solid #e5e5e5;
+    margin-right: 0.23rem;
+    float: left;
+}
+.searchCon .mouthSearch .active{
+    background: #22bcee;
+    color: #fff;
+    border: 1px solid #22bcee;
+}
+.searchBox .searchbtn{
+    width: 1.6rem;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    margin: 0 auto;
+    border-radius: 0.03rem;
+    float: left;
+}
+.searchCon .mouthSearch{
+    padding-left: 0.23rem;
+    color: #999;
+    font-size: 0.26rem;
+    overflow: hidden;
+    padding-bottom: 0.2rem;
+    float: right;
+}
+.searchCon .mouthSearch p{
+    height: 0.6rem;
+    line-height: 0.6rem;
+    color: #333;
+    padding-left: 0.16rem;
+    padding-right: 0.16rem;
+    border: 1px solid #e5e5e5;
+    margin-right: 0.23rem;
+    float: left;
+}
+.searchCon .mouthSearch .active{
+    background: #22bcee;
+    color: #fff;
+    border: 1px solid #22bcee;
+}
+
+
+
+
+/*mui-btn-blue*/
+.mui-btn-blue, .mui-btn-primary, input[type=submit]{
+    border: none;
+}
+[data-type=date] .mui-dtpicker-title h5, [data-type=date] .mui-picker{
+    box-sizing: border-box;
+}
+.mui-btn,.mui-btn-blue{
+    border: 1px solid #007aff;
+    background-color: #007aff;
+    font-weight: 400;
+    line-height: 1.42;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    -webkit-transition: all;
+    transition: all;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
+    color: #fff;
+    border-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background-clip: padding-box;
+}
+.mui-btn{
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+}
+.mui-btn-blue{
+    background-color: #007aff;
+    border: 1px solid #007aff;
+    color: #fff;
+}
+
+
+
+
+
+
+/*maskLayer1*/
+.maskLayer1{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 101;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    padding-top: 0.88rem;
+}
+.maskLayer1 .popupE{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 0.2rem;
+}
+.maskLayer1 .contentE{
+    width: 100%;
+    min-height: 20%;
+    max-height: 70%;
+    box-sizing: border-box;
+    padding: 0.06rem 0.15rem 0.2rem 0.15rem;
+    overflow-y: auto;
+    background: #f2f4f6;
+    margin-top: 20%;
+    border-radius: 0.12rem;
+}
+.headEquip p{
+    font-size: 0.30rem;
+    line-height: 0.56rem;
+    padding-bottom: 0.1rem;
+    color: #000;
+}
+.headEquip span{
+    padding-right: 0.07rem;
+    color: #22bcee;
+    float: right;
+    text-decoration: underline;
+}
+.headEquip span img{
+    width: 0.3rem;
+    height: 0.3rem;
+}
+.bodyEquip .backEquip{
+    background: #fff;
+    margin-bottom: 0.2rem;
+    border-radius: 0.12rem;
+}
+.totalInfoEquip{
+    display: inline-block;
+    width: 100%;
+    padding: 0.04rem 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.totalInfoEquip.lookJumpEquipHead{
+    font-weight: 600;
+}
+.totalInfoEquip:last-child{
+    border-bottom: 0;
+}
+.totalInfoEquip li{
+    font-size: 0.26rem;
+    float: left;
+    line-height: 0.44rem;
+    padding: 0 0.12rem;
+    color: #333;
+    width: 17%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+.totalInfoEquip li:nth-child(4){
+    width: 22%;
+}
+.totalInfoEquip li:last-child{
+    width: 27%;
+}
+.totalInfoEquip li:last-child span{
+    color: #22bcee;
+    padding-right: 0.06rem;
+}
+.totalInfoEquip li:last-child span.active{
+    /*display: none;*/
+    color: #666;
+}
+.totalInfoEquip li input{
+    width: 0.9rem;
+    line-height: 0.42rem;
+    box-sizing: border-box;
+    padding: 0 0.05rem;
+    border: 1px solid #e5e5e5;
+    color: #ed7d31;
+}
+
+.bodyEquip .saveInfoE{
+    line-height: 0.56rem;
+    text-align: center;
+    display: inline-block;
+    padding: 0 0.2rem;
+    background: #22bcee;
+    color: #fff;
+    border-radius: 0.04rem;
+    margin-top: 0.2rem;
+}
+
+.overEquip span{
+    float: right;
+    border: 1px solid #22bcee;
+    font-size: 0.28rem;
+    padding: 0.05rem;
+    color: #22bcee;
+    border-radius: 3px;
+}
+
+
+/*popupM*/
+.maskLayer1 .popupM{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 0.2rem;
+    display: none;
+}
+.popupM .contentM{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    padding: 0.06rem 0.15rem 0.2rem 0.15rem;
+    overflow-y: auto;
+    background: #fff;
+    margin-top: 20%;
+    border-radius: 0.12rem;
+}
+.popupM .contentM .uploadImgList{
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.3rem 0;
+}
+.popupM .contentM .uploadImgList li{
+    float: left;
+    padding-right: 0.22rem;
+    padding-bottom: 0.22rem;
+}
+.popupM .contentM .uploadImgList img{
+    width: 1rem;
+    height: 1rem;
+    display: block;
+    border: 1px dashed #e0e0e0;
+}
+.popupM .contentM .uploadImgList.uploadImgList2{
+    border-top: 1px solid #e5e5e5;
+}
+.sureMBot{
+    text-align: center;
+    padding: 0.2rem 0;
+}
+.sureMBot span{
+    display: inline-block;
+    width: 1.5rem;
+    font-size: 0.28rem;
+    line-height: 0.62rem;
+    text-align: center;
+    background: #22bcee;
+    color: #fff;
+    border-radius: 0.09rem;
+}
+
+
+/*popupI*/
+.maskLayer1 .popupI{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    display: none;
+}
+.maskLayer1 .popupI img{
+    display: inline-block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.maskLayer1 .popupI p{
+    width: 1rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    font-size: 0.28rem;
+    text-align: center;
+    margin: 0.15rem 0;
+    position: absolute;
+    right: 0;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    background: #22bcee;
+    color: #fff;
+}
+.maskLayer1 .popupI .deleteThisImg{
+    top: 0.88rem;
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>欢迎进入VTMS物流平台</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="css/index-role.css" />
+	<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+	<script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</head>
+<body>
+	<div class="swiper-container">
+	    <div class="swiper-wrapper">
+	      <div class="swiper-slide"><img src="images/banner5.png" alt="" /></div>
+	    </div>
+	</div>
+	<script>
+	    var swiper = new Swiper('.swiper-container', {
+	      slidesPerView: 1,
+	      spaceBetween: 0,
+	      loop: true,
+	      pagination: {
+	        el: '.swiper-pagination',
+	        clickable: true,
+	      },
+	      navigation: {
+	        nextEl: '.swiper-button-next',
+	        prevEl: '.swiper-button-prev',
+	      },
+	    });
+	  </script>
+
+	<div class="orderClassify partonClassify">
+		<div class="userInfo">
+			<p class="img"><img src="images/moren_tx.png" alt="" /></p>
+			<p class="txt">登录</p>
+		</div>
+		<ul>
+			<li class="meauShowPermission" meauName="在途订单" hrefUrl="orderStatList.html?orderstate=2">
+				<p class="img"><img src="images/ordericon3.png" alt="" /></p>
+				<p class="txt">在途订单</p>
+				<p class="hint">0</p>
+			</li>
+			<li class="meauShowPermission" meauName="异常订单" hrefUrl="orderStatList.html?orderstate=3">
+				<p class="img"><img src="images/ordericon4.png" alt="" /></p>
+				<p class="txt">异常订单</p>
+				<p class="hint">0</p>
+			</li>
+			<li class="meauShowPermission" meauName="完成订单" hrefUrl="orderStatList.html?orderstate=1">
+				<p class="img"><img src="images/ordericon2.png" alt="" /></p>
+				<p class="txt">完成订单</p>
+				<p class="hint">0</p>
+			</li>
+			<li class="meauShowPermission" meauName="全部订单" hrefUrl="orderStatList.html?orderstate=0">
+				<p class="img"><img src="images/ordericon1.png" alt="" /></p>
+				<p class="txt">全部订单</p>
+				<p class="hint">0</p>
+			</li>
+		</ul>
+	</div>
+
+	<div class="main indexContent patronContent">
+		<ul>
+			<li class="distributionLi meauShowPermission" meauName="配送订单">
+				<a href="javascript:;" hrefUrl="orderStat-tpls.html">
+					<p class="pic"><img src="images/index_pic_13.png" alt="" /></p>
+					<p class="txt">配送订单</p>
+				</a>
+			</li>
+			<li class="inventoryLi meauShowPermission" meauName="应收费用">
+				<a href="javascript:;" hrefUrl="orderCostListDj00.html">
+					<p class="pic"><img src="images/index_pic_11.png" alt="" /></p>
+					<p class="txt">应收费用</p>
+				</a>
+			</li>
+			<li class="abnormalLi meauShowPermission" meauName="异常">
+				<a href="javascript:;" hrefUrl="abnormalOrder.html">
+					<p class="pic"><img src="images/index_pic_14.png" alt="" /></p>
+					<p class="txt">异常</p>
+				</a>
+			</li>
+			<li class="inventoryLi meauShowPermission" meauName="库存">
+				<a href="javascript:;" hrefUrl="inventory-tpls.html">
+					<p class="pic"><img src="images/index_pic_9.png" alt="" /></p>
+					<p class="txt">库存</p>
+				</a>
+			</li>
+            <li class="inventoryLi meauShowPermission" meauName="待揽货列表">
+                <a href="javascript:;" hrefUrl="workTaskListDj1.html">
+                    <p class="pic"><img src="images/index_pic_19.png" alt="" /></p>
+                    <p class="txt">待揽货列表</p>
+                </a>
+            </li>
+			<!--<li class="costLi meauShowPermission" meauName="库存">
+				<a href="javascript:;" hrefUrl="orderCostListDj00.html">
+					<p class="pic"><img src="images/index_pic_11.png" alt="" /></p>
+					<p class="txt">库存</p>
+				</a>
+			</li>-->
+			<li class="vehicleLi meauShowPermission" meauName="运输监控">
+				<a href="javascript:;" hrefUrl="vehicle.html">
+					<p class="pic"><img src="images/ordericon3.png" alt="" /></p>
+					<p class="txt">运输监控</p>
+				</a>
+			</li>
+			<li class="aboutSuye meauShowPermission" meauName="关于VTMS">
+				<a href="javascript:;" hrefUrl="aboutUs.html">
+					<p class="pic"><img src="images/index_pic_4.png" alt="" /></p>
+					<p class="txt">关于VTMS</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<!--配置 wx.config 参数-->
+	<script src="js/wxScanQRCode.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		document.write("<s" + "cript type='text/javascript' src='js/index-role.js?v=" + verson + "'></s" + "cript>");
+	</script>
+</body>
+</html>

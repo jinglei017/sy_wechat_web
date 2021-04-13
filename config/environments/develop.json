@@ -1,0 +1,16 @@
+{
+    "umsUrl":"/icdp-ums-app-1.0.0",
+    "cmdUrl":"/icdp-cdm-app-1.0.0",
+    "omsUrl":"/icdp-tms-app-1.0.0",
+    "wechatUrl":"/icdp-ums-app-1.0.0",
+    "wmsUrl":"/icdp-wms-app-1.0.0",
+    "tmsUrl":"/icdp-tms-app-1.0.0",
+    "pidUrl":"/icdp-pid-app-1.0.0",
+    "chartUrl":"/icdp-chart-app-1.0.0",
+    "ImgWebsite":"http://dev-img.suyechina.com/",
+    "httpUrl":"http://dev.wechat.suyechina.com/icdp-ums-app-1.0.0",
+    "qrCodeSrc":"images/wechat-test.jpg",
+    "AmapQdKey": "043972419a240d13dc0bad2fcb6ff47f",
+    "BmapQdAk": "wBOEnwDjQZ8LB2IsHcotMlVzYcKN6rtM",
+    "regUrl":"https://dev.www.suyechina.com/html/dynamic/caseSuc.html"
+}

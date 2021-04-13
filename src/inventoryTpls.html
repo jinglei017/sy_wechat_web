@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>库存</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/inventory.css" />
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+    <p class="txt"><span id="customerName"></span><span id="inventoryNum"></span></p>
+    <p class="right">
+        <img src="images/search1.png" class="searchBtn" alt="" />
+    </p>
+</div>
+
+<!--查询、重置-->
+<div class="searchLayer">
+    <div class="searchCon">
+        <ul>
+            <li>
+                <span>商品名:</span><input type="text" placeholder="请输入商品名" id="searchName">
+            </li>
+            <li>
+                <span>型号:</span><input type="text" placeholder="请输入型号" id="searchXh">
+            </li>
+            <li>
+                <span>批次:</span><input type="text" placeholder="请输入批次" id="searchPc">
+            </li>
+            <li>
+                <span>商品条码:</span><input type="text" placeholder="请输入商品条码" id="searchBar">
+            </li>
+        </ul>
+        <p class="searchbtn">
+            <span class="searchspan" id="inventorySearchBtn">查询</span>
+            <span class="bg_white searchspan" id="inventoryResetBtn">重置</span>
+        </p>
+    </div>
+</div>
+
+<!--库存列表-->
+<div class="main">
+    <div id="tableBodyDetails"></div>
+</div>
+
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/inventoryTpls.js?v=" + verson + "'></s" + "cript>");
+</script>
+
+</body>
+</html>

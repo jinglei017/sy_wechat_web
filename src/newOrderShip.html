@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线下单</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/newOrderShip.css" />
+</head>
+<body>
+
+<div id="newOrderApp">
+    <div class="header">
+        <a href="javascript:;" class="returnBtn" v-on:click="goIndexPage()"></a>
+        <p class="txt">在线下单</p>
+        <p class="right" v-if="appearPartDiv == '3'" v-on:click="getSearchDiv()">
+            <img src="images/search1.png" class="searchBtn" alt="" />
+        </p>
+    </div>
+
+    <div class="searchLayer">
+        <div class="searchCon">
+            <ul>
+                <li>
+                    <span>商户名称:</span>
+                    <input type="text" v-model="selectGoods.partyName" class="ordernum" placeholder="请输入商户名称" />
+                </li>
+                <li>
+                    <span>商户编码:</span>
+                    <input type="text" v-model="selectGoods.partyCode" class="ordernum" placeholder="请输入商户编码" />
+                </li>
+                <li>
+                    <span>商品名称:</span>
+                    <input type="text" v-model="selectGoods.itemName" class="ordernum" placeholder="请输入商品名称" />
+                </li>
+                <li>
+                    <span>商品编码:</span>
+                    <input type="text" v-model="selectGoods.itemCode" class="ordernum" placeholder="请输入商品编码"/>
+                </li>
+            </ul>
+            <p class="searchbtn" v-on:click="getSearchVal()">
+                查询
+            </p>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="mapDiv"></div>
+        <div class="orderPlaceDiv" v-if="appearPartDiv != '3'">
+            <!--发货商-->
+            <div class="orderModule">
+                <div class="orderMoSign">
+                    <span class="contDivEditIcon contDivEditIcon2"></span>
+                    <span class="contDivEditTit">发货商</span>
+                    <img src="images/editImg.png" v-if="getShipperInfo == 1" v-on:click="openShipperFill('0')" title="编辑">
+                    <span class="returnOrder" v-if="getShipperInfo == 0" v-on:click="openShipperFill('1')">收起</span>
+                </div>
+                <div class="orderMoCont" v-if="getShipperInfo == 0">
+                    <ul class="orderMoFill">
+                        <li>
+                            <span>公司名称</span>
+                            <input type="text" placeholder="公司名称(必填)" v-model="shipperParty.partyName">
+                        </li>
+                        <li>
+                            <span>姓名</span>
+                            <input type="text" placeholder="姓名(必填)" v-model="shipperPartyContact.contactName">
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                            <input type="text" placeholder="手机号(必填)" v-model="shipperPartyContact.contactTel">
+                        </li>
+                        <li class="orderMoAddress">
+                            <select v-model="shipperPartyLocation.provinceCode" v-on:change="selectLocLevelFun('provinceCode',shipperPartyLocation,shipperPartyLocation.provinceCode)">
+                                <option value="">选择省</option>
+                                <option v-for="addressItem in getAllProviceList('100000')" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                            <select v-model="shipperPartyLocation.cityCode" class="pointCityName" v-on:change="selectLocLevelFun('cityCode',shipperPartyLocation,shipperPartyLocation.cityCode)">
+                                <option value="">选择市</option>
+                                <option v-for="addressItem in getAllCityList(shipperPartyLocation.provinceCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                            <select v-model="shipperPartyLocation.districtCode" v-on:change="selectLocLevelFun('districtCode',shipperPartyLocation,shipperPartyLocation.districtCode)" style="border: 0;">
+                                <option value="">选择区</option>
+                                <option v-for="addressItem in getAllDistrictList(shipperPartyLocation.cityCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                        </li>
+                        <li class="orderMoAddress">
+                            <input type="text" placeholder="街道(必填)" v-model="shipperPartyLocation.street">
+                            <input type="text" placeholder="门牌号" v-model="shipperPartyLocation.extValue" style="border: 0;">
+                        </li>
+                    </ul>
+                </div>
+                <div class="orderMoContSmall" v-if="getShipperInfo == 1">
+                    <ul class="orderMoShow" v-if="isShipperInfo">
+                        <li>
+                            <span>公司名称</span>
+                            <p class="conpanyyy">{{shipperParty.partyName}}</p>
+                        </li>
+                        <li>
+                            <span>地址</span>
+                            <p class="conpanyyy">{{shipperPartyLocation.address}}</p>
+                        </li>
+                        <li>
+                            <span>联系人</span>
+                            <p>{{shipperPartyContact.contactName}}</p>
+                            <p class="orderMoTel">{{shipperPartyContact.contactTel}}</p>
+                        </li>
+                    </ul>
+                    <ul class="orderMoShow" v-if="!isShipperInfo">
+                        <li class="politeHint" v-on:click="makeShipperFill()">
+                            <p>请填写发货商信息</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--收货商-->
+            <div class="orderModule">
+                <div class="orderMoSign">
+                    <span class="contDivEditIcon contDivEditIcon3"></span>
+                    <span class="contDivEditTit">收货商</span>
+                    <img src="images/editImg.png" v-if="getReceiptInfo == 1" v-on:click="openReceiptFill('0')" title="编辑">
+                    <span class="returnOrder" v-if="getReceiptInfo == 0" v-on:click="openReceiptFill('1')">收起</span>
+                </div>
+                <div class="orderMoCont"v-if="getReceiptInfo == 0">
+                    <ul class="orderMoFill">
+                        <li>
+                            <span>公司名称</span>
+                            <input type="text" placeholder="公司名称(必填)" v-model="receiptParty.partyName">
+                        </li>
+                        <li>
+                            <span>姓名</span>
+                            <input type="text" placeholder="姓名(必填)" v-model="receiptPartyContact.contactName">
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                            <input type="text" placeholder="手机号(必填)" v-model="receiptPartyContact.contactTel">
+                        </li>
+                        <li class="orderMoAddress">
+                            <select v-model="receiptPartyLocation.provinceCode" v-on:change="selectLocLevelFun('provinceCode',receiptPartyLocation,receiptPartyLocation.provinceCode)" class="receiptAdd1">
+                                <option value="">选择省</option>
+                                <option v-for="addressItem in getAllProviceList('100000')" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                            <select v-model="receiptPartyLocation.cityCode" v-on:change="selectLocLevelFun('cityCode',receiptPartyLocation,receiptPartyLocation.cityCode)" class="receiptAdd2">
+                                <option value="">选择市</option>
+                                <option v-for="addressItem in getAllCityList(receiptPartyLocation.provinceCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                            <select v-model="receiptPartyLocation.districtCode" v-on:change="selectLocLevelFun('districtCode',receiptPartyLocation,receiptPartyLocation.districtCode)" class="receiptAdd3" style="border: 0;">
+                                <option value="">选择区</option>
+                                <option v-for="addressItem in getAllDistrictList(receiptPartyLocation.cityCode)" v-bind:value="addressItem.adcode">{{addressItem.chineseName}}</option>
+                            </select>
+                        </li>
+                        <li class="orderMoAddress">
+                            <input type="text" placeholder="街道(必填)" v-model="receiptPartyLocation.street">
+                            <input type="text" placeholder="门牌号" v-model="receiptPartyLocation.extValue" style="border: 0;">
+                        </li>
+                    </ul>
+                </div>
+                <div class="orderMoContSmall"v-if="getReceiptInfo == 1">
+                    <ul class="orderMoShow" v-if="isReceiptInfo">
+                        <li>
+                            <span>公司名称</span>
+                            <p class="conpanyyy">{{receiptParty.partyName}}</p>
+                        </li>
+                        <li>
+                            <span>地址</span>
+                            <p class="conpanyyy">{{receiptPartyLocation.address}}</p>
+                        </li>
+                        <li>
+                            <span>联系人</span>
+                            <p>{{receiptPartyContact.contactName}}</p>
+                            <p class="orderMoTel">{{receiptPartyContact.contactTel}}</p>
+                        </li>
+                    </ul>
+                    <ul class="orderMoShow" v-if="!isReceiptInfo">
+                        <li class="politeHint" v-on:click="makeReceiptFill()">
+                            <p>请填写收货商信息</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--订单信息-->
+            <div class="orderModule">
+                <div class="orderMoSign">
+                    <span class="contDivEditIcon contDivEditIcon1"></span>
+                    <span class="contDivEditTit">订单信息</span>
+                </div>
+                <div class="orderMoCont">
+                    <ul class="orderMoFill">
+                        <li>
+                            <span>商品</span>
+                            <p>
+                                <button class="orderMoFillLook" v-on:click="chooseGoodsFun()">添加 +</button>
+                                <button v-on:click="getShopCar()" v-if="orderGoodsInfoList.length != 0">购物车</button>
+                            </p>
+                        </li>
+                        <li>
+                            <span>关联号</span>
+                            <input type="text" placeholder="关联号(必填)" v-model="orderDetail.customerRefNo">
+                        </li>
+                        <li>
+                            <span>要求送达时间</span>
+                            <input type="text" placeholder="例：2019-08-01(必填)" v-model="orderDetail.completeTime">
+                        </li>
+                        <!--<li>
+                            <span>总数量</span>
+                            <input type="text" placeholder="总数量(必填)">
+                            <p class="orderUnit">件</p>
+                        </li>
+                        <li>
+                            <span>总重量</span>
+                            <input type="text" placeholder="总重量(必填)">
+                            <p class="orderUnit">kg</p>
+                        </li>
+                        <li>
+                            <span>总体积</span>
+                            <input type="text" placeholder="总体积(必填)">
+                            <p class="orderUnit">m³</p>
+                        </li>-->
+                        <li>
+                            <span>备注</span>
+                            <input type="text" placeholder="备注" v-model="orderDetail.remark">
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--商品信息-->
+        <div class="orderModuleShop" v-if="appearPartDiv == '3'">
+            <div class="orderMoSign">
+                <span class="contDivEditIcon contDivEditIcon0"></span>
+                <span class="contDivEditTit">商品</span>
+                <span class="returnOrder" v-on:click="returnOrder()">返回订单></span>
+            </div>
+            <div class="orderMoCont">
+                <ul class="orderMoList">
+                    <li v-for="(item,index) in showPackageList">
+                        <div class="orderMoLLeft">
+                            <p>
+                                <span class="orExplain">商品名称</span>
+                                <span class="orMeaning">{{item.itemName}}</span>
+                            </p>
+                            <p>
+                                <span class="orExplain">批次号</span>
+                                <span class="orMeaning">{{item.lotNo}}</span>
+                            </p>
+                            <p>
+                                <span class="orExplain">参考库存</span>
+                                <span class="orMeaning">{{item.qty1}} {{item.unit1}}</span>
+                            </p>
+                            <p>
+                                <span class="orExplain">特性</span>
+                                <span class="orMeaning">
+                                    <select v-model="item.itemNature">
+                                        <option value="GEN">普货</option>
+                                        <option value="DAN">危货</option>
+                                    </select>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="orderMoLRight">
+                            <p>
+                                <input type="text" v-model="item.qty">
+                                件
+                            </p>
+                            <span v-on:click="orderItemAdd(index)" v-if="item.addOrReduce">+</span>
+                            <span class="reduceSpan" v-on:click="orderItemReduce(index)" v-if="!item.addOrReduce">-</span>
+                        </div>
+                    </li>
+                    <li class="moreOrderList" v-if="itemList.length && !isAloadGoods" v-on:click="moreGoodsFun()">更多...</li>
+                    <li class="moreOrderList" v-if="isAloadGoods">已加载全部商品</li>
+                    <li class="moreOrderList" v-if="!itemList.length && !showPackageList.length" style="text-decoration: underline;">暂无商品信息</li>
+                </ul>
+            </div>
+        </div>
+        <!--购物车-->
+        <div class="orderModuleCar" v-if="orderGoodsInfoList.length && getShopCarDiv">
+            <div>
+                <div class="orderShopUp" v-on:click="closeShopCar()"></div>
+                <div class="orderShopCar">
+                    <div class="shopCarTop">
+                        <p>购物车</p>
+                        <span v-on:click="deleteCarAll()">清空购物车</span>
+                    </div>
+                    <ul class="shopCarList">
+                        <li class="shopCarItem" v-for="(goodsItem,index) in orderGoodsInfoList">
+                            <div class="carItemTop">
+                                <span>商品名称</span>
+                                <p>{{goodsItem.orderItem.itemName}}</p>
+                                <img src="images/delete.png" alt="" v-on:click="deleteGoodsItem(index)">
+                            </div>
+                            <div class="carItemBottom">
+                                <span>下单数量</span>
+                                <input type="text" v-model="goodsItem.orderItem.qty" placeholder="0">
+                                <p>&nbsp;件</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="botSubmitDiv" v-if="appearPartDiv == '1'" v-on:click="saveNewOrderInfo()">提交订单</div>
+        <div class="botSubmitDiv" v-if="appearPartDiv == '2'" v-on:click="saveShipperInfo()">保存发货信息</div>
+        <div class="botSubmitDiv" v-if="appearPartDiv == '4'" v-on:click="saveReceiptInfo()">保存收货信息</div>
+        <div class="botSubmitDiv" v-if="appearPartDiv == '3'" v-on:click="addGoodsConfirm()">添加</div>
+    </div>
+
+</div>
+
+<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+</script>
+<script>
+    $(function () {
+        // 获取当前位置
+        getLocationFun();
+        /* 微信中不隐去.header */
+        var ua = window.navigator.userAgent.toLowerCase();
+        /*if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            $(".header").show();
+            $(".main").css({
+                "marginTop":"0.88rem"
+            })
+        }*/
+    });
+</script>
+<script type="text/javascript">
+
+    var app = new Vue({
+        el: '#newOrderApp',
+        data: {
+            pageNum:1,
+            appearPartDiv: '1',
+            getShopCarDiv: 0,
+            getShipperInfo: true,
+            getReceiptInfo: true,
+            isShipperInfo: 1,
+            isReceiptInfo: 0,
+            isAloadGoods: 0,
+            selectGoods:{},
+            orderDetail:{},
+            shipperParty:{},
+            shipperPartyLocation:{},
+            shipperPartyContact:{},
+            shipperPartyLocationContact:{},
+            receiptParty:{},
+            receiptPartyLocation:{},
+            receiptPartyContact:{},
+            receiptPartyLocationContact:{},
+            itemList:[],
+            showPackageList:[],
+            orderGoodsInfoList:[],
+            orderGoodsIdList:[],
+            temporaryGoodsItem:{
+                num:'1'
+            },
+            temporaryGoods:[]
+        },
+        methods:{
+            // 返回
+            goIndexPage(){
+                window.location.href = "index.html";
+            },
+            // 获取发货商信息
+            addOrderDetails(){
+                var that = this;
+                getRequest(cmdUrl + "/get/partyDetails.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp+"&partyCode="+that.logininf.userPartyNo+"&isDefault=1",function(res){
+                    if(res.result.party != null && res.result.party != ''){
+                        that.shipperParty = res.result.party;
+                    }
+                    if(res.result.contactList != null && res.result.contactList != ''){
+                        that.shipperPartyContact = res.result.contactList[0];
+                        that.shipperPartyLocationContact = that.shipperPartyContact;
+                    }
+                    if(res.result.locationList != null && res.result.locationList != ''){
+                        that.shipperPartyLocation = res.result.locationList[0];
+                    }
+                })
+            },
+            // 填写发货人信息
+            openShipperFill(type){
+                var that = this;
+                that.getShipperInfo = '0';
+                switch(type)
+                {
+                    case '0':
+                        that.getShipperInfo = '0';
+                        that.appearPartDiv = '2';
+                        break;
+                    case '1':
+                        that.getShipperInfo = '1';
+                        that.appearPartDiv = '1';
+                        break;
+                }
+            },
+            makeShipperFill(){
+                var that = this;
+                that.getShipperInfo = '0';
+                that.appearPartDiv = '2';
+            },
+            saveShipperInfo(){
+                var that = this;
+                if(that.shipperParty.partyName == '' || that.shipperParty.partyName == undefined ||
+                    that.shipperPartyContact.contactName == '' || that.shipperPartyContact.contactName == undefined ||
+                    that.shipperPartyContact.contactTel == '' || that.shipperPartyContact.contactTel == undefined ||
+                    that.shipperPartyLocation.provinceCode == '' || that.shipperPartyLocation.provinceCode == undefined ||
+                    that.shipperPartyLocation.cityCode == '' || that.shipperPartyLocation.cityCode == undefined ||
+                    that.shipperPartyLocation.districtCode == '' || that.shipperPartyLocation.districtCode == undefined ||
+                    that.shipperPartyLocation.street == '' || that.shipperPartyLocation.street == undefined){
+                    loadData("show","请填写完整发货商信息",true);
+                    return false;
+                }
+                that.getShipperInfo = '1';
+                that.appearPartDiv = '1';
+                that.isShipperInfo = 1;
+            },
+            // 填写收货人信息
+            openReceiptFill(type){
+                var that = this;
+                switch(type)
+                {
+                    case '0':
+                        that.getReceiptInfo = '0';
+                        that.appearPartDiv = '4';
+                        break;
+                    case '1':
+                        that.getReceiptInfo = '1';
+                        that.appearPartDiv = '1';
+                        break;
+                }
+            },
+            makeReceiptFill(){
+                var that = this;
+                that.getReceiptInfo = '0';
+                that.appearPartDiv = '4';
+            },
+            saveReceiptInfo(){
+                var that = this;
+                that.getReceiptInfo = '1';
+                that.appearPartDiv = '1';
+                that.isReceiptInfo = 1;
+                var street = that.receiptPartyLocation.street;
+                if(street == undefined){
+                    street = ''
+                }
+                if(that.receiptParty.partyName == '' || that.receiptParty.partyName == undefined ||
+                    that.receiptPartyContact.contactName == '' || that.receiptPartyContact.contactName == undefined ||
+                    that.receiptPartyContact.contactTel == '' || that.receiptPartyContact.contactTel == undefined ||
+                    that.receiptPartyLocation.provinceCode == '' || that.receiptPartyLocation.provinceCode == undefined ||
+                    that.receiptPartyLocation.cityCode == '' || that.receiptPartyLocation.cityCode == undefined ||
+                    that.receiptPartyLocation.districtCode == '' || that.receiptPartyLocation.districtCode == undefined ||
+                    that.receiptPartyLocation.street == '' || that.receiptPartyLocation.street == undefined){
+                    loadData("show","请填写完整收货商信息",true);
+                    return false;
+                }
+                that.receiptPartyLocation.address = $(".receiptAdd1").find("option:selected").text() +$(".receiptAdd2").find("option:selected").text()+
+                    $(".receiptAdd3").find("option:selected").text() +street+that.receiptPartyLocation.extValue;
+            },
+            // 商品列表
+            chooseGoodsFun(){
+                var that = this;
+                that.appearPartDiv = '3';
+                that.itemList = [];
+                that.showPackageList = [];
+                that.selectGoods.partyCode = that.shipperParty.partyCode;
+                that.selectGoods.partyName = that.shipperParty.partyName;
+                /*that.selectGoods.partyCode = '';
+                that.selectGoods.partyName = '';*/
+                that.selectGoods.itemCode = '';
+                that.selectGoods.itemName = '';
+                var params = that.selectGoods;
+                params.pageInfo = {
+                    pageNum:1,
+                    pageSize:20
+                }
+                postRequest(wmsUrl + "/query/selectItemInventoryInfoListPage.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    that.itemList = res.result;
+                    for(var i=0;i<that.itemList.length;i++){
+                        var showPackageItem = {
+                            seq: i,                                            // item的排列顺序
+                            itemNature: "GEN",                                 // 性质：GEN-普货，DAN-危货
+                            itemName: that.itemList[i].itemName,               // 条目名称
+                            itemCode: that.itemList[i].itemNo,                 // 条目编码
+                            itemDesc: that.itemList[i].itemName,               // 条目描述
+                            itemBarCode: that.itemList[i].itemBarCode,         // 商品编号
+                            lotNo: that.itemList[i].proDateTime,               // 批次号
+                            receivedQty: 1,                                    // 实数量
+                            qty: 1,                                            // 实数量
+                            qty1: that.itemList[i].qty1,                       // 库存
+                            qty2: that.itemList[i].qty2,                       // 最小库存
+                            unit: that.itemList[i].unit2,                      // 选中单位
+                            unit1: that.itemList[i].unit1,                     // 大单位
+                            unit2: that.itemList[i].unit2,                     // 小单位
+                            qtyUnit: 'PCS',                                    // PCS-件
+                            weight: that.itemList[i].weight,                   // 总重量
+                            weightUnit: 'KG',                                  // KG-公斤
+                            volume: that.itemList[i].volume,                   // 总体积
+                            volumeUnit: 'M3',                                  // M3-立方米
+                            unitPrice: that.itemList[i].amount,                // 单价
+                            amount: that.itemList[i].amount,                   // 总价值
+                            currency: 'CNY',                                   // CNY-人民币
+                            unitConversion: that.itemList[i].unitConversion,   // 转换率
+                            locationCode: that.itemList[i].locationCode,       // 仓库编码
+                            remark:'',                                               // 备注
+                            wmItemInventoryId: that.itemList[i].wmItemInventoryId,   //id
+                            addOrReduce:1
+                        };
+                        that.showPackageList.push(showPackageItem)
+                    }
+                })
+            },
+            getSearchDiv(){
+                var that = this;
+                $(".searchLayer").toggle()
+            },
+            // 更多
+            moreGoodsFun(){
+                var that = this;
+                that.pageNum += 1;
+                var params = that.selectGoods;
+                params.pageInfo = {
+                    pageNum:1,
+                    pageSize:20
+                }
+                postRequest(wmsUrl + "/query/selectItemInventoryInfoListPage.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    if(res.result.length < 20 || res.result == ''){
+                        that.isAloadGoods = 1;
+                    }
+                    that.itemList = res.result;
+                    for(var i=0;i<that.itemList.length;i++){
+                        var showPackageItem = {
+                            seq: i,                                            // item的排列顺序
+                            itemNature: "GEN",                                 // 性质：GEN-普货，DAN-危货
+                            itemName: that.itemList[i].itemName,               // 条目名称
+                            itemCode: that.itemList[i].itemNo,                 // 条目编码
+                            itemDesc: that.itemList[i].itemName,               // 条目描述
+                            itemBarCode: that.itemList[i].itemBarCode,         // 商品编号
+                            lotNo: that.itemList[i].proDateTime,               // 批次号
+                            receivedQty: 1,                                    // 实数量
+                            qty: 1,                                            // 实数量
+                            qty1: that.itemList[i].qty1,                       // 库存
+                            qty2: that.itemList[i].qty2,                       // 最小库存
+                            unit: that.itemList[i].unit2,                      // 选中单位
+                            unit1: that.itemList[i].unit1,                     // 大单位
+                            unit2: that.itemList[i].unit2,                     // 小单位
+                            qtyUnit: 'PCS',                                    // PCS-件
+                            weight: that.itemList[i].weight,                   // 总重量
+                            weightUnit: 'KG',                                  // KG-公斤
+                            volume: that.itemList[i].volume,                   // 总体积
+                            volumeUnit: 'M3',                                  // M3-立方米
+                            unitPrice: that.itemList[i].amount,                // 单价
+                            amount: that.itemList[i].amount,                   // 总价值
+                            currency: 'CNY',                                   // CNY-人民币
+                            unitConversion: that.itemList[i].unitConversion,   // 转换率
+                            locationCode: that.itemList[i].locationCode,       // 仓库编码
+                            remark:'',                                               // 备注
+                            wmItemInventoryId: that.itemList[i].wmItemInventoryId,   //id
+                            addOrReduce:1
+                        };
+                        that.showPackageList.push(showPackageItem)
+                    }
+                })
+            },
+            // 查询
+            getSearchVal(){ // 订单搜索
+                var that = this;
+                $(".searchLayer").hide();
+                that.appearPartDiv = '3';
+                that.itemList = [];
+                that.showPackageList = [];
+                var params = that.selectGoods;
+                params.pageInfo = {
+                    pageNum:1,
+                    pageSize:20
+                };
+                postRequest(wmsUrl + "/query/selectItemInventoryInfoListPage.json?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,params,function(res){
+                    that.itemList = res.result;
+                    for(var i=0;i<that.itemList.length;i++){
+                        var showPackageItem = {
+                            seq: i,                                            // item的排列顺序
+                            itemNature: "GEN",                                 // 性质：GEN-普货，DAN-危货
+                            itemName: that.itemList[i].itemName,               // 条目名称
+                            itemCode: that.itemList[i].itemNo,                 // 条目编码
+                            itemDesc: that.itemList[i].itemName,               // 条目描述
+                            itemBarCode: that.itemList[i].itemBarCode,         // 商品编号
+                            lotNo: that.itemList[i].proDateTime,               // 批次号
+                            receivedQty: 1,                                    // 实数量
+                            qty: 1,                                            // 实数量
+                            qty1: that.itemList[i].qty1,                       // 库存
+                            qty2: that.itemList[i].qty2,                       // 最小库存
+                            unit: that.itemList[i].unit2,                      // 选中单位
+                            unit1: that.itemList[i].unit1,                     // 大单位
+                            unit2: that.itemList[i].unit2,                     // 小单位
+                            qtyUnit: 'PCS',                                    // PCS-件
+                            weight: that.itemList[i].weight,                   // 总重量
+                            weightUnit: 'KG',                                  // KG-公斤
+                            volume: that.itemList[i].volume,                   // 总体积
+                            volumeUnit: 'M3',                                  // M3-立方米
+                            unitPrice: that.itemList[i].amount,                // 单价
+                            amount: that.itemList[i].amount,                   // 总价值
+                            currency: 'CNY',                                   // CNY-人民币
+                            unitConversion: that.itemList[i].unitConversion,   // 转换率
+                            locationCode: that.itemList[i].locationCode,       // 仓库编码
+                            remark:'',                                               // 备注
+                            wmItemInventoryId: that.itemList[i].wmItemInventoryId,   //id
+                            addOrReduce:1
+                        };
+                        that.showPackageList.push(showPackageItem)
+                    }
+                })
+            },
+            // 加入商品
+            orderItemAdd(index){
+                var that = this;
+                if(that.showPackageList[index].qty > 0){
+                    that.showPackageList[index].addOrReduce = 0;
+                }
+            },
+            // 取消商品
+            orderItemReduce(index){
+                var that = this;
+                that.showPackageList[index].addOrReduce = 1;
+            },
+            // 返回订单
+            returnOrder(){
+                var that = this;
+                that.appearPartDiv = 1;
+            },
+            // 添加商品
+            addGoodsConfirm(){
+                var that = this;
+                that.appearPartDiv = 1;
+                for(var i=0;i<that.showPackageList.length;i++){
+                    if(that.showPackageList[i].addOrReduce == 0){
+                        if(that.orderGoodsIdList.indexOf(that.showPackageList[i].wmItemInventoryId) == -1){
+                            var goodsItemInfo = {
+                                orderItem: {
+                                    seq: i,
+                                    itemNature: that.showPackageList[i].itemNature,
+                                    itemName: that.showPackageList[i].itemName,
+                                    itemCode: that.showPackageList[i].itemCode,
+                                    itemDesc: that.showPackageList[i].itemName,
+                                    lotNo: that.showPackageList[i].lotNo,
+                                    receivedQty: that.showPackageList[i].qty,
+                                    qty: that.showPackageList[i].qty,
+                                    qtyUnit: that.showPackageList[i].qtyUnit,
+                                    weight: that.showPackageList[i].weight,
+                                    weightUnit: that.showPackageList[i].weightUnit,
+                                    volume: that.showPackageList[i].volume,
+                                    volumeUnit: that.showPackageList[i].volumeUnit,
+                                    unitPrice: that.showPackageList[i].unitPrice,
+                                    amount: that.showPackageList[i].amount,
+                                    currency: that.showPackageList[i].currency,
+                                    locationCode: that.showPackageList[i].locationCode,
+                                    remark: that.showPackageList[i].remark
+                                }
+                            };
+                            that.orderGoodsInfoList.push(goodsItemInfo);
+                            var wmItemInventoryId = that.showPackageList[i].wmItemInventoryId;
+                            that.orderGoodsIdList.push(wmItemInventoryId);
+                        }else{
+                            that.orderGoodsInfoList[i].orderItem.qty = (that.showPackageList[i].qty)/1 + (that.orderGoodsInfoList[i].orderItem.qty)/1;
+                        }
+                    }
+                }
+            },
+            // 打开购物车
+            getShopCar(){
+                var that = this;
+                that.getShopCarDiv = 1;
+            },
+            // 关闭购物车
+            closeShopCar(){
+                var that = this;
+                that.getShopCarDiv = 0;
+            },
+            // 清空购物车
+            deleteCarAll(){
+                var that = this;
+                that.orderGoodsInfoList = [];
+                that.getShopCarDiv = 0;
+            },
+            // 删除已选商品
+            deleteGoodsItem(index){
+                var that = this;
+                that.orderGoodsInfoList.splice(index,1);
+                if(that.orderGoodsInfoList.length < 1){
+                    that.getShopCarDiv = 0;
+                }
+            },
+            // 提交订单
+            saveNewOrderInfo(){
+                var that = this;
+                if(that.shipperParty.partyName == '' || that.shipperParty.partyName == undefined ||
+                    that.shipperPartyContact.contactName == '' || that.shipperPartyContact.contactName == undefined ||
+                    that.shipperPartyContact.contactTel == '' || that.shipperPartyContact.contactTel == undefined ||
+                    that.shipperPartyLocation.provinceCode == '' || that.shipperPartyLocation.provinceCode == undefined ||
+                    that.shipperPartyLocation.cityCode == '' || that.shipperPartyLocation.cityCode == undefined ||
+                    that.shipperPartyLocation.districtCode == '' || that.shipperPartyLocation.districtCode == undefined ||
+                    that.shipperPartyLocation.street == '' || that.shipperPartyLocation.street == undefined){
+                    loadData("show","请填写完整发货商信息",true);
+                    return false;
+                }
+                if(that.receiptParty.partyName == '' || that.receiptParty.partyName == undefined ||
+                    that.receiptPartyContact.contactName == '' || that.receiptPartyContact.contactName == undefined ||
+                    that.receiptPartyContact.contactTel == '' || that.receiptPartyContact.contactTel == undefined ||
+                    that.receiptPartyLocation.provinceCode == '' || that.receiptPartyLocation.provinceCode == undefined ||
+                    that.receiptPartyLocation.cityCode == '' || that.receiptPartyLocation.cityCode == undefined ||
+                    that.receiptPartyLocation.districtCode == '' || that.receiptPartyLocation.districtCode == undefined ||
+                    that.receiptPartyLocation.street == '' || that.receiptPartyLocation.street == undefined){
+                    loadData("show","请填写完整收货商信息",true);
+                    return false;
+                }
+                if(that.orderDetail.customerRefNo == '' || that.orderDetail.customerRefNo == undefined){
+                    loadData("show","请填写关联号",true);
+                    return false;
+                }
+                if(that.orderDetail.completeTime == '' || that.orderDetail.completeTime == undefined){
+                    loadData("show","请填写要求送达时间",true);
+                    return false;
+                }
+                if(that.orderGoodsInfoList.length == 0){
+                    loadData("show","请添加商品",true);
+                    return false;
+                }
+                that.orderDetail.orderType = 'SO';
+                that.orderDetail.orderFrom = that.logininf.tenantNo;
+                var shipperPartyInfoModel = {};
+                shipperPartyInfoModel.party = that.shipperParty;  // 1-发货商基本信息
+                shipperPartyInfoModel.imgContact = that.shipperPartyContact;  // 2-发货商紧急联系人
+                var receiptPartyInfoModel = {};
+                receiptPartyInfoModel.party = that.receiptParty;  // 1-收货商基本信息
+                receiptPartyInfoModel.imgContact = that.receiptPartyContact;  // 2-收货商紧急联系人
+                receiptPartyInfoModel.location = that.receiptPartyLocation;  // 3-收货商地址信息
+                receiptPartyInfoModel.contact = that.receiptPartyLocationContact;  // 4-收货商地址联系人
+                var omOrderHeadInfoModel = {};
+                omOrderHeadInfoModel.order = that.orderDetail;
+                omOrderHeadInfoModel.shipperPartyInfo = shipperPartyInfoModel;
+                omOrderHeadInfoModel.receiptPartyInfo = receiptPartyInfoModel;
+                omOrderHeadInfoModel.orderItemInfoList = that.orderGoodsInfoList;
+                postRequest(omsUrl + "/inster/omSoOrderInfo?token="+that.logininf.token+"&timeStamp="+that.logininf.timeStamp,omOrderHeadInfoModel,function(data){
+                    if(data.msg == "SUCCESS" || data.msg == "success"){
+                        window.location.href = "newOrderSuccessShip.html";
+                    }
+                });
+            },
+
+            // cdm基础数据 选择国省市区，以及输入街道改变详细地址 ——————— start
+            selectLocLevelFun(level,paramObj,code){ // 选中国省市区触发事件，入参：地址级别，对象，当前 国、省、市、区 编码 [ 便于扩展实时改变 详细地址address ]
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode':
+                        paramObj.provinceCode = "";
+                        paramObj.cityCode = "";
+                        paramObj.districtCode = "";
+                        break;
+                    case 'provinceCode':
+                        paramObj.cityCode = "";
+                        paramObj.districtCode = "";
+                        break;
+                    case 'cityCode':
+                        paramObj.districtCode = "";
+                        break;
+                    case 'districtCode':
+
+                        break;
+                }
+                that.changeAddressFun(level,paramObj,code);
+            },
+            getAllProviceList(countryCode){ // 根据所选的 countryCode 获取对应 省列表
+                return getProvinceData(countryCode);
+            },
+            getAllCityList(provinceCode){ // 根据所选的 provinceCode 获取对应 市列表
+                return getCityData(provinceCode);
+            },
+            getAllDistrictList(cityCode){ // 根据所选的 cityCode 获取对应 区列表
+                return getDistrictData(cityCode);
+            },
+            changeAddressFun(level,paramObj,code){ // 选择国省市区，实时改变 详细地址 address ，入参：地址级别，当前 国、省、市、区 编码
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode': // 选择 国 ，改变 address
+                        if(code == ''){
+                            that.address00 = '';
+                        }else{
+                            $.each(that.getAllCountryList, function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address00 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        break;
+                    case 'provinceCode': // 选择 省 ，改变 address
+                        if(code == ''){
+                            that.address0 = '';
+                        }else{
+                            $.each(that.getAllProviceList(paramObj.countryCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address0 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address1 = '';
+                        that.address2 = '';
+                        break;
+                    case 'cityCode': // 选择 市 ，改变 address
+                        if(code == ''){
+                            that.address1 = '';
+                        }else{
+                            $.each(that.getAllCityList(paramObj.provinceCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address1 = val.chineseName;
+                                }
+                            });
+                        }
+                        that.address2 = '';
+                        break;
+                    case 'districtCode': // 选择 区 ，改变 address
+                        if(code == ''){
+                            that.address2 = '';
+                        }else{
+                            $.each(that.getAllDistrictList(paramObj.cityCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address2 = val.chineseName;
+                                }
+                            });
+                        }
+                        break;
+                }
+                if(paramObj.street != '' && paramObj.street != undefined && paramObj.street != null){
+                    that.address3 = paramObj.street;
+                }else{
+                    that.address3 = '';
+                }
+                paramObj.address = that.address00 + that.address0 + that.address1 + that.address2 + that.address3;
+            },
+            changeAddress(paramObj,street,type){ // 输入街道，改变 address
+                var that = this;
+                if(street == undefined){
+                    return false;
+                }
+                that.address3 = street;
+                switch(type)
+                {
+                    case '0': // 发货商，改变 address
+                        that.changeAddressFun('countryCode',that.shipperPartyLocation,that.shipperPartyLocation.countryCode);
+                        that.changeAddressFun('provinceCode',that.shipperPartyLocation,that.shipperPartyLocation.provinceCode);
+                        that.changeAddressFun('cityCode',that.shipperPartyLocation,that.shipperPartyLocation.cityCode);
+                        that.changeAddressFun('districtCode',that.shipperPartyLocation,that.shipperPartyLocation.districtCode);
+                        break;
+                    case '1': // 收货商，改变 address
+                        that.changeAddressFun('countryCode',that.receiptPartyLocation,that.receiptPartyLocation.countryCode);
+                        that.changeAddressFun('provinceCode',that.receiptPartyLocation,that.receiptPartyLocation.provinceCode);
+                        that.changeAddressFun('cityCode',that.receiptPartyLocation,that.receiptPartyLocation.cityCode);
+                        that.changeAddressFun('districtCode',that.receiptPartyLocation,that.receiptPartyLocation.districtCode);
+                        break;
+                }
+                paramObj.address = that.address00 + that.address0 + that.address1 + that.address2 + that.address3;
+            },
+            resetAddressParamFun(type){ // 重置 改变address 参数，入参：类型（全重置、默认国家“中国”）
+                var that = this;
+                switch(type)
+                {
+                    case '0':
+                        that.address00 = '';
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        that.address3 = '';
+                        break;
+                    case '1':
+                        that.address00 = '中国';
+                        that.address0 = '';
+                        that.address1 = '';
+                        that.address2 = '';
+                        that.address3 = '';
+                        break;
+                }
+            },
+            getAddressParamFun(level,paramObj,code){ // 赋值 改变address 参数
+                var that = this;
+                switch(level)
+                {
+                    case 'countryCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllCountryList, function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address00 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address00 = '';
+                            paramObj.countryCode = "";
+                        }
+                        break;
+                    case 'provinceCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllProviceList(paramObj.countryCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address0 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address0 = '';
+                            paramObj.provinceCode = "";
+                        }
+                        break;
+                    case 'cityCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllCityList(paramObj.provinceCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address1 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address1 = '';
+                            paramObj.cityCode = "";
+                        }
+                        break;
+                    case 'districtCode':
+                        if(code != null && code != ''){
+                            $.each(that.getAllDistrictList(paramObj.cityCode), function (indexs, val) {
+                                if (val.adcode == code) {
+                                    that.address2 = val.chineseName;
+                                }
+                            });
+                        }else{
+                            that.address2 = '';
+                            paramObj.districtCode = "";
+                        }
+                        break;
+                }
+            },
+            // cdm基础数据 选择国省市区，以及输入街道改变详细地址 ——————— end
+        },
+        created:function(){
+            var that = this;
+            that.logininf = JSON.parse(localStorage.getItem("logininf"));
+            initSelectData(that);
+            that.orderGoodsInfoList = [];
+            that.addOrderDetails();
+        }
+    });
+    function initSelectData(that){
+        that.orderDetail = { // 订单基本信息
+            orderFrom:"",
+            orderTo:"",
+            customerRefNo:"",
+            orderType:"",
+            orderNature:"",
+            completeTime:"",
+            expireTime:"",
+            totalQty:"",
+            qtyUnit:"",
+            totalWeight:"",
+            weightUnit:"",
+            totalVolume:"",
+            volumeUnit:"",
+            totalAmount:"",
+            currency:"",
+            remark:""
+        };
+
+        that.shipperParty = { // 发货商
+            partyName:"",
+            partyCode:"",
+            isBuyer:null,
+            isVendor:null,
+            isTruck:null,
+            isWarehouse:null,
+            is3pl:null
+        };
+        that.shipperPartyContact = { // 发货商 联系人
+            contactName:"",
+            contactTel:"",
+            contactEmail:""
+        };
+        that.shipperPartyLocation = { // 发货地
+            locationName:"",
+            //    locationType:null,
+            locationCode:"",
+            countryCode:"100000",
+            provinceCode:"",
+            cityCode:"",
+            districtCode:"",
+            street:"",
+            postCode:"",
+            address:""
+        };
+        that.shipperPartyLocationContact = { // 发货地 联系人
+            contactName:"",
+            contactTel:""
+        };
+
+        that.receiptParty = { // 收货商
+            partyName:"",
+            partyCode:"",
+            isBuyer:null,
+            isVendor:null,
+            isTruck:null,
+            isWarehouse:null,
+            is3pl:null
+        };
+        that.receiptPartyContact = { // 收货商 联系人
+            contactName:"",
+            contactTel:"",
+            contactEmail:""
+        };
+        that.receiptPartyLocation = { // 收货地
+            locationName:"",
+            //    locationType:null,
+            locationCode:"",
+            countryCode:"100000",
+            provinceCode:"",
+            cityCode:"",
+            districtCode:"",
+            street:"",
+            postCode:"",
+            address:""
+        };
+        that.receiptPartyLocationContact = { // 收货地 联系人
+            contactName:"",
+            contactTel:""
+        };
+
+        that.selectGoods = {
+            partyCode: '',
+            partyName: '',
+            itemCode: '',
+            itemName: ''
+        }
+    }
+    //根据国家获取省
+    function getProvinceData(countryCode){
+        var listData = [];
+        if(localStorage.getItem("newOrderDjBasicData") != null){
+            var getAllData = JSON.parse(localStorage.getItem("newOrderDjBasicData"));    //获取下拉数据
+            var provinceData = getAllData.provinceList;
+            for(var i = 0;i < provinceData.length;i++){
+                if(provinceData[i].parentCode == countryCode){
+                    listData.push(provinceData[i]);
+                }
+            }
+        }
+        return listData;
+    }
+
+    //根据省获取市
+    function getCityData(provinceCode){
+        var listData = [];
+        if(localStorage.getItem("newOrderDjBasicData") != null){
+            var getAllData = JSON.parse(localStorage.getItem("newOrderDjBasicData"));    //获取下拉数据
+            var cityData = getAllData.cityList;
+            for(var i = 0;i < cityData.length;i++){
+                if(cityData[i].parentCode == provinceCode){
+                    listData.push(cityData[i]);
+                }
+            }
+        }
+        return listData;
+    }
+
+    //根据市获取区
+    function getDistrictData(cityCode){
+        var listData = [];
+        if(localStorage.getItem("newOrderDjBasicData") != null){
+            var getAllData = JSON.parse(localStorage.getItem("newOrderDjBasicData"));    //获取下拉数据
+            var districtData = getAllData.districtList;
+            for(var i = 0;i < districtData.length;i++){
+                if(districtData[i].parentCode == cityCode){
+                    listData.push(districtData[i]);
+                }
+            }
+        }
+        return listData;
+    }
+
+
+</script>
+
+</body>
+</html>

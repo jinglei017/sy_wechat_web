@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>今日订单</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" href="css/mui.picker.min.css" />
+	<link rel="stylesheet" href="css/orderstatlist1.css" />
+</head>
+
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">今日订单</p>
+		<p class="right">
+			<img src="images/search1.png" class="searchBtn" alt="" />
+		</p>
+	</div>
+	
+	<div class="searchLayer">
+		<div class="searchCon">
+			<ul>
+				<li>
+					<span>订单号:</span>
+					<input type="text" class="ordernum orderNo" placeholder="请输入订单号" />
+				</li>
+				<li>
+					<span>开始时间:</span>
+					<input type="选择日期时间" placeholder="例：2019-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+				</li>
+				<li>
+					<span>结束时间:</span>
+					<input type="选择日期时间" placeholder="例：2019-01-01" data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='endTime' class="btn"/>
+				</li>
+				<li class="shortLi">
+					<span>异常状态:</span>
+					<select name="abnormal" class="abnormalStatus">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+				</li>
+				<li>
+					<span>完成状态:</span>
+					<select name="status" class="statusSelect">
+						<option value="">全部</option>
+						<option value="INIT">未开始</option>
+						<option value="1">已完成</option>
+						<option value="2">执行中</option>
+						<option value="3">配送中</option>
+						<option value="4">部分完成</option>
+					</select>
+				</li>
+			</ul>
+			<p class="searchbtn">
+				查询
+			</p>
+		</div>
+	</div>
+	
+	<div class="orderList">
+		<ul class="listTitle">
+			<li>订单号</li>
+			<li>装车</li>
+			<li>配送</li>
+			<li>签收</li>
+			<li>位置</li>
+		</ul>
+		<div class="listCon">
+			<!--<ul class="listItem">
+				<li>TO180827024604000024<span class="associationNo">原单号：201808270009</span></li>
+				<li class="doneli"></li>
+				<li class="notdone"></li>
+				<li class="notdone"></li>
+				<li class="getLocationLi"><img src="images/location.png" alt="" /></li>
+			</ul>
+			<div class="masterItem">
+				<ul class="masterTitle">
+					<li class="first">+</li>
+					<li>TO180827024604000024<span class="associationNo">原单号：201808270009</span></li>
+					<li class="num">0/3</li>
+					<li class="iscomplate">未完成</li>
+				</ul>
+				<div class="masterListCon">
+					<ul class="listItem">
+						<li>TO180827024604000024<span class="associationNo">原单号：201808270009</span></li>
+						<li class="doneli"></li>
+						<li class="notdone"></li>
+						<li class="notdone"></li>
+						<li class="getLocationLi"><img src="images/location.png" alt="" /></li>
+					</ul>
+				</div>
+			</div>-->
+		</div>
+	</div>
+	
+	
+	<div class="maskLayer">
+		<div class="popup">
+			<div class="popupCon">
+				<h3 class="infHint">订单详细信息 <a href="javascript:;" class="closeorderinf"></a></h3>
+				<div class="popuptitle">
+					<ul>
+						<li>
+							<span class="txt">订单号</span>
+							<p class="inf">180500010180500010</p>
+						</li>
+						<li>
+							<span class="txt">收货地址</span>
+							<p class="inf">牌楼东路528号，百联总仓</p>
+						</li>
+						<li>
+							<span class="txt">配送司机</span>
+							<p class="inf"><a href="tel:13617880669">张三：13617880669</a></p>
+						</li>
+						<!--<li>
+							<span class="txt">车牌号码</span>
+							<p class="inf">沪E18062</p>
+						</li>-->
+					</ul>
+				</div>
+				<div class="orderSort">
+					<ul class="ordersortTitle">
+						<li>品名</li>
+						<li>数量（件）</li>
+						<li>规格</li>
+					</ul>
+					<div class="ordersortList">
+						<!--<ul>
+							<li>牛前腱</li>
+							<li>x60</li>
+							<li>1970</li>
+						</ul>-->
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="popup5">
+			<div class="popupTitle">
+				<a href="javascript:;"></a>
+			</div>
+			<ul class="imgList">
+				<!--<li><img src="images/top_pic.png" alt="" /></li>
+				<li><img src="images/top_pic.png" alt="" /></li>-->
+			</ul>
+		</div>
+		
+		<div class="popup6">
+			<div class="popupTitle">
+				<a href="javascript:;"></a>
+			</div>
+			<div class="swiper-container">
+			    <ul class="swiper-wrapper imgList">
+			      
+			    </ul>
+			    <div class="swiper-pagination"></div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="footer" style="display: none;">
+		<ul>
+			<li>
+				<a href="javascript:;">库存</a>
+			</li>
+			<li class="active">
+				<a href="javascript:;">订单</a>
+			</li>
+			<li>
+				<a href="javascript:;">分析</a>
+			</li>
+		</ul>
+	</div>
+	
+	<script src="js/jquery-2.1.0.js" type="text/javascript"></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script src="js/mui.js"></script>
+	<script src="js/mui.picker.min.js"></script>
+	<script>
+		(function($) {
+			$.init();
+			var result = $('#result')[0];
+			var btns = $('.btn');
+			var flag = true;
+			btns.each(function(i, btn) {
+				btn.addEventListener('tap', function() {
+					var that = this;
+					setTimeout(function(){
+						flag = true;
+					},100);
+					if(flag){
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							that.value = rs.text;
+							picker.dispose();
+						});
+						
+						flag  = false;
+					}
+					
+				}, false);
+			});
+		})(mui);
+	</script>
+	<script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+        document.write("<s" + "cript type='text/javascript' src='js/orderStatList-client.js?v=" + verson + "'></s" + "cript>");
+	</script>
+
+</body>
+</html>

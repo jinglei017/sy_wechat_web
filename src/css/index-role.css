@@ -1,0 +1,263 @@
+body{
+	background: #f3f5f7;
+    overflow-y: auto;
+}
+.searchOrder{
+	width: 100%;
+	height: 0.88rem;
+	box-sizing: border-box;
+	padding-left: 0.23rem;
+	padding-right: 0.23rem;
+	font-size: 0.24rem;
+	color: #fff;
+	position: fixed;
+	top: 0px;
+	z-index: 99;
+    display: none;
+}
+.searchOrder .headerIcon1{
+	width: 0.96rem;
+	position: absolute;
+	left: 0.23rem;
+	top: 0.13rem;
+
+	cursor: pointer;
+}
+.searchOrder .headerIcon1 img{
+	width: 0.36rem;
+	height: 0.36rem;
+	display: block;
+	margin-left: 0.16rem;
+}
+.searchOrder .headerIcon1 span{
+	display: block;
+	padding-top: 0.06rem;
+}
+.searchOrder .searchInp{
+	width: 4.8rem;
+	padding-right: 0.3rem;
+	height: 0.6rem;
+	line-height: 0.6rem;
+	background: #fff;
+	border-radius: 0.56rem;
+	margin: 0 auto;
+	margin-top: 0.18rem;
+}
+.searchOrder .searchInp input{
+	width: 3.8rem;
+	padding-left: 0.3rem;
+	height: 0.6rem;
+	float: left;
+}
+.searchOrder .searchInp img{
+	width: 0.42rem;
+	height: 0.42rem;
+	display: block;
+	float: right;
+	padding-top: 0.06rem;
+}
+.searchOrder .headerIcon2{
+	position: absolute;
+	right: 0.23rem;
+	top: 0.13rem;
+
+	cursor: pointer;
+}
+.searchOrder .headerIcon2 img{
+	width: 0.36rem;
+	height: 0.36rem;
+	display: block;
+	margin: 0 auto;
+}
+.searchOrder .headerIcon2 span{
+	display: block;
+	padding-top: 0.06rem;
+}
+
+.swiper-container{
+	position: relative;
+	width: 100%;
+	height: 4.2rem;
+	overflow: hidden;
+}
+.swiper-container .swiper-wrapper{
+	display: flex;
+}
+.swiper-container .swiper-wrapper .swiper-slide{
+	position: relative;
+	flex-shrink: 0;
+}
+.swiper-container .swiper-wrapper .swiper-slide img{
+	width: 100%;
+	height: 4.2rem;
+	display: block;
+}
+
+.swiper-pagination{
+	position: absolute;
+	bottom: 0.2rem;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.swiper-pagination span{
+	width: 0.16rem;
+	height: 0.16rem;
+	float: left;
+	border-radius: 50%;
+	background: #fff;
+	margin-right: 0.16rem;
+}
+.swiper-pagination .swiper-pagination-bullet-active{
+	background: #22bcee;
+}
+.orderClassify{
+	padding-bottom: 0.23rem;
+	position: relative;
+	z-index: 99;
+}
+.orderClassify .userInfo{
+	position: absolute;
+	height: 1.2rem;
+	top: -0.8rem;
+	left: 0.36rem;
+	color: #fff;
+	font-size: 0.33rem;
+	line-height: 0.9rem;
+}
+.orderClassify .userInfo .img{
+	float: left;
+}
+.orderClassify .userInfo img{
+	width: 1.2rem;
+	height: 1.2rem;
+	display: block;
+}
+.orderClassify .userInfo .txt{
+	float: left;
+	padding-left: 0.26rem;
+	line-height: 1.06rem;
+	color: #fff;
+}
+.orderClassify ul{
+	width: 100%;
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+	overflow: hidden;
+	padding-top: 0.96rem;
+	padding-bottom: 0.16rem;
+}
+.orderClassify ul li{
+	width: 25%;
+	box-sizing: border-box;
+	float: left;
+	text-align: center;
+	font-size: 0.24rem;
+	color: #666;
+	line-height: 0.6rem;
+	position: relative;
+}
+.orderClassify ul li .hint{
+	position: absolute;
+    z-index: 9;
+    width: 0.49rem;
+    height: 0.49rem;
+    border-radius: 50%;
+    background: #fff;
+    color: #f00;
+    text-align: center;
+    line-height: 0.52rem;
+    font-size: 0.26rem;
+    top: -0.26rem;
+    right: 0.3rem;
+    border: 1.5px solid #f00;
+}
+.orderClassify ul li img{
+	width: 0.56rem;
+	height: 0.56rem;
+	margin: 0 auto;
+	display: block;
+
+}
+.main .selectRole{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(0,0,0,0.5);
+	top: 0rem;
+	left: 0rem;
+	z-index: 999;
+}
+.main .selectRole h3{
+	text-align: center;
+	line-height: 0.88rem;
+	padding-top: 0.3rem;
+	font-weight: normal;
+	border-top: none;
+	color: #fff;
+
+}
+.main .selectRole .selectRoleCon{
+	width: 3.6rem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+.main .selectRole .selectRoleCon ul{
+	border-top: none;
+}
+.main .selectRole ul li{
+	width: 3.6rem;
+	height: 0.88rem;
+	color: #fff;
+	text-align: center;
+	line-height: 0.88rem;
+	border-radius: 0.88rem;
+	background: none;
+	border: none;
+	font-size: 0.3rem;
+	margin-top: 0.6rem;
+	border: 1px solid #fff;
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+}
+.main .selectRole ul li:last-child{
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+}
+.main ul{
+	overflow: hidden;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	background: #fff;
+	padding-top: 0.12rem;
+	padding-bottom: 0.12rem;
+}
+.main ul li{
+	width: 33.33333%;
+	float: left;
+	padding-top: 0.36rem;
+	padding-bottom: 0.36rem;
+	box-sizing: border-box;
+}
+.main ul li:nth-of-type(3n){
+	border-right: none;
+}
+.main ul li a img{
+	width: 0.72rem;
+	height: 0.72rem;
+	display: block;
+	margin: 0 auto;
+}
+.main ul li a .txt{
+	font-size: 0.28rem;
+	color: #666;
+	line-height: 0.6rem;
+	text-align: center;
+}
+.driverClassify{
+	padding-bottom: 0px;
+}
+.driverContent ul{
+	padding-top: 0.6rem;
+}

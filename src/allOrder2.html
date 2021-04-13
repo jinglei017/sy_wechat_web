@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>我的任务</title>
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/allOrder.css" />
+	<style>
+		.main .orderCon .orderList li .round{
+			display: none;
+		}
+		.main .orderCon .orderList li{
+			padding-left: 0.23rem;
+		}
+		.header .right{
+			text-align: right;
+			font-size: 0.28rem;
+		}
+		.header .right a{
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="header">
+		<a href="javascript:;" class="returnBtn"></a>
+		<p class="txt">我的任务</p>
+		<p class="right">
+			<a href="uploadPictures.html">批量上传图片</a>
+		</p>
+	</div>
+	
+	<div class="main">
+		<div class="orderCon orderCon1">
+			<div class="orderSureBtn">确认</div>
+			<div class="allAcceptBtn">
+				<input type="hidden" id="scanData" />
+				<span class="btn">扫码签收</span>
+				<div class="acceptOrderState"></div>
+			</div>
+			<ul class="orderList">
+				<!--<li>
+					<div class="right">
+						<p class="ordernum">订单号：810-597889-01</p>
+						<p class="shipAddress">
+							 重量：2000kg 体积：123cm3
+						</p>
+						<p class="receiverAddress">
+							客户：百联  收货地址：科盛路216科盛路216科盛路216科盛路216科盛路216
+						</p>
+					</div>
+					<div class="orderHandle">
+						<a href="javascript:;" class="truck">签收</a>
+						<p class="photo">
+							<img src="images/cameraIcon.png" alt="" />
+							<span class="txt">上传签收单</span>
+						</p>
+					</div>
+					<p class="round"></p>
+				</li>-->
+			</ul>
+		</div>
+	</div>
+	
+	
+	<div class="footer">
+		<ul>
+			<li>
+				<a href="javascript:;">接单<span>(0)</span></a>
+			</li>
+			<li>
+				<a href="allOrder1.html">装车<span>(0)</span></a>
+			</li>
+			<li class="active">
+				<a href="allOrder2.html">配送<span>(0)</span></a>
+			</li>
+			<li>
+				<a href="allOrder3.html">签收<span>(0)</span></a>
+			</li>
+			<li>
+				<a href="allOrder4.html">异常<span>(0)</span></a>
+			</li>
+			
+		</ul>
+	</div>
+	
+	
+	<div class="maskLayer">
+		<div class="popup1">
+			<div class="popupTitle">
+				订单是否正常  <a href="javascript:;"></a>
+			</div>
+			<div class="popupCon1">
+				<p class="checkednum">订单号： </p>
+			</div>
+			<div class="popupBot1">
+				<a href="javascript:;" class="normalorderbtn">正常</a>
+				<a href="javascript:;" class="abnormalorderbtn">异常</a>
+			</div>
+		</div>
+		<div class="popup7"> 
+			<div class="orderCon">
+				<div class="orderItem">
+					<input type="hidden" class="orderid" />
+					<p class="ordernum">接受总数：5 </p>
+					<p class="orderSize">
+						<span>接受重量：40kg</span>
+						<span>接受体积： 0.02</span>
+					</p>
+				</div>
+				<a href="javascript:;" class="closebtn"></a>
+			</div>
+			<div class="orderDesc">
+				<div class="uploadSeal">
+					<p>上传附件图片</p>
+					<ul class="uploadSealBtn">
+						<li class="lastLi"><img src="images/cameraIcon.png" alt="" /></li>
+					</ul>
+				</div>
+				<div class="popupBot2">
+					<p class="abnormalorderbtn">异常</p>
+					<p class="normalorderbtn">签收</p>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="popup2"> 
+			<div class="orderCon">
+				<div class="orderItem">
+					<input type="hidden" class="orderid" />
+					<p class="ordernum">接受总数：5 </p>
+					<p class="orderSize">
+						<span>接受重量：40kg</span>
+						<span>接受体积： 0.02</span>
+					</p>
+					<!--<p class="orderaddress">古北家乐福古北家乐福古北家乐福</p>-->
+				</div>
+				<a href="javascript:;" class="closebtn"></a>
+			</div>
+			<div class="orderDesc">
+				<div class="orderTextBox">
+					<h3>异常描述</h3>
+					<textarea class="abnormalDesc" name="" rows="" cols=""></textarea>
+					<h3>处理意见</h3>
+					<textarea class="disposition" name="" rows="" cols=""></textarea>
+					<div class="orderinf">
+						<p class="name">
+							<span>客户姓名</span>
+							<input type="text" class="customerTel" placeholder="请输入客户姓名" />
+						</p>
+						<p class="tel">
+							<span>客户电话</span>
+							<input type="text" class="customerName" placeholder="请输入客户电话" />
+						</p>
+						<p class="exceptionChoice">
+							<span>异常是否执行</span>
+							<select name="" id="" class="choiceVal">
+								<option value="0">请选择</option>
+								<option value="1">异常执行</option>
+								<option value="2">异常不执行</option>
+							</select>
+						</p>
+					</div>
+				</div>
+				<div class="uploadSeal">
+					<p>上传附件图片</p>
+					<ul class="uploadSealBtn">
+						<li class="lastLi"><img src="images/cameraIcon.png" alt="" /></li>
+					</ul>
+				</div>
+				
+				
+				<div class="popupBot2">
+					<p class="abnormalorderbtn">异常</p>
+					<p class="normalorderbtn">签收</p>
+				</div>
+				<!--<div class="popupBot2">
+					<a href="javascript:;" class="normalorderbtn">正常</a>
+					<a href="javascript:;" class="abnormalorderbtn">异常</a>
+				</div>-->
+			</div>
+		</div>
+		<div class="popup3">
+			<div class="popupCon">
+				<h3 class="infHint">订单详细信息 <a href="javascript:;" class="closeorderinf"></a></h3>
+				<div class="popuptitle">
+					<ul>
+						
+					</ul>
+				</div>
+				<div class="orderSort">
+					<ul class="ordersortTitle">
+						<li>品名</li>
+						<li>数量（件）</li>
+						<li>规格</li>
+					</ul>
+					<div class="ordersortList">
+						<!--<ul>
+							<li>牛前腱</li>
+							<li>x60</li>
+							<li>1970</li>
+						</ul>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="popup5">
+			<div class="popupTitle">
+				<a href="javascript:;"></a>
+			</div>
+			<ul class="imgList">
+				<!--<li><img src="images/top_pic.png" alt="" /></li>
+				<li><img src="images/top_pic.png" alt="" /></li>-->
+			</ul>
+		</div>
+		<div class="popup6">
+			<div class="popupTitle">
+				<a href="javascript:;"></a>
+			</div>
+			<div class="swiper-container">
+			    <ul class="swiper-wrapper imgList">
+			    	
+			    </ul>
+			    <div class="swiper-pagination"></div>
+			</div>
+		</div>
+		
+		<div class="popup">
+			<div class="popupTitle">
+				添加备注信息  <a href="javascript:;"></a>
+			</div>
+			<div class="popupCon">
+				<textarea name="" rows="" cols=""></textarea>
+			</div>
+			<div class="popupBot">
+				确认
+			</div>
+		</div>
+	</div>
+	
+	<div class="markmsg">订单已接受</div>
+	<script src="js/jquery-2.1.0.js" type="text/javascript" ></script>
+	<script src="js/common.js" type="text/javascript"></script>
+	<script src="js/swiper-4.2.6.min.js" type="text/javascript"></script>
+	<script src="js/env_config.js" type="text/javascript"></script>
+	
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script src="js/wxScanQRCode.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+		document.write("<s" + "cript type='text/javascript' src='js/allOrder.js?v=" + verson + "'></s" + "cript>");
+	</script>
+</body>
+</html>

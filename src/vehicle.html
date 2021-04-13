@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>运输监控</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/mui.picker.min.css"/>
+    <link rel="stylesheet" href="css/vehicle.css"/>
+    <!--<link rel="stylesheet" href="css/mui.min.css" />-->
+
+
+</head>
+<body>
+
+<div class="header">
+    <a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+    <p class="txt">运输监控</p>
+    <p class="right">
+        <img src="images/search1.png" class="searchBtn" alt=""/>
+    </p>
+</div>
+
+<div class="searchLayer">
+    <div class="searchCon">
+        <ul>
+            <li>
+                <span>请选择日期:</span>
+                <input type="text" placeholder="选择您要查找的日期"
+                       data-options='{"type":"date","beginYear":2016,"endYear":2050}' id='startTime' class="btn"/>
+            </li>
+        </ul>
+        <div class="searchBox">
+            <p class="searchbtn">
+                查询
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="main" style="padding-bottom: 1rem;">
+    <div class="orderList carList">
+        <ul class="listTitle">
+        	<li>班次</li>
+            <li>车牌号</li>
+            <li>当前进度</li>
+            <li>司机姓名</li>
+            <li>位置</li>
+            <li>查看</li>
+        </ul>
+        <div class="listCon">
+            <!--<ul class="listItem">
+                <li>沪AEF6318</li>
+                <li class="notdone">6/10</li>
+                <li>朱师傅</li>
+                <li class="getLocationLi"><img src="images/location.png" alt="" /></li>
+            </ul>-->
+
+        </div>
+    </div>
+</div>
+<div class="carAmountInf"></div>
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script src="js/env_config.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="js/mui.js"></script>
+<script src="js/mui.picker.min.js"></script>
+<script>
+    (function ($) {
+        $.init();
+        var result = $('#result')[0];
+        var btns = $('.btn');
+        var flag = true;
+        btns.each(function (i, btn) {
+            btn.addEventListener('tap', function () {
+                var that = this;
+                setTimeout(function () {
+                    flag = true;
+                }, 100);
+                if (flag) {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        that.value = rs.text;
+                        picker.dispose();
+                    });
+
+                    flag = false;
+                }
+
+            }, false);
+        });
+    })(mui);
+</script>
+
+
+<script type="text/javascript">
+    document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    document.write("<s" + "cript type='text/javascript' src='js/vehicle.js?v=" + verson + "'></s" + "cript>");
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>上传图片</title>
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/uploadPictures.css" />
+	
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/env_config.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script src="js/wxScanQRCode.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="header">
+		<a href="javascript:;" class="returnBtn" onclick="javascript:history.back(-1)"></a>
+		<p class="txt">上传图片</p>
+		<p class="right">确认上传</p>
+	</div>
+	
+	<div class="main">
+		<ul class="orderList">
+			<!--<li>
+				<p class="ordernum">订单号：TJO18091304113711355</p>
+				<p>原单号：HBJ201809001204</p>
+			</li>-->
+		</ul>
+	</div>
+	        
+	
+	<div class="maskLayer"> 
+		<div class="popup7"> 
+			<div class="orderCon">
+				<div class="orderItem">
+					<!--<input type="hidden" class="orderid" />
+					<p class="ordernum">订单号： TJO18091211362911321</p>
+					<p class="orderSize">原单号：AQCK180912-019</p>-->
+				</div>
+				<a href="javascript:;" class="closebtn"></a>
+			</div>
+			<div class="orderDesc">
+				<div class="uploadSeal">
+					<p>上传附件图片</p>
+					<ul class="uploadSealBtn">
+						<li class="lastLi"><img src="images/cameraIcon.png" alt="" /></li>
+					</ul>
+				</div>
+				<div class="popupBot2">
+					<p class="cancelBtn">取消</p>
+					<p class="savePictureBtn">保存</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="upLoadLayer">
+		<p class="hint">图片上传中...</p>
+	</div>
+    <script type="text/javascript">
+        document.write("<s" + "cript type='text/javascript' src='js/getlocation.js?v=" + verson + "'></s" + "cript>");
+    </script>
+	<script type="text/javascript" src="js/uploadPictures.js"></script>
+</body>
+</html>
